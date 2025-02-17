@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline -lncurses
 
 SRCS = srcs/main.c libft/ft_putstr_fd.c srcs/shell_launching.c \
-		libft/ft_strlen.c
+		libft/ft_strlen.c libft/ft_strncmp.c
 HEADERS = inc/minishell.h
 
 OBJS_DIR = objects/
