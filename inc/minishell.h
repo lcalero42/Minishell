@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 15:37:23 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:24:02 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # include <readline/history.h>
 # include <sys/ioctl.h>
 # include <signal.h>
+
+typedef struct s_data
+{
+	char	**cmd;	
+} t_data;
+
+void	ft_free(char **cmd);
+
+void	pars_input(t_data *data, char *input);
 
 void	print_welcome();
 
