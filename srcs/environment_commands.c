@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 19:22:02 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:36:49 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 void	pwd()
 {
 	char	cwd[1024];
-	
-	
+
 	getcwd(cwd, sizeof(cwd));
 	printf("%s\n", cwd);
 }
@@ -44,7 +43,7 @@ void	cd(char *s)
 			return ;
 		}
 	}
-	if (chdir(s))
+	else if (chdir(s))
 	{
 		perror("cd");
 		return ;

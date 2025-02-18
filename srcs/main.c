@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 19:22:46 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:27:05 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int ac, char **av)
 			break ;
 		if (!ft_strncmp("exit", line, 4) || !line)
 			break ;
-		handle_commands(line);
+		handle_commands(&data);
 		if (*line)
 			add_history(line);
 		free(line);
