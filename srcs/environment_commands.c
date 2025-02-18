@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   environment_commands.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 14:13:53 by lcalero          ###   ########.fr       */
+/*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
+/*   Updated: 2025/02/18 14:17:10 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../inc/minishell.h"
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/ioctl.h>
-# include <signal.h>
-
-void	print_welcome();
-
-void	setup_signal(int signum);
-
-void	pwd();
-
-void	handle_commands(char *s);
-
-#endif
+void	pwd()
+{
+	char	cwd[1024];
+	getcwd(cwd, sizeof(cwd));
+	printf("%s\n", cwd);
+}
