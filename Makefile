@@ -5,7 +5,8 @@ LDFLAGS = -lreadline -lncurses
 
 SRCS = srcs/main.c libft/ft_putstr_fd.c srcs/shell_launching.c \
 		libft/ft_strlen.c libft/ft_strncmp.c srcs/handle_signals.c \
-		srcs/environment_commands.c srcs/handle_commands.c
+		srcs/environment_commands.c srcs/handle_commands.c \
+		libft/ft_strnstr.c libft/ft_strjoin.c
 HEADERS = inc/minishell.h
 
 OBJS_DIR = objects/
