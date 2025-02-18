@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 14:14:17 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:57:54 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 int	main(void)
 {
 	char	*line;
+	t_data	data;
 	
 	setup_signal(SIGINT);
 	print_welcome();
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell: \e[0m");
+		pars_input(&data, line);
 		if (!line)
 			break ;
 		if (!ft_strncmp("exit", line, 4) || !line)
@@ -29,7 +31,9 @@ int	main(void)
 		if (*line)
 			add_history(line);
 		free(line);
+		ft_free(data.cmd);
 	}
+	ft_free(data.cmd);
 	rl_clear_history();
 	return (0);
 }
