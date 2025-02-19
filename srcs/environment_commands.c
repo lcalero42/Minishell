@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 18:03:06 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:16:59 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	echo(t_data *data)
 		{
 			output = expand_variable(data->cmd[i]);
 			if (!output)
-				break ;
+				i++;
 		}
 		else
 			output = data->cmd[i];
