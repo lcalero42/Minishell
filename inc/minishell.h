@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 11:26:25 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:04:26 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 void	print_welcome(void);
 
-void	setup_signal(int signum);
+void	setup_signal(void);
 
 void	pwd(void);
 

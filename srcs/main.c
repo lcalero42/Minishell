@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 11:27:20 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:22:23 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	main(void)
 {
 	char	*line;
 
-	setup_signal(SIGINT);
+	setup_signal();
 	print_welcome();
 	while (1)
 	{
-		line = readline("\e[1;32mMinishell: \e[0m");
+		line = readline("\e[1;32mMinishell> \e[0m");
 		if (!line)
 			break ;
 		if (!ft_strncmp("exit", line, 4) || !line)
