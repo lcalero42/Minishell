@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_commands.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 15:42:34 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:54:51 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	echo(t_data *data)
 void	env(char **env)
 {
 	int	i;
-	
+
 	i = 0;
 	while (env[i])
 	{
