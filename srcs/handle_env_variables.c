@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:57:52 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 17:20:59 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:54:07 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*expand_variable(char *input)
 	{
 		var_name = ft_strdup(input + 1);
 		output = getenv(var_name);
+		if (!output)
+			return (NULL);
 		free(var_name);
 	}
 	return (output);
