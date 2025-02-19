@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 18:16:59 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:33:59 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,28 @@ void	env(char **env)
 	{
 		ft_putstr_fd(env[i], 1);
 		ft_putchar_fd('\n', 1);
+		i++;
+	}
+}
+void	unset(char *var, char **envp)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (envp[i])
+	{
+		if (!strncmp(envp[i], var, ft_strlen(var))
+		&& envp[i][ft_strlen(var)] == '=')
+		{
+			j = i;
+			while (envp[j])
+			{
+				envp[j] = envp[j + 1];
+				j++;
+			}
+		}
 		i++;
 	}
 }

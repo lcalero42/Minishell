@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 15:42:02 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:28:51 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	handle_exit(char *line);
 
-void	loop(t_data *data, char **envp)
+void	loop(t_data *data)
 {
 	char	*line;
 
@@ -24,7 +24,7 @@ void	loop(t_data *data, char **envp)
 		pars_input(data, line);
 		if (!handle_exit(line))
 			break ;
-		handle_commands(data, envp);
+		handle_commands(data);
 		if (*line)
 			add_history(line);
 		free(line);

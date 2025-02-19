@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 17:13:29 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:30:07 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ typedef struct s_data
 	char	**cmd;
 }	t_data;
 
-void	loop(t_data *data, char **envp);
+extern char	**environ;
+
+void	loop(t_data *data);
 
 void	ft_free(char **cmd);
 
@@ -41,7 +43,9 @@ void	echo(t_data *data);
 
 void	env(char **env);
 
-void	handle_commands(t_data *data, char **envp);
+void	unset(char *var, char **envp);
+
+void	handle_commands(t_data *data);
 
 void	cd(char *s);
 
