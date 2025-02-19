@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 16:11:32 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:13:29 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ void	env(char **env);
 void	handle_commands(t_data *data, char **envp);
 
 void	cd(char *s);
+
+char	*expand_variable(char *input);
 
 #endif
