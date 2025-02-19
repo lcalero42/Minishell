@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 12:07:14 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:22:36 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	print_welcome(void);
 void	setup_signal(int signum);
 
 void	pwd(void);
+
+void	echo(t_data *data);
 
 void	handle_commands(t_data *data);
 

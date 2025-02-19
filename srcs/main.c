@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 20:23:58 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:23:02 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	ft_bzero(&data, sizeof(data));
 	while (1)
 	{
-		line = readline("\e[1;32mMinishell: \e[0m");
+		line = readline("\e[1;32mMinishell> \e[0m");
 		pars_input(&data, line);
 		if (!line)
 			break ;
