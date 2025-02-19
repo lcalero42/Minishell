@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 13:22:36 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:50:06 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_data
 {
 	char	**cmd;	
 }	t_data;
+
+void	loop(t_data *data);
 
 void	ft_free(char **cmd);
 
