@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:39:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/18 20:09:25 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:08:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	pars_input(t_data *data, char *input)
 void	ft_free(char **cmd)
 {
 	int	i;
-	
+
 	if (!cmd)
 		return ;
 	i = 0;

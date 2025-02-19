@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 19:27:21 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:07:14 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@
 typedef struct s_data
 {
 	char	**cmd;	
-} t_data;
+}	t_data;
 
 void	ft_free(char **cmd);
 
 void	pars_input(t_data *data, char *input);
 
-void	print_welcome();
+void	print_welcome(void);
 
 void	setup_signal(int signum);
 
-void	pwd();
+void	pwd(void);
 
 void	handle_commands(t_data *data);
 

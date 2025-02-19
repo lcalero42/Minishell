@@ -6,13 +6,13 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 19:36:49 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:07:21 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	pwd()
+void	pwd(void)
 {
 	char	cwd[1024];
 
@@ -29,19 +29,15 @@ void	cd(char *s)
 	{
 		home_dir = getenv("HOME");
 		if (chdir(home_dir))
-		{
 			perror("cd");
-			return ;
-		}
+		return ;
 	}
 	else if (!strncmp(s, "-", ft_strlen(s)))
 	{
 		old_pwd = getenv("OLDPWD");
 		if (chdir(old_pwd))
-		{
 			perror("cd");
-			return ;
-		}
+		return ;
 	}
 	else if (chdir(s))
 	{
