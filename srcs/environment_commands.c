@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 15:42:34 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:36:38 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	echo(t_data *data)
 void	env(char **env)
 {
 	int	i;
-	
+
 	i = 0;
 	while (env[i])
 	{
