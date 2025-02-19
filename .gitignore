@@ -56,3 +56,6 @@ objects
 
 #executable
 minishell
+
+#vscode config
+.vscode

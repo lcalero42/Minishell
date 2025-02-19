@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_commands.c                                  :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 13:48:52 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/02/18 18:39:29 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/02/19 12:08:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	handle_commands(t_data *data)
+void	pars_input(t_data *data, char *input)
 {
-	if (!data->cmd[0])
+	if (!input)
 		return ;
-	if (!ft_strncmp("pwd", data->cmd[0], ft_strlen(data->cmd[0]))
-		&& ft_strlen(data->cmd[0]) == 3)
-		pwd();
-	if (!ft_strncmp("cd", data->cmd[0], ft_strlen(data->cmd[0]))
-		&& ft_strlen(data->cmd[0]) == 2)
-		cd(data->cmd[1]);
+	data->cmd = ft_split(input, ' ');
+}
+
+void	ft_free(char **cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return ;
+	i = 0;
+	while (cmd[i])
+	{
+		free(cmd[i]);
+		i++;
+	}
+	free(cmd);
 }
