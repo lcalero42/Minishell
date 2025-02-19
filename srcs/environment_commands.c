@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 14:58:36 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:42:34 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,17 @@ void	echo(t_data *data)
 	}
 	if (put_endl)
 		ft_putchar_fd('\n', 1);
+}
+
+void	env(char **env)
+{
+	int	i;
+	
+	i = 0;
+	while (env[i])
+	{
+		ft_putstr_fd(env[i], 1);
+		ft_putchar_fd('\n', 1);
+		i++;
+	}
 }

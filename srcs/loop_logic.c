@@ -6,25 +6,25 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 14:54:07 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:42:02 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int handle_exit(char *line);
+static int	handle_exit(char *line);
 
-void	loop(t_data *data)
+void	loop(t_data *data, char **envp)
 {
 	char	*line;
-	
+
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
 		pars_input(data, line);
 		if (!handle_exit(line))
 			break ;
-		handle_commands(data);
+		handle_commands(data, envp);
 		if (*line)
 			add_history(line);
 		free(line);
@@ -36,7 +36,7 @@ void	loop(t_data *data)
 	rl_clear_history();
 }
 
-static int handle_exit(char *line)
+static int	handle_exit(char *line)
 {
 	if (!line)
 		return (0);
