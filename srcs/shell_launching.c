@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_launching.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:38:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/17 18:13:44 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:25:22 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_line(const char *text);
 
-void	print_welcome()
+void	print_welcome(void)
 {
 	ft_putstr_fd("\n\n", 1);
 	print_line("███╗   ███╗██╗███╗   ██╗██╗███████╗");

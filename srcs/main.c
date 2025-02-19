@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 14:14:17 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:27:20 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(void)
 {
 	char	*line;
-	
+
 	setup_signal(SIGINT);
 	print_welcome();
 	while (1)

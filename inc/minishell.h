@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/18 14:13:53 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:26:25 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 
-void	print_welcome();
+void	print_welcome(void);
 
 void	setup_signal(int signum);
 
-void	pwd();
+void	pwd(void);
 
 void	handle_commands(char *s);
 
