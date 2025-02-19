@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 15:55:40 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:11:32 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 # include <readline/history.h>
 # include <sys/ioctl.h>
 # include <signal.h>
-
-# define POSSIBLE_NEXT_CMD {"<", ">", "<<", ">>", '|'}
-# define NUM_POSSIBLE_CMD 5
 
 typedef struct s_data
 {
