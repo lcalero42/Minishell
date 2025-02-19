@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 17:31:29 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:39:13 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,24 @@ void	cd(char *s)
 
 void	echo(t_data *data)
 {
-	int	i;
-	int	j;
-	int	put_endl;
+	int		i;
+	int		put_endl;
+	char	*output;
 
 	i = 1;
 	put_endl = 1;
 	while (data->cmd[i] && data->cmd[i][0] == '-' && data->cmd[i][1] == 'n')
 	{
-		j = 1;
-		while (data->cmd[i][j] == 'n')
-			j++;
-		if (data->cmd[i][j] != '\0')
-			break ;
 		put_endl = 0;
 		i++;
 	}
 	while (data->cmd[i])
 	{
-		ft_putstr_fd(data->cmd[i], 1);
+		if (data->cmd[i][0] == '$')
+			output = expand_variable(data->cmd[i]);
+		else
+			output = data->cmd[i];
+		ft_putstr_fd(output, 1);
 		if (data->cmd[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;
