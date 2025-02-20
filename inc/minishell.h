@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/20 23:51:30 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/21 00:29:10 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ typedef struct s_data
 	char	**cmd;
 	char	*envp[100];
 }	t_data;
-
-extern char	**environ;
 
 void	loop(t_data *data);
 
