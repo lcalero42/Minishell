@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 19:33:59 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/20 16:17:10 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,11 @@ void	echo(t_data *data)
 	while (data->cmd[i])
 	{
 		if (data->cmd[i][0] == '$')
-		{
 			output = expand_variable(data->cmd[i]);
-			if (!output)
-				i++;
-		}
 		else
 			output = data->cmd[i];
-		ft_putstr_fd(output, 1);
+		if (output)
+			ft_putstr_fd(output, 1);
 		if (data->cmd[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;
@@ -88,17 +85,18 @@ void	env(char **env)
 		i++;
 	}
 }
+
 void	unset(char *var, char **envp)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	j = 0;
 	while (envp[i])
 	{
 		if (!strncmp(envp[i], var, ft_strlen(var))
-		&& envp[i][ft_strlen(var)] == '=')
+			&& envp[i][ft_strlen(var)] == '=')
 		{
 			j = i;
 			while (envp[j])
