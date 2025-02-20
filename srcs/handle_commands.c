@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 19:29:44 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:31:35 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void	handle_commands(t_data *data)
 		pwd();
 	else if (!ft_strncmp("cd", data->cmd[0], ft_strlen(data->cmd[0]))
 		&& ft_strlen(data->cmd[0]) == 2)
-		cd(data->cmd[1]);
+		cd(data->cmd[1], data);
 	else if (!ft_strncmp("echo", data->cmd[0], ft_strlen(data->cmd[0]))
 		&& ft_strlen(data->cmd[0]) == 4)
 		echo(data);
 	else if (!ft_strncmp("env", data->cmd[0], ft_strlen(data->cmd[0]))
 		&& ft_strlen(data->cmd[0]) == 3)
-		env(environ);
+		env(data->envp);
 	else if (!ft_strncmp("unset", data->cmd[0], ft_strlen(data->cmd[0]))
 		&& ft_strlen(data->cmd[0]) == 5)
-		unset(data->cmd[1], environ);
+		unset(data->cmd[1], data->envp);
 	else
 		handle_unknown_command(data);
 }

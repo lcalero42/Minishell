@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 19:30:07 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:51:30 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,18 @@
 typedef struct s_data
 {
 	char	**cmd;
+	char	*envp[100];
 }	t_data;
 
 extern char	**environ;
 
 void	loop(t_data *data);
 
+int		make_env(t_data *data, char **envp);
+
 void	ft_free(char **cmd);
+
+void	ft_free_env(t_data *data);
 
 void	pars_input(t_data *data, char *input);
 
@@ -47,8 +52,10 @@ void	unset(char *var, char **envp);
 
 void	handle_commands(t_data *data);
 
-void	cd(char *s);
+void	cd(char *s, t_data *data);
 
-char	*expand_variable(char *input);
+char	*expand_variable(char *input, t_data *data);
+
+char *ft_getenv(t_data *data, char *s);
 
 #endif

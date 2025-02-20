@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:10:28 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/20 16:17:10 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/21 00:24:41 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ void	pwd(void)
 	ft_putchar_fd('\n', 1);
 }
 
-void	cd(char *s)
+void	cd(char *s, t_data *data)
 {
 	char	*home_dir;
 	char	*old_pwd;
 
 	if (!s)
 	{
-		home_dir = getenv("HOME");
+		home_dir = ft_getenv(data, "HOME");
 		if (chdir(home_dir))
 			perror("cd");
 		return ;
 	}
 	else if (!strncmp(s, "-", ft_strlen(s)))
 	{
-		old_pwd = getenv("OLDPWD");
+		old_pwd = ft_getenv(data, "OLDPWD");
 		if (chdir(old_pwd))
 			perror("cd");
 		return ;
@@ -60,7 +60,7 @@ void	echo(t_data *data)
 	while (data->cmd[i])
 	{
 		if (data->cmd[i][0] == '$')
-			output = expand_variable(data->cmd[i]);
+			output = expand_variable(data->cmd[i], data);
 		else
 			output = data->cmd[i];
 		if (output)
@@ -98,12 +98,14 @@ void	unset(char *var, char **envp)
 		if (!strncmp(envp[i], var, ft_strlen(var))
 			&& envp[i][ft_strlen(var)] == '=')
 		{
+			free(envp[i]);
 			j = i;
 			while (envp[j])
 			{
 				envp[j] = envp[j + 1];
 				j++;
 			}
+			break ;
 		}
 		i++;
 	}

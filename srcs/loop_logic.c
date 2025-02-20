@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 19:28:51 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:51:50 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	loop(t_data *data)
 		ft_free(data->cmd);
 	}
 	free(line);
+	ft_free_env(data);
 	if (line)
 		ft_free(data->cmd);
 	rl_clear_history();
