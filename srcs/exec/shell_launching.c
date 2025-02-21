@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell_launching.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:38:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/19 13:49:39 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:55:28 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static void	print_line(const char *text);
 

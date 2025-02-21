@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 18:39:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/19 12:08:47 by lcalero          ###   ########.fr       */
+/*   Created: 2025/02/21 13:53:44 by lcalero           #+#    #+#             */
+/*   Updated: 2025/02/21 13:54:49 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	pars_input(t_data *data, char *input)
-{
-	if (!input)
-		return ;
-	data->cmd = ft_split(input, ' ');
-}
-
-void	ft_free(char **cmd)
+void	unset(char *var, char **envp)
 {
 	int	i;
+	int	j;
 
-	if (!cmd)
-		return ;
 	i = 0;
-	while (cmd[i])
+	j = 0;
+	while (envp[i])
 	{
-		free(cmd[i]);
+		if (!strncmp(envp[i], var, ft_strlen(var))
+			&& envp[i][ft_strlen(var)] == '=')
+		{
+			free(envp[i]);
+			j = i;
+			while (envp[j])
+			{
+				envp[j] = envp[j + 1];
+				j++;
+			}
+			break ;
+		}
 		i++;
 	}
-	free(cmd);
 }

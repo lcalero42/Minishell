@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 00:08:15 by lcalero          ###   ########.fr       */
+/*   Created: 2025/02/21 13:52:53 by lcalero           #+#    #+#             */
+/*   Updated: 2025/02/21 13:54:23 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	cd(char *s, t_data *data)
 {
-	t_data	data;
+	char	*home_dir;
+	char	*old_pwd;
 
-	(void)ac;
-	(void)av;
-	setup_signal();
-	print_welcome();
-	ft_bzero(&data, sizeof(data));
-	make_env(&data, envp);
-	loop(&data);
-	return (0);
+	if (!s)
+	{
+		home_dir = ft_getenv(data, "HOME");
+		if (chdir(home_dir))
+			perror("cd");
+		return ;
+	}
+	else if (!strncmp(s, "-", ft_strlen(s)))
+	{
+		old_pwd = ft_getenv(data, "OLDPWD");
+		if (chdir(old_pwd))
+			perror("cd");
+		return ;
+	}
+	else if (chdir(s))
+	{
+		perror("cd");
+		return ;
+	}
 }

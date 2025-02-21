@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 00:08:15 by lcalero          ###   ########.fr       */
+/*   Created: 2025/02/18 18:39:29 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/02/21 13:55:32 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	pars_input(t_data *data, char *input)
 {
-	t_data	data;
+	if (!input)
+		return ;
+	data->cmd = ft_split(input, ' ');
+}
 
-	(void)ac;
-	(void)av;
-	setup_signal();
-	print_welcome();
-	ft_bzero(&data, sizeof(data));
-	make_env(&data, envp);
-	loop(&data);
-	return (0);
+void	ft_free(char **cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return ;
+	i = 0;
+	while (cmd[i])
+	{
+		free(cmd[i]);
+		i++;
+	}
+	free(cmd);
 }

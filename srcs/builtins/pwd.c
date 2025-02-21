@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 00:08:15 by lcalero          ###   ########.fr       */
+/*   Created: 2025/02/21 13:53:32 by lcalero           #+#    #+#             */
+/*   Updated: 2025/02/21 13:54:12 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	pwd(void)
 {
-	t_data	data;
+	char	cwd[1024];
 
-	(void)ac;
-	(void)av;
-	setup_signal();
-	print_welcome();
-	ft_bzero(&data, sizeof(data));
-	make_env(&data, envp);
-	loop(&data);
-	return (0);
+	getcwd(cwd, sizeof(cwd));
+	ft_putstr_fd(cwd, 1);
+	ft_putchar_fd('\n', 1);
 }
