@@ -6,12 +6,14 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/25 18:45:57 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:28:18 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 #include <sys/wait.h>
+
+static void	handle_unknown_command(char *cmd);
 
 char	*find_executable(char *cmd)
 {
@@ -51,6 +53,8 @@ void	exec_cmd(char *cmd, char **args, char **envp)
 
 	pid = fork();
 	executable = NULL;
+	if (cmd[0] == '/' || cmd[0] == '.')
+		executable = cmd;
 	if (pid < 0)
 	{
 		perror("fork");
@@ -58,24 +62,17 @@ void	exec_cmd(char *cmd, char **args, char **envp)
 	}
 	else if (pid == 0)
 	{
-		if (cmd[0] == '/' || cmd[0] == '.')
-			executable = cmd;
-		else
-			executable = find_executable(cmd);
-
 		if (executable)
-		{
 			execve(executable, args, envp);
-			perror(args[0]);
-			exit(127);
-		}
-		else
-		{
-			ft_putstr_fd(cmd, 2);
-			ft_putstr_fd(": command not found\n", 2);
-			exit(127);
-		}
+		handle_unknown_command(cmd);
 	}
 	else
 		waitpid(pid, &status, 0);
+}
+
+static void	handle_unknown_command(char *cmd)
+{
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": Command not found", 2);
+	ft_putchar_fd('\n', 2);
 }

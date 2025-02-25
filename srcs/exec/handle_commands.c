@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/25 18:51:20 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:22:47 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,5 @@ void	handle_commands(t_data *data)
 		unset(data->cmd[1], data->envp);
 	else 
 		exec_cmd(data->cmd[0], data->cmd, data->envp);
-	// handle_unknown_command(data);
 }
 
-// static void	handle_unknown_command(t_data *data)
-// {
-// 	ft_putstr_fd(data->cmd[0], 2);
-// 	ft_putstr_fd(": Command not found", 2);
-// 	ft_putchar_fd('\n', 2);
-// }
