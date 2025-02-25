@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 13:55:23 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/25 18:51:20 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	handle_unknown_command(t_data *data);
+// static void	handle_unknown_command(t_data *data);
 
 void	handle_commands(t_data *data)
 {
@@ -33,13 +33,14 @@ void	handle_commands(t_data *data)
 	else if (!ft_strncmp("unset", data->cmd[0], ft_strlen(data->cmd[0]))
 		&& ft_strlen(data->cmd[0]) == 5)
 		unset(data->cmd[1], data->envp);
-	else
-		handle_unknown_command(data);
+	else 
+		exec_cmd(data->cmd[0], data->cmd, data->envp);
+	// handle_unknown_command(data);
 }
 
-static void	handle_unknown_command(t_data *data)
-{
-	ft_putstr_fd(data->cmd[0], 2);
-	ft_putstr_fd(": Command not found", 2);
-	ft_putchar_fd('\n', 2);
-}
+// static void	handle_unknown_command(t_data *data)
+// {
+// 	ft_putstr_fd(data->cmd[0], 2);
+// 	ft_putstr_fd(": Command not found", 2);
+// 	ft_putchar_fd('\n', 2);
+// }
