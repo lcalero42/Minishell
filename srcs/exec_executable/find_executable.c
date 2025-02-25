@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/25 19:28:18 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:32:37 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*find_executable(char *cmd)
 	char	**paths;
 	char	*full_path;
 	int		i;
-	
+
 	i = 0;
 	path = getenv("PATH");
 	if (!path)
@@ -29,7 +29,7 @@ char	*find_executable(char *cmd)
 	paths = ft_split(path, ':');
 	if (!paths)
 		return (NULL);
-	while (paths[i])
+	while (paths[i++])
 	{
 		full_path = ft_strjoin(paths[i], "/");
 		full_path = ft_strjoin(full_path, cmd);
@@ -39,7 +39,6 @@ char	*find_executable(char *cmd)
 			return (full_path);
 		}
 		free(full_path);
-		i++;
 	}
 	ft_free(paths);
 	return (NULL);

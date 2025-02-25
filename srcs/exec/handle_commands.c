@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/25 19:22:47 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:30:49 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	handle_commands(t_data *data)
 	else if (!ft_strncmp("unset", data->cmd[0], ft_strlen(data->cmd[0]))
 		&& ft_strlen(data->cmd[0]) == 5)
 		unset(data->cmd[1], data->envp);
-	else 
+	else
 		exec_cmd(data->cmd[0], data->cmd, data->envp);
 }
-
