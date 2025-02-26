@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/26 13:16:37 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:20:24 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	exec_cmd(char *cmd, char **args, char **envp)
 	}
 	else
 		waitpid(pid, &status, 0);
+	printf("\n");
+	return ;
 }
 
 static void	handle_unknown_command(char *cmd)
