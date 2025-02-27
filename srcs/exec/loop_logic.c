@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 13:55:25 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/02/26 15:11:08 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	loop(t_data *data)
 }
 
 static int	handle_exit(char *line)
-{
+{ 
 	if (!line)
 		return (0);
 	if (!ft_strncmp("exit", line, 4))

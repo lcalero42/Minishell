@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/26 13:20:24 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:37:49 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ void	exec_cmd(char *cmd, char **args, char **envp)
 static void	handle_unknown_command(char *cmd)
 {
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": Command not found", 2);
+	ft_putstr_fd(": command not found", 2);
 	ft_putchar_fd('\n', 2);
 }
