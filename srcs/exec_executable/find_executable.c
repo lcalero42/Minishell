@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/27 10:37:49 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:47:10 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ void	exec_cmd(char *cmd, char **args, char **envp)
 		if (executable)
 			execve(executable, args, envp);
 		handle_unknown_command(cmd);
+		exit(127);
 	}
 	else
 		waitpid(pid, &status, 0);
-	printf("\n");
+	if (cmd[0] == '/' || cmd[0] == '.')
+		printf("\n");
 	return ;
 }
 
@@ -76,4 +78,5 @@ static void	handle_unknown_command(char *cmd)
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found", 2);
 	ft_putchar_fd('\n', 2);
+	return ;
 }
