@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/25 17:41:47 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:57:10 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,7 @@ char	*ft_strncpy(char *destination, const char *source, size_t length);
 char	**split_token(const char *str);
 
 void	exec_cmd(char *cmd, char **args, char **envp);
+
+void	handle_unknown_command(char *cmd);
 
 #endif

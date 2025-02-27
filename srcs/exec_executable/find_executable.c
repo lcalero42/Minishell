@@ -6,14 +6,12 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/27 10:47:10 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:03:56 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 #include <sys/wait.h>
-
-static void	handle_unknown_command(char *cmd);
 
 char	*find_executable(char *cmd)
 {
@@ -68,15 +66,7 @@ void	exec_cmd(char *cmd, char **args, char **envp)
 	}
 	else
 		waitpid(pid, &status, 0);
-	if (cmd[0] == '/' || cmd[0] == '.')
+	if ((cmd[0] == '/' || cmd[0] == '.') && status == 0)
 		printf("\n");
-	return ;
-}
-
-static void	handle_unknown_command(char *cmd)
-{
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found", 2);
-	ft_putchar_fd('\n', 2);
 	return ;
 }
