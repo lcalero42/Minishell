@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 18:39:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/27 11:03:50 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/02/24 14:09:57 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/02/24 16:22:15 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	pars_input(t_data *data, char *input)
+char	*ft_strncpy(char *destination, const char *source, size_t length)
 {
-	if (!input)
-		return ;
-	data->cmd = split_token(input);
-}
+	size_t	i;
 
-void	ft_free(char **cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
 	i = 0;
-	while (cmd[i])
+	while (source[i] && i < length)
 	{
-		free(cmd[i]);
+		destination[i] = source[i];
 		i++;
 	}
-	free(cmd);
+	while (i < length)
+	{
+		destination[i] = '\0';
+		i++;
+	}
+	return (destination);
 }

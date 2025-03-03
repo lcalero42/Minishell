@@ -10,7 +10,8 @@ SRCS = srcs/main.c libft/ft_putstr_fd.c srcs/exec/shell_launching.c \
                 srcs/exec/loop_logic.c srcs/env/handle_env_variables.c \
                 libft/ft_strlcpy.c libft/ft_strdup.c srcs/builtins/cd.c \
                 srcs/builtins/echo.c srcs/builtins/unset.c srcs/builtins/env.c \
-				srcs/builtins/export.c
+				srcs/parsing/split_tokens.c srcs/parsing/ft_strncpy.c \
+				srcs/exec_executable/find_executable.c libft/ft_strjoin.c
 HEADERS = inc/minishell.h
 
 OBJS_DIR = objects/
