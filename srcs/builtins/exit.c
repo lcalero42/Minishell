@@ -1,45 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop_logic.c                                       :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/03 15:39:38 by luis             ###   ########.fr       */
+/*   Created: 2025/03/03 15:21:31 by luis              #+#    #+#             */
+/*   Updated: 2025/03/03 15:47:41 by luis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	handle_exit(char *line);
+static int is_numeric(char *s);
 
-void	loop(t_data *data)
+void    ft_exit(t_data *data)
 {
-	char	*line;
+    int exit_code;
 
-	while (1)
-	{
-		line = readline("\e[1;32mMinishell> \e[0m");
-		pars_input(data, line);
-		if (!handle_exit(line))
-			break ;
-		handle_commands(data);
-		if (*line)
-			add_history(line);
-		free(line);
-		ft_free(data->cmd);
-	}
-	free(line);
-	ft_free_env(data);
-	if (line)
-		ft_free(data->cmd);
-	rl_clear_history();
+    exit_code = 0;
+    if (data->cmd[1])
+    {
+        if (!is_numeric(data->cmd[1]))
+            exit_code = 2;
+        else
+            exit_code = ft_atoi(data->cmd[1]) % 256;
+    }
+    ft_putstr_fd("exit", 1);
+    exit(exit_code);
 }
 
-static int	handle_exit(char *line)
+static int is_numeric(char *s)
 {
-	if (!line)
+	if (!s || !*s)
 		return (0);
+	while (*s)
+	{
+		if (!ft_isdigit(*s))
+			return (0);
+		s++;
+	}
 	return (1);
 }

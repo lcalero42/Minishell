@@ -6,7 +6,7 @@
 /*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/03 14:41:07 by luis             ###   ########.fr       */
+/*   Updated: 2025/03/03 15:35:24 by luis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	handle_commands(t_data *data);
 void	cd(char *s, t_data *data);
 
 void	export(t_data *data);
+
+void	ft_exit(t_data *data);
 
 char	*expand_variable(char *input, t_data *data);
 
