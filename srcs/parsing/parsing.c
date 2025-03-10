@@ -6,11 +6,11 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:39:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/27 11:03:50 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:17:00 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 void	pars_input(t_data *data, char *input)
 {

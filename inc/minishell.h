@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/03 15:35:24 by luis             ###   ########.fr       */
+/*   Updated: 2025/03/10 15:14:30 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,34 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 # include <limits.h>
+
+typedef enum e_token_type
+{
+	WORD,			//Command and args
+	PIPE,			// '|'
+	REDIR_IN,		// '<'
+	REDIR_OUT,		// '>'
+	REDIR_APPEND,	// '>>'
+	HEREDOC,		// '<<'
+	ENV_VAR,		// '$VAR'
+	QUOTE,			// '"' or '''
+}	t_token_type;
+
+typedef struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	struct s_token	*next;
+}	t_token;
+
+typedef struct s_command
+{
+	char				*args;
+	char				*infile;
+	char				*outfile;
+	int					append;
+	struct s_command	*next;
+}	t_command;
 
 typedef struct s_data
 {

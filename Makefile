@@ -1,6 +1,6 @@
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -Iinc -I.
 LDFLAGS = -lreadline -lncurses
 
 SRCS = srcs/main.c libft/ft_putstr_fd.c srcs/exec/shell_launching.c \

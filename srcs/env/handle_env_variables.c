@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env_variables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:57:52 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/03 14:41:42 by luis             ###   ########.fr       */
+/*   Updated: 2025/03/10 15:17:40 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 int	make_env(t_data *data, char **envp)
 {

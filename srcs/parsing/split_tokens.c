@@ -6,11 +6,11 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:16:02 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/26 14:18:48 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:16:54 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 static int		is_space_or_operator(char c);
 static void		add_t(char **tokens, int *i, const char *start,
