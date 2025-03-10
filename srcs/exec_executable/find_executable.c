@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/27 11:03:56 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:50:48 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	exec_cmd(char *cmd, char **args, char **envp)
 	}
 	else
 		waitpid(pid, &status, 0);
-	if ((cmd[0] == '/' || cmd[0] == '.') && status == 0)
-		printf("\n");
+	// if ((cmd[0] == '/' || cmd[0] == '.') && status == 0)
+	// 	printf("\n");
 	return ;
 }

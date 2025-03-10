@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:21:31 by luis              #+#    #+#             */
-/*   Updated: 2025/03/03 15:47:41 by luis             ###   ########.fr       */
+/*   Updated: 2025/03/10 11:37:21 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    ft_exit(t_data *data)
         else
             exit_code = ft_atoi(data->cmd[1]) % 256;
     }
-    ft_putstr_fd("exit", 1);
+    ft_putstr_fd("exit\n", 1);
     exit(exit_code);
 }
 
