@@ -17,24 +17,25 @@ char	*extract_quoted_string(char *str)
 	char	*rslt;
 	int		i;
 	int		size;
-
-	size = 0;
-	i = 0;
-	if (str[0] == '\'' || str[0] == '"')
+	char	quote;
+	
+	if (!str || (str[0] != '\'' && str[0] != '"'))
+		return (NULL);
+	quote = str[0];
+	size = 1;
+	while (str[size] && str[size] != quote)
 		size++;
-	while (str[size] != '\'' || str[size] != '"' && str[size])
-		size++;
-	rslt = malloc(size * sizeof(char));
+	if (str[size] != quote)
+		return (NULL);
+	rslt = malloc((size) * sizeof(char));
 	if (!rslt)
 		return (NULL);
 	i = 0;
-	if (str[0] == '\'' || str[0] == '"')
-		i++;
-	while (str[i] != '\'' || str[i] != '"' && str[i])
+	while (i < size - 1)
 	{
-		rslt[i] = str[i];
+		rslt[i] = str[i + 1];
 		i++;
 	}
 	rslt[i] = '\0';
-	return (rslt);
+	return (rslt);	
 }

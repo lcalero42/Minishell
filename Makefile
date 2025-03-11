@@ -13,7 +13,9 @@ SRCS = srcs/main.c libft/ft_putstr_fd.c srcs/exec/shell_launching.c \
 				srcs/parsing/split_tokens.c srcs/parsing/ft_strncpy.c \
 				srcs/exec_executable/find_executable.c libft/ft_strjoin.c \
 				srcs/builtins/export.c srcs/builtins/exit.c libft/ft_isdigit.c \
-				libft/ft_atoi.c
+				libft/ft_atoi.c srcs/parsing/add_token.c srcs/parsing/ft_isspace.c \
+				srcs/parsing/tokenize.c srcs/parsing/extract_quoted_string.c \
+				srcs/parsing/extract_word.c
 HEADERS = inc/minishell.h
 
 OBJS_DIR = objects/

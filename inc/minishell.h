@@ -55,11 +55,17 @@ typedef struct s_data
 	char	*envp[100];
 }	t_data;
 
+t_token	*tokenize(char *input, t_data *data);
+
+char	*extract_quoted_string(char *str);
+
+char	*extract_word(char *str);
+
 void	add_token(t_token **tokens, char *value, t_token_type type);
 
 int		ft_isspace(char c);
 
-void	loop(t_data *data);
+void	loop(t_data *data, t_token *token);
 
 int		make_env(t_data *data, char **envp);
 

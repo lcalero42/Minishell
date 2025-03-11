@@ -20,16 +20,16 @@ char	*extract_word(char *str)
 	
 	i = 0;
 	size = 0;
-	while (ft_isspace(str[size]))
+	while (!ft_isspace(str[size]) && str[size])
 		size++;
 	rslt = malloc(sizeof(char) * (size + 1));
 	if (!rslt)
 		return (NULL);
-	while (str[i])
+	while (!ft_isspace(str[i]) && str[i])
 	{
-		rslt[i] = rslt[i];
+		rslt[i] = str[i];
 		i++;
 	}
-	rslt[i] == '\0';
+	rslt[i] = '\0';
 	return (rslt);
 }

@@ -16,6 +16,7 @@ t_token	*tokenize(char *input, t_data *data)
 {
 	t_token	*tokens;
 	int	i;
+	char *word;
 
 	tokens = NULL;
 	i = 0;
@@ -23,7 +24,7 @@ t_token	*tokenize(char *input, t_data *data)
 	while (input[i])
 	{
 		if (input[i] == '|')
-			add_token(&tokens, '|', PIPE);
+			add_token(&tokens, "|", PIPE);
 		else if (input[i] == '<' && input[i + 1] == '<')
 		{
 			add_token(&tokens, "<<", HEREDOC);
@@ -39,11 +40,20 @@ t_token	*tokenize(char *input, t_data *data)
 		else if (input[i] == '>')
 			add_token(&tokens, ">", REDIR_OUT);
 		else if (input[i] == '$')
-			add_token(&tokens, ft_getenv(data, extract_word(input[i] + i)), ENV_VAR);
+			add_token(&tokens, ft_getenv(data, extract_word(input + i)), ENV_VAR);
 		else if (input[i] == '\'' || input[i] == '"')
-			add_token(&tokens, extract_quoted_string(input + i), QUOTE);
+		{
+			word = extract_quoted_string(input + i);
+			add_token(&tokens, word, QUOTE);
+			i += ft_strlen(word) + 2;
+		}
 		else if (!ft_isspace(input[i]))
-			add_token(&tokens, extract_word(input[i] + i), WORD);
+		{
+			word = extract_word(input + i);
+			add_token(&tokens, word, WORD);
+			i += ft_strlen(word);
+			continue;
+		}
 		i++;
 	}
 	return (tokens);

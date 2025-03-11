@@ -15,13 +15,14 @@
 int	main(int ac, char **av, char **envp)
 {
 	t_data	data;
-
-	(void)ac;
+	t_token tokens;
 	(void)av;
+	(void)ac;
 	setup_signal();
 	print_welcome();
 	ft_bzero(&data, sizeof(data));
+	ft_bzero(&tokens, sizeof(tokens));
 	make_env(&data, envp);
-	loop(&data);
+	loop(&data, &tokens);
 	return (0);
 }

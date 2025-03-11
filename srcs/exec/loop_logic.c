@@ -14,17 +14,23 @@
 
 static int	handle_exit(char *line);
 
-void	loop(t_data *data)
+void	loop(t_data *data, t_token *token)
 {
 	char	*line;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
-		pars_input(data, line);
+		token = tokenize(line, data);
 		if (!handle_exit(line))
 			break ;
-		handle_commands(data);
+		while (token)  // Parcours toute la liste, y compris le dernier élément
+		{
+			printf("value : %s\n", token->value);
+			printf("type : %d\n", token->type);
+			token = token->next;
+		}	
+		// handle_commands(data);
 		if (*line)
 			add_history(line);
 		free(line);
