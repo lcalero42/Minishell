@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:26 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:10:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 static int	handle_exit(char *line);
 
-void	loop(t_data *data, t_token *token)
+void	loop(t_data *data)
 {
 	char	*line;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
-		token = tokenize(line, data);
+		data->tokens = tokenize(line, data);
 		if (!handle_exit(line))
 			break ;
-		while (token)  // Parcours toute la liste, y compris le dernier élément
+		while (data->tokens)
 		{
-			printf("value : %s\n", token->value);
-			printf("type : %d\n", token->type);
-			token = token->next;
-		}	
+			printf("value : %s\n", data->tokens->value);
+			printf("type : %d\n", data->tokens->type);
+			data->tokens = data->tokens->next;
+		}
 		// handle_commands(data);
 		if (*line)
 			add_history(line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:09:33 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/10 18:12:45 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:11:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*extract_word(char *str)
 	int		i;
 	int		size;
 	char	*rslt;
-	
+
 	i = 0;
 	size = 0;
 	while (!ft_isspace(str[size]) && str[size])

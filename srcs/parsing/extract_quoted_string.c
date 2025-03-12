@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_quoted_string.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:30:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/10 18:12:57 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:13:07 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*extract_quoted_string(char *str)
 	int		i;
 	int		size;
 	char	quote;
-	
+
 	if (!str || (str[0] != '\'' && str[0] != '"'))
 		return (NULL);
 	quote = str[0];
@@ -37,5 +37,5 @@ char	*extract_quoted_string(char *str)
 		i++;
 	}
 	rslt[i] = '\0';
-	return (rslt);	
+	return (rslt);
 }

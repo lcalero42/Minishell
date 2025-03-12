@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/10 18:21:11 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:10:55 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 {
 	char	**cmd;
 	char	*envp[100];
+	t_token	*tokens;
 }	t_data;
 
 t_token	*tokenize(char *input, t_data *data);
@@ -65,7 +66,7 @@ void	add_token(t_token **tokens, char *value, t_token_type type);
 
 int		ft_isspace(char c);
 
-void	loop(t_data *data, t_token *token);
+void	loop(t_data *data);
 
 int		make_env(t_data *data, char **envp);
 
