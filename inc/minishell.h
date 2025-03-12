@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/12 14:10:55 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:26:50 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	ft_free(char **cmd);
 
 void	ft_free_env(t_data *data);
 
-void	pars_input(t_data *data, char *input);
-
 void	print_welcome(void);
 
 void	setup_signal(void);
@@ -101,8 +99,6 @@ char	*expand_variable(char *input, t_data *data);
 char	*ft_getenv(t_data *data, char *s);
 
 char	*ft_strncpy(char *destination, const char *source, size_t length);
-
-char	**split_token(const char *str);
 
 void	exec_cmd(char *cmd, char **args, char **envp);
 
