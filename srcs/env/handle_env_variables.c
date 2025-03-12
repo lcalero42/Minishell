@@ -6,11 +6,11 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:57:52 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/25 16:20:39 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:17:40 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 int	make_env(t_data *data, char **envp)
 {

@@ -6,11 +6,11 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:16:02 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/02/25 16:46:54 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:16:54 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 static int		is_space_or_operator(char c);
 static void		add_t(char **tokens, int *i, const char *start,
@@ -70,6 +70,8 @@ static int	is_space_or_operator(char c)
 {
 	if (c == ' ' || c == '|' || c == '<' || c == '>')
 		return (1);
+	if (c == '\\' || c == ';')
+		return (2);
 	return (0);
 }
 
@@ -87,6 +89,12 @@ static void	process_t(const char **str, const char **start, char **t, int *i)
 		(*str)++;
 		while (**str && **str != quote_type)
 			(*str)++;
+	}
+	else if (is_space_or_operator(**str) == 2)
+	{
+		(*str)++;
+		if (!**str)
+			return ;
 	}
 	else if (!is_space_or_operator(**str))
 	{

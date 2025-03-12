@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 12:06:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:46 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/10 15:31:58 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/03/10 15:35:29 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 200809L
 #include "minishell.h"
 
-void	sig_handler(int sig);
-
-void	setup_signal(void)
+void	add_token(t_token **tokens, char *value, t_token_type type)
 {
-	struct sigaction	sa;
-
-	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-	sa.sa_handler = sig_handler;
-	sigaction(SIGINT, &sa, NULL);
-}
-
-void	sig_handler(int sig)
-{
-	if (sig == SIGINT)
+	t_token *new;
+	t_token	*tmp;
+	
+	new = malloc(sizeof(t_token));
+	if (!new)
+		return ;
+	new->value = ft_strdup(value);
+	new->type = type;
+	new->next = NULL;
+	if (!*tokens)
 	{
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		*tokens = new;
+		return ;
 	}
+	tmp = *tokens;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
 }

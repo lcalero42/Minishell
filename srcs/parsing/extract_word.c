@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*   extract_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 12:06:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:46 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/10 18:09:33 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/03/10 18:12:45 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 200809L
 #include "minishell.h"
 
-void	sig_handler(int sig);
-
-void	setup_signal(void)
+char	*extract_word(char *str)
 {
-	struct sigaction	sa;
-
-	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-	sa.sa_handler = sig_handler;
-	sigaction(SIGINT, &sa, NULL);
-}
-
-void	sig_handler(int sig)
-{
-	if (sig == SIGINT)
+	int		i;
+	int		size;
+	char	*rslt;
+	
+	i = 0;
+	size = 0;
+	while (!ft_isspace(str[size]) && str[size])
+		size++;
+	rslt = malloc(sizeof(char) * (size + 1));
+	if (!rslt)
+		return (NULL);
+	while (!ft_isspace(str[i]) && str[i])
 	{
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		rslt[i] = str[i];
+		i++;
 	}
+	rslt[i] = '\0';
+	return (rslt);
 }

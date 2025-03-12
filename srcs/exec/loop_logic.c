@@ -3,28 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 13:55:25 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/10 15:17:26 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 static int	handle_exit(char *line);
 
-void	loop(t_data *data)
+void	loop(t_data *data, t_token *token)
 {
 	char	*line;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
-		pars_input(data, line);
+		token = tokenize(line, data);
 		if (!handle_exit(line))
 			break ;
-		handle_commands(data);
+		while (token)  // Parcours toute la liste, y compris le dernier élément
+		{
+			printf("value : %s\n", token->value);
+			printf("type : %d\n", token->type);
+			token = token->next;
+		}	
+		// handle_commands(data);
 		if (*line)
 			add_history(line);
 		free(line);
@@ -40,8 +46,6 @@ void	loop(t_data *data)
 static int	handle_exit(char *line)
 {
 	if (!line)
-		return (0);
-	if (!ft_strncmp("exit", line, 4))
 		return (0);
 	return (1);
 }
