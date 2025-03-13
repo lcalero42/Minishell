@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/12 15:47:16 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:29:00 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,87 @@
 
 static int	handle_exit(char *line);
 
+void	print_tab(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		printf("%s\n", s[i]);
+		i++;
+	}
+}
+
 void	loop(t_data *data)
 {
-	char	*line;
+	char		*line;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
 		data->tokens = tokenize(line, data);
+		data->commands = parse_commands(data->tokens);
 		if (!handle_exit(line))
 			break ;
-		// while (data->tokens)
+		// while (commands)
 		// {
-		// 	printf("value : %s\n", data->tokens->value);
-		// 	printf("type : %d\n", data->tokens->type);
-		// 	data->tokens = data->tokens->next;
+		// 	// Print command info
+		// 	printf("\n===== COMMAND INFO =====\n");
+		// 	printf("Command: '%s'\n", commands->command);
+			
+		// 	// Print arguments
+		// 	printf("Arguments:\n");
+		// 	if (commands->args)
+		// 	{
+		// 		int i = 0;
+		// 		while (commands->args[i])
+		// 		{
+		// 			printf("  arg[%d]: '%s'\n", i, commands->args[i]);
+		// 			i++;
+		// 		}
+		// 	}
+		// 	else
+		// 		printf("  No arguments\n");
+			
+		// 	// Print redirections
+		// 	printf("Redirections:\n");
+		// 	if (commands->redirections)
+		// 	{
+		// 		t_redirection *redir = commands->redirections;
+		// 		int redir_count = 0;
+				
+		// 		while (redir)
+		// 		{
+		// 			printf("  [%d] ", redir_count++);
+					
+		// 			// Print redirection type
+		// 			switch (redir->type)
+		// 			{
+		// 				case REDIR_INPUT:
+		// 					printf("Type: INPUT (<)");
+		// 					break;
+		// 				case REDIR_OUTPUT:
+		// 					printf("Type: OUTPUT (>)");
+		// 					break;
+		// 				case REDIR_APPEND_OUT:
+		// 					printf("Type: APPEND (>>)");
+		// 					break;
+		// 				case REDIR_HEREDOC:
+		// 					printf("Type: HEREDOC (<<)");
+		// 					break;
+		// 				default:
+		// 					printf("Type: UNKNOWN");
+		// 			}
+					
+		// 			printf(", File: '%s'\n", redir->file);
+		// 			redir = redir->next;
+		// 		}
+		// 	}
+		// 	else
+		// 		printf("  No redirections\n");
+		// 	printf("=======================\n");
+		// 	commands = commands->next;
 		// }
 		handle_commands(data);
 		if (*line)

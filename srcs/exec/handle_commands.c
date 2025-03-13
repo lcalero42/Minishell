@@ -6,41 +6,39 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/12 17:01:45 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:28:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	handle_unknown_command(t_data *data);
-
 void	handle_commands(t_data *data)
 {
-	t_token	*tmp;
+	t_command	*tmp;
 
-	tmp = data->tokens;
+	tmp = data->commands;
 	while (tmp)
 	{
-		if (!data->tokens->value)
+		if (!tmp->command)
 			return ;
-		else if (!ft_strncmp("pwd", tmp->value, INT_MAX))
+		else if (!ft_strncmp("pwd", tmp->command, INT_MAX))
 			pwd();
-		else if (!ft_strncmp("cd", tmp->value, INT_MAX))
-			cd(tmp->value, data);
-		else if (!ft_strncmp("echo", tmp->value, INT_MAX))
+		else if (!ft_strncmp("cd", tmp->command, INT_MAX))
+			cd(tmp->args[0], data);
+		else if (!ft_strncmp("echo", tmp->command, INT_MAX))
 			echo(data);
-		else if (!ft_strncmp("env", tmp->value, INT_MAX))
+		else if (!ft_strncmp("env", tmp->command, INT_MAX))
 			env(data->envp);
-		else if (!ft_strncmp("unset", tmp->value, INT_MAX))
-			unset(tmp->value, data->envp);
-		else if (!ft_strncmp("export", tmp->value, INT_MAX))
+		else if (!ft_strncmp("unset", tmp->command, INT_MAX))
+			unset(tmp->args[0], data->envp);
+		else if (!ft_strncmp("export", tmp->command, INT_MAX))
 			export(data);
-		else if (!ft_strncmp("exit", tmp->value, INT_MAX))
+		else if (!ft_strncmp("exit", tmp->command, INT_MAX))
 			ft_exit(data);
-		else if ((tmp->value[0] == '/' || tmp->value[0] == '.'))
+		else if ((tmp->command[0] == '/' || tmp->command[0] == '.'))
 			exec_cmd(data->cmd[0], data->cmd, data->envp);
 		else
-			handle_unknown_command(tmp->value);
+			handle_unknown_command(tmp->command);
 		tmp = tmp->next;
 	}
 	return ;
