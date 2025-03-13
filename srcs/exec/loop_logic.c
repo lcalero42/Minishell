@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/13 18:29:00 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:54:08 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,23 @@ void	print_tab(char **s)
 void	loop(t_data *data)
 {
 	char		*line;
-
+	t_command	*commands;
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
 		data->tokens = tokenize(line, data);
 		data->commands = parse_commands(data->tokens);
+		commands = data->commands;
 		if (!handle_exit(line))
 			break ;
+		// printf("\n===== TOKENS =====\n");
+		// 	t_token *temp = data->tokens;
+		// 	while (temp)
+		// 	{
+		// 		printf("Token type: %d, Value: '%s'\n", temp->type, temp->value);
+		// 		temp = temp->next;
+		// 	}
+		// printf("=================\n");
 		// while (commands)
 		// {
 		// 	// Print command info

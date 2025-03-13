@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/13 18:23:44 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:35:59 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 static void	add_redirection(t_command *cmd, char *file, t_redir_type type);
 
-t_command *parse_commands(t_token *token_list)
+t_command	*parse_commands(t_token *token_list)
 {
-	t_command *cmd_list;
-	t_command *current_cmd;
-	t_token *token;
-	
+	t_command		*cmd_list;
+	t_command		*current_cmd;
+	t_token			*token;
+	t_command		*new_cmd;
+	t_redir_type	type;
+
 	cmd_list = NULL;
 	current_cmd = NULL;
+	new_cmd = NULL;
 	token = token_list;
 	while (token)
 	{
@@ -29,7 +32,7 @@ t_command *parse_commands(t_token *token_list)
 			current_cmd = NULL;
 		else if (token->type == WORD && !current_cmd)
 		{
-			t_command *new_cmd = init_command();
+			new_cmd = init_command();
 			if (!new_cmd)
 				return (free_commands(cmd_list), NULL);
 			if (!cmd_list)
@@ -41,13 +44,12 @@ t_command *parse_commands(t_token *token_list)
 		}
 		else if (token->type == WORD && current_cmd && current_cmd->command)
 			add_argument(current_cmd, token->value);
-		else if ((token->type == REDIR_IN || token->type == REDIR_OUT || 
-				token->type == REDIR_APPEND || token->type == HEREDOC) && 
-				token->next && token->next->type == WORD)
+		else if ((token->type == REDIR_IN || token->type == REDIR_OUT
+				|| token->type == REDIR_APPEND || token->type == HEREDOC)
+			&& token->next && token->next->type == WORD)
 		{
 			if (current_cmd)
 			{
-				t_redir_type type;
 				if (token->type == REDIR_IN)
 					type = REDIR_INPUT;
 				else if (token->type == REDIR_OUT)
@@ -69,7 +71,7 @@ static void	add_redirection(t_command *cmd, char *file, t_redir_type type)
 {
 	t_redirection	*new_redir;
 	t_redirection	*last;
-	
+
 	new_redir = malloc(sizeof(t_redirection));
 	if (!new_redir)
 		return ;
