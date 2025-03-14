@@ -1,44 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_free_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 15:21:31 by luis              #+#    #+#             */
-/*   Updated: 2025/03/13 16:35:46 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/12 16:11:31 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/03/13 16:20:00 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_numeric(char *s);
-
-void	ft_exit(t_data *data)
+void	ft_free_tokens(t_token *tokens)
 {
-	int	exit_code;
-
-	exit_code = 0;
-	if (data->cmd[1])
+	while (tokens)
 	{
-		if (!is_numeric(data->cmd[1]))
-			exit_code = 2;
-		else
-			exit_code = ft_atoi(data->cmd[1]) % 256;
+		if (tokens->value)
+			free(tokens->value);
+		tokens = tokens->next;
 	}
-	ft_putstr_fd("exit\n", 1);
-	exit(exit_code);
-}
-
-static int	is_numeric(char *s)
-{
-	if (!s || !*s)
-		return (0);
-	while (*s)
-	{
-		if (!ft_isdigit(*s))
-			return (0);
-		s++;
-	}
-	return (1);
+	free(tokens);
 }

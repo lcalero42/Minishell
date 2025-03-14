@@ -34,7 +34,8 @@ SRCS = srcs/main.c \
 	   srcs/exec/handle_commands.c \
        srcs/exec/loop_logic.c \
 	   srcs/exec_executable/find_executable.c \
-	   srcs/parsing/ft_free.c
+	   srcs/parsing/ft_free.c \
+	   srcs/parsing/ft_free_tokens.c
 
 HEADERS = inc/minishell.h
 
