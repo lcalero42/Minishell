@@ -6,11 +6,13 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/13 18:28:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:50:17 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	find_command(t_command *command, t_data *data);
 
 void	handle_commands(t_data *data)
 {
@@ -19,29 +21,33 @@ void	handle_commands(t_data *data)
 	tmp = data->commands;
 	while (tmp)
 	{
-		if (!tmp->command)
-			return ;
-		else if (!ft_strncmp("pwd", tmp->command, INT_MAX))
-			pwd();
-		else if (!ft_strncmp("cd", tmp->command, INT_MAX))
-			cd(tmp->args[0], data);
-		else if (!ft_strncmp("echo", tmp->command, INT_MAX))
-			echo(data);
-		else if (!ft_strncmp("env", tmp->command, INT_MAX))
-			env(data->envp);
-		else if (!ft_strncmp("unset", tmp->command, INT_MAX))
-			unset(tmp->args[0], data->envp);
-		else if (!ft_strncmp("export", tmp->command, INT_MAX))
-			export(data);
-		else if (!ft_strncmp("exit", tmp->command, INT_MAX))
-			ft_exit(data);
-		else if ((tmp->command[0] == '/' || tmp->command[0] == '.'))
-			exec_cmd(data->cmd[0], data->cmd, data->envp);
-		else
-			handle_unknown_command(tmp->command);
+		find_command(tmp, data);
 		tmp = tmp->next;
 	}
-	return ;
+}
+
+static void	find_command(t_command *command, t_data *data)
+{
+	if (!command->command)
+		return ;
+	else if (!ft_strncmp("pwd", command->command, INT_MAX))
+		pwd();
+	else if (!ft_strncmp("cd", command->command, INT_MAX))
+		cd(command->args[0], data);
+	else if (!ft_strncmp("echo", command->command, INT_MAX))
+		echo(data);
+	else if (!ft_strncmp("env", command->command, INT_MAX))
+		env(data->envp);
+	else if (!ft_strncmp("unset", command->command, INT_MAX))
+		unset(command->args[0], data->envp);
+	else if (!ft_strncmp("export", command->command, INT_MAX))
+		export(data);
+	else if (!ft_strncmp("exit", command->command, INT_MAX))
+		ft_exit(data);
+	else if ((command->command[0] == '/' || command->command[0] == '.'))
+		exec_cmd(data->cmd[0], data->cmd, data->envp);
+	else
+		handle_unknown_command(command->command);
 }
 
 void	handle_unknown_command(char *cmd)

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/13 18:24:38 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:32:23 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <signal.h>
 # include <limits.h>
 
-#define MAX_ARGS 64
+# define MAX_ARGS 64
 
 typedef enum e_token_type
 {
@@ -49,25 +49,25 @@ typedef enum e_redir_type
 	REDIR_OUTPUT,
 	REDIR_APPEND_OUT,
 	REDIR_HEREDOC
-} t_redir_type;
+}	t_redir_type;
 
 typedef struct s_redirection
 {
-	char *file;
-	t_redir_type type;
-	struct s_redirection *next;
-} t_redirection;
+	char					*file;
+	t_redir_type			type;
+	struct s_redirection	*next;
+}	t_redirection;
 
 typedef struct s_command
 {
-	char 				*command;
-	char 				**args;
+	char				*command;
+	char				**args;
 	char				*infile;
 	char				*outfile;
 	int					append;
-	t_redirection 		*redirections;
-	struct s_command 	*next;
-} t_command;
+	t_redirection		*redirections;
+	struct s_command	*next;
+}	t_command;
 
 typedef struct s_data
 {
@@ -87,13 +87,15 @@ void		add_token(t_token **tokens, char *value, t_token_type type);
 
 int			ft_isspace(char c);
 
-t_command 	*parse_commands(t_token *token_list);
+t_command	*parse_commands(t_token *token_list);
 
-t_command 	*init_command(void);
+t_command	*init_command(void);
 
 void		add_command(t_command **cmd_list, t_command *new_cmd);
 
 void		add_argument(t_command *cmd, char *arg);
+
+void		add_redirection(t_command *cmd, char *file, t_redir_type type);
 
 void		free_commands(t_command *cmd_list);
 
