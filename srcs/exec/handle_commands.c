@@ -6,27 +6,30 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 15:50:17 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/14 16:47:11 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	find_command(t_command *command, t_data *data);
+static void	find_command(t_command *command, t_data *data, int *is_known);
+static void	lst_update_command(t_data *data, int is_known);
 
 void	handle_commands(t_data *data)
 {
 	t_command	*tmp;
+	int			is_known_cmd;
 
 	tmp = data->commands;
+	is_known_cmd = 1;
 	while (tmp)
 	{
-		find_command(tmp, data);
+		find_command(tmp, data, &is_known_cmd);
 		tmp = tmp->next;
 	}
 }
 
-static void	find_command(t_command *command, t_data *data)
+static void	find_command(t_command *command, t_data *data, int *is_known)
 {
 	if (!command->command)
 		return ;
@@ -44,10 +47,12 @@ static void	find_command(t_command *command, t_data *data)
 		export(data);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(data);
-	else if ((command->command[0] == '/' || command->command[0] == '.'))
-		exec_cmd(data->cmd[0], data->cmd, data->envp);
 	else
+	{
+		*is_known = 0;
 		handle_unknown_command(command->command);
+	}
+	lst_update_command(data, *is_known);
 }
 
 void	handle_unknown_command(char *cmd)
@@ -56,4 +61,10 @@ void	handle_unknown_command(char *cmd)
 	ft_putstr_fd(": command not found", 2);
 	ft_putchar_fd('\n', 2);
 	return ;
+}
+
+static void	lst_update_command(t_data *data, int is_known)
+{
+	if (is_known)
+		data->commands = data->commands->next;
 }

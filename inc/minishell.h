@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 15:32:23 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/14 16:22:15 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_command
 
 typedef struct s_data
 {
-	char		**cmd;
 	char		*envp[100];
 	t_token		*tokens;
 	t_command	*commands;

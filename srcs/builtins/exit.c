@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:21:31 by luis              #+#    #+#             */
-/*   Updated: 2025/03/10 15:18:12 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:27:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	ft_exit(t_data *data)
 	int	exit_code;
 
 	exit_code = 0;
-	if (data->cmd[1])
+	if (data->commands->args[0])
 	{
-		if (!is_numeric(data->cmd[1]))
+		if (!is_numeric(data->commands->args[0]))
 			exit_code = 2;
 		else
-			exit_code = ft_atoi(data->cmd[1]) % 256;
+			exit_code = ft_atoi(data->commands->args[0]) % 256;
 	}
 	ft_putstr_fd("exit\n", 1);
 	exit(exit_code);

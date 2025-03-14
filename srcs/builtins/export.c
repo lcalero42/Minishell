@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/10 15:18:05 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:26:43 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ void	export(t_data *data)
 	int		count;
 
 	i = 1;
-	j = 1;
+	j = 0;
 	count = 0;
-	while (data->cmd[count])
+	while (data->commands->args[count])
 		count++;
 	while (j < count)
 	{
 		if (!data->envp[i])
 		{
-			data->envp[i] = ft_strdup(data->cmd[j]);
+			data->envp[i] = ft_strdup(data->commands->args[j]);
 			j++;
 		}
-		else if (check_var_name(data->cmd[j], data->envp[i]))
+		else if (check_var_name(data->commands->args[j], data->envp[i]))
 		{
 			free(data->envp[i]);
-			data->envp[i] = ft_strdup(data->cmd[j]);
+			data->envp[i] = ft_strdup(data->commands->args[j]);
 			j++;
 		}
 		i++;
