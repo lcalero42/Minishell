@@ -6,25 +6,13 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 16:28:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/14 17:04:54 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	handle_exit(char *line);
-
-void	print_tab(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		printf("%s\n", s[i]);
-		i++;
-	}
-}
 
 void	loop(t_data *data)
 {
@@ -36,7 +24,10 @@ void	loop(t_data *data)
 		data->tokens = tokenize(line, data);
 		data->commands = parse_commands(data->tokens);
 		if (!handle_exit(line))
+		{
+			ft_putstr_fd("exit\n", 1);
 			break ;
+		}
 		handle_commands(data);
 		if (*line)
 			add_history(line);

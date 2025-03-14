@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:15:06 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/12 15:18:49 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/14 16:49:39 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ t_token	*tokenize(char *input, t_data *data)
 {
 	t_token	*tokens;
 	int		i;
-
+	
+	if (!input)
+		return (NULL);
 	tokens = NULL;
 	i = 0;
 	while (input[i])
