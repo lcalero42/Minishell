@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 17:04:54 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:52:44 by luis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ static int	handle_exit(char *line);
 void	loop(t_data *data)
 {
 	char		*line;
+	t_command	*first_cmd;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
 		data->tokens = tokenize(line, data);
 		data->commands = parse_commands(data->tokens);
+		first_cmd = data->commands;
 		if (!handle_exit(line))
 		{
 			ft_putstr_fd("exit\n", 1);
@@ -32,8 +34,11 @@ void	loop(t_data *data)
 		if (*line)
 			add_history(line);
 		free(line);
-		free_commands(data->commands);
+		free_commands(first_cmd);
+		free_tokens(data->tokens);
 	}
+	free_commands(first_cmd);
+	free_tokens(data->tokens);
 	free(line);
 	ft_free_env(data);
 	rl_clear_history();

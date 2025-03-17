@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 15:11:55 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:39:18 by luis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,17 @@ static void	handle_word_token(t_token *token, t_command **cmd_list,
 	new_cmd = init_command();
 	if (!new_cmd)
 		return ;
+	new_cmd->command = ft_strdup(token->value);
+	if (!new_cmd->command)
+	{
+		free_commands(new_cmd);
+		return ;
+	}
 	if (!(*cmd_list))
 		*cmd_list = new_cmd;
 	else
 		add_command(cmd_list, new_cmd);
 	*current_cmd = new_cmd;
-	(*current_cmd)->command = ft_strdup(token->value);
 }
 
 static int	should_handle_redirection(t_token *token, t_command *cmd)

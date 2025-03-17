@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 16:22:15 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:22:44 by luis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,11 @@ void		add_argument(t_command *cmd, char *arg);
 
 void		add_redirection(t_command *cmd, char *file, t_redir_type type);
 
+void		free_tokens(t_token *tokens);
+
 void		free_commands(t_command *cmd_list);
+
+void		free_redirections(t_redirection *redir);
 
 void		loop(t_data *data);
 

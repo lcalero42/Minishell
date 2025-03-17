@@ -24,6 +24,7 @@ SRCS = srcs/main.c \
 	   srcs/parsing/ft_free.c \
 	   srcs/parsing/cmd_utils.c \
 	   srcs/parsing/parse_commands.c \
+	   srcs/parsing/free_redirections.c \
 	   srcs/builtins/cd.c \
        srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \

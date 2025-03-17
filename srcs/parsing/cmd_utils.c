@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:41 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 15:53:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/17 16:23:09 by luis             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	free_commands(t_command *cmd_list)
 			free(current->infile);
 		if (current->outfile)
 			free(current->outfile);
+		if (current->redirections)
+			free_redirections(current->redirections);
 		free(current);
 		current = next;
 	}
