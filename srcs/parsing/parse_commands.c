@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/17 16:39:18 by luis             ###   ########.fr       */
+/*   Updated: 2025/03/18 17:58:55 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,22 @@ t_command	*parse_commands(t_token *token_list)
 	{
 		if (token->type == PIPE)
 			current_cmd = NULL;
-		else if (token->type == WORD && !current_cmd)
+		else if (token->type == WORD && (!current_cmd || !current_cmd->command))
 			handle_word_token(token, &cmd_list, &current_cmd);
 		else if (is_text_token(token->type) && current_cmd
 			&& current_cmd->command)
 			add_argument(current_cmd, token->value);
 		else if (should_handle_redirection(token, current_cmd))
 		{
+			if (!current_cmd)
+			{
+				t_command *new_cmd = init_command();
+				if (!cmd_list)
+					cmd_list = new_cmd;
+				else
+					add_command(&cmd_list, new_cmd);
+				current_cmd = new_cmd;
+			}
 			handle_redirections(token, current_cmd);
 			token = token->next;
 		}
@@ -66,6 +75,11 @@ static void	handle_word_token(t_token *token, t_command **cmd_list,
 {
 	t_command	*new_cmd;
 
+	if (*current_cmd && !(*current_cmd)->command)
+	{
+		(*current_cmd)->command = ft_strdup(token->value);
+		return ;
+	}
 	new_cmd = init_command();
 	if (!new_cmd)
 		return ;
@@ -84,9 +98,10 @@ static void	handle_word_token(t_token *token, t_command **cmd_list,
 
 static int	should_handle_redirection(t_token *token, t_command *cmd)
 {
+	(void)cmd;
 	return ((token->type == REDIR_IN || token->type == REDIR_OUT
 			|| token->type == REDIR_APPEND || token->type == HEREDOC)
-		&& token->next && token->next->type == WORD && cmd);
+		&& token->next && token->next->type == WORD);
 }
 
 static int	is_text_token(t_token_type type)

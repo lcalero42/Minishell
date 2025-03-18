@@ -54,6 +54,10 @@ dkms.conf
 #debug
 readline.supp
 
+#debug
+debug_func.c
+readline.supp
+
 #objects
 objects
 
