@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 14:06:37 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:13:32 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_data
 	char		*envp[100];
 	t_token		*tokens;
 	t_command	*commands;
+	int			exit_status;
 }	t_data;
 
 t_token		*tokenize(char *input, t_data *data);
@@ -118,7 +119,7 @@ void		pwd(void);
 
 void		echo(t_data *data);
 
-void		env(char **env);
+void		env(char **env, t_data *data);
 
 void		unset(char *var, char **envp);
 
@@ -136,8 +137,8 @@ char		*ft_getenv(t_data *data, char *s);
 
 char		*ft_strncpy(char *destination, const char *source, size_t length);
 
-void		exec_cmd(char *cmd, char **args, char **envp);
+void		exec_cmd(t_data *data);
 
-void		handle_unknown_command(char *cmd);
+void		handle_unknown_command(char *cmd, t_data *data);
 
 #endif

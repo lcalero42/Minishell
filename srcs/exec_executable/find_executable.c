@@ -6,65 +6,75 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/18 15:07:55 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:45:26 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/wait.h>
 
-char	*find_executable(char *cmd)
-{
-	char	*path;
-	char	**paths;
-	char	*full_path;
-	int		i;
+static char	**join_cmd_args(t_data *data);
+static int	count_args(char **args);
 
-	i = 0;
-	path = getenv("PATH");
-	if (!path)
-		return (NULL);
-	paths = ft_split(path, ':');
-	if (!paths)
-		return (NULL);
-	while (paths[i++])
-	{
-		full_path = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin(full_path, cmd);
-		if (access(full_path, X_OK) == 0)
-		{
-			ft_free(paths);
-			return (full_path);
-		}
-		free(full_path);
-	}
-	ft_free(paths);
-	return (NULL);
-}
-
-void	exec_cmd(char *cmd, char **args, char **envp)
+void	exec_cmd(t_data *data)
 {
 	char	*executable;
 	pid_t	pid;
 	int		status;
-
+	char	**exec_args;
+	
 	pid = fork();
 	executable = NULL;
-	if (cmd[0] == '/' || cmd[0] == '.')
-		executable = cmd;
+	status = 0;
+	if (data->commands->command[0] == '/' || data->commands->command[0] == '.')
+		executable = data->commands->command;
+	exec_args = join_cmd_args(data);
 	if (pid < 0)
 	{
 		perror("fork");
+		data->exit_status = 1;
 		return ;
 	}
 	else if (pid == 0)
 	{
 		if (executable)
-			execve(executable, args, envp);
-		handle_unknown_command(cmd);
+			execve(executable, exec_args, data->envp);
+		handle_unknown_command(data->commands->command, data);
 		exit(127);
 	}
-	else
-		waitpid(pid, &status, 0);
-	return ;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+    	data->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+   		data->exit_status = 128 + WTERMSIG(status);
+	ft_free(exec_args);
+	 return ;
+}
+
+static char	**join_cmd_args(t_data *data)
+{
+	char **exec_args;
+	
+	exec_args = malloc(sizeof(char *) * (count_args(data->commands->args) + 2));
+	if (!exec_args)
+		return (NULL);
+    exec_args[0] = ft_strdup(data->commands->command);
+    int i = 0;
+    while (data->commands->args[i])
+    {
+        exec_args[i + 1] = ft_strdup(data->commands->args[i]);
+        i++;
+    }
+    exec_args[i + 1] = NULL;
+	return (exec_args);
+}
+
+static int	count_args(char **args)
+{
+	int	i;
+	
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
 }

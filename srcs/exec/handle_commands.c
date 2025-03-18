@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 15:06:05 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:13:41 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 	else if (!ft_strncmp("echo", command->command, INT_MAX))
 		echo(data);
 	else if (!ft_strncmp("env", command->command, INT_MAX))
-		env(data->envp);
+		env(data->envp, data);
 	else if (!ft_strncmp("unset", command->command, INT_MAX))
 		unset(command->args[0], data->envp);
 	else if (!ft_strncmp("export", command->command, INT_MAX))
@@ -48,20 +48,21 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(data);
 	else if (command->command[0] == '/' || command->command[0] == '.')
-		exec_cmd(command->command, command->args, data->envp);
+		exec_cmd(data);
 	else
 	{
 		*is_known = 0;
-		handle_unknown_command(command->command);
+		handle_unknown_command(command->command, data);
 	}
 	lst_update_command(data, *is_known);
 }
 
-void	handle_unknown_command(char *cmd)
+void	handle_unknown_command(char *cmd, t_data *data)
 {
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found", 2);
 	ft_putchar_fd('\n', 2);
+	data->exit_status = 127;
 	return ;
 }
 
