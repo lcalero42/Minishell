@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luis <luis@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:15:06 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/17 17:17:34 by luis             ###   ########.fr       */
+/*   Updated: 2025/03/18 14:28:11 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*tokenize(char *input, t_data *data)
 {
 	t_token	*tokens;
 	int		i;
-	
+
 	if (!input)
 		return (NULL);
 	tokens = NULL;
@@ -66,7 +66,7 @@ static int	handle_operators(t_token **tokens, char *input, int *i)
 static void	handle_words(t_token **tokens, t_data *data, char *input, int *i)
 {
 	char	*word;
-	
+
 	if (input[*i] == '$')
 	{
 		word = extract_word(input + *i + 1);
@@ -88,14 +88,14 @@ static void	handle_words(t_token **tokens, t_data *data, char *input, int *i)
 
 static void	add_word(char *input, int *i, t_token_type type, t_token **tokens)
 {
-	char *word;
+	char	*word;
 
 	word = input;
 	add_token(tokens, word, type);
 	if (type == WORD)
 		*i += ft_strlen(word) - 1;
-	else
-	*i += ft_strlen(word) + 2;
+	else if (type == QUOTE)
+		*i += ft_strlen(word) + 1;
 	free(word);
 }
 
@@ -103,7 +103,7 @@ void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 	t_token	*next;
-	
+
 	tmp = tokens;
 	while (tmp)
 	{
