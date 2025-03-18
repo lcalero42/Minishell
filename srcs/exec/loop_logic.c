@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 15:50:33 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:03:47 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ static int	handle_exit(char *line);
 
 void	loop(t_data *data)
 {
-	char	*line;
+	char		*line;
+	t_command	*first_cmd;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
 		data->tokens = tokenize(line, data);
+		data->commands = parse_commands(data->tokens);
+		first_cmd = data->commands;
 		if (!handle_exit(line))
+		{
+			ft_putstr_fd("exit\n", 1);
 			break ;
-		// while (data->tokens)
-		// {
-		// 	printf("value : %s\n", data->tokens->value);
-		// 	printf("type : %d\n", data->tokens->type);
-		// 	data->tokens = data->tokens->next;
-		// }
+		}
 		handle_commands(data);
 		if (*line)
 			add_history(line);
@@ -37,10 +37,10 @@ void	loop(t_data *data)
 		ft_free(data->cmd);
 		ft_free_tokens(data->tokens);
 	}
+	free_commands(first_cmd);
+	free_tokens(data->tokens);
 	free(line);
 	ft_free_env(data);
-	if (line)
-		ft_free(data->cmd);
 	rl_clear_history();
 }
 

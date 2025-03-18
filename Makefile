@@ -21,6 +21,10 @@ SRCS = srcs/main.c \
 	   srcs/parsing/tokenize.c \
 	   srcs/parsing/extract_quoted_string.c \
 	   srcs/parsing/extract_word.c \
+	   srcs/parsing/ft_free.c \
+	   srcs/parsing/cmd_utils.c \
+	   srcs/parsing/parse_commands.c \
+	   srcs/parsing/free_redirections.c \
 	   srcs/builtins/cd.c \
        srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
@@ -33,9 +37,7 @@ SRCS = srcs/main.c \
 	   srcs/exec/shell_launching.c \
 	   srcs/exec/handle_commands.c \
        srcs/exec/loop_logic.c \
-	   srcs/exec_executable/find_executable.c \
-	   srcs/parsing/ft_free.c \
-	   srcs/parsing/ft_free_tokens.c
+	   srcs/exec_executable/find_executable.c
 
 HEADERS = inc/minishell.h
 
