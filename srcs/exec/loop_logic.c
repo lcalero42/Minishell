@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 14:03:47 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:10:24 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	loop(t_data *data)
 		if (*line)
 			add_history(line);
 		free(line);
-		ft_free(data->cmd);
-		ft_free_tokens(data->tokens);
+		free_commands(first_cmd);
+		free_tokens(data->tokens);
 	}
 	free_commands(first_cmd);
 	free_tokens(data->tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 16:47:11 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/18 15:06:05 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 		export(data);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(data);
+	else if (command->command[0] == '/' || command->command[0] == '.')
+		exec_cmd(command->command, command->args, data->envp);
 	else
 	{
 		*is_known = 0;
