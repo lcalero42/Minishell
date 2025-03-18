@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:57:52 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 16:14:05 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:22:48 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ char	*ft_getenv(t_data *data, char *s)
 {
 	int	i;
 
-	if (!ft_strncmp(s, "?", ft_strlen(s)))
-		return (ft_itoa(data->exit_status));
 	i = 0;
 	while (data->envp[i])
 	{
