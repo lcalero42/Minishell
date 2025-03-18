@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/12 16:14:55 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:57:57 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,54 +56,45 @@ typedef struct s_data
 	t_token	*tokens;
 }	t_data;
 
+
+// parsing
+void	add_token(t_token **tokens, char *value, t_token_type type);
+char	*extract_word(char *str);
+char	*extract_quoted_string(char *str);
 t_token	*tokenize(char *input, t_data *data);
 
-void	ft_free_tokens(t_token *tokens);
-
-char	*extract_quoted_string(char *str);
-
-char	*extract_word(char *str);
-
-void	add_token(t_token **tokens, char *value, t_token_type type);
-
-int		ft_isspace(char c);
-
-void	loop(t_data *data);
-
-int		make_env(t_data *data, char **envp);
-
-void	ft_free(char **cmd);
-
-void	ft_free_env(t_data *data);
-
-void	print_welcome(void);
-
-void	setup_signal(void);
-
+// builtins
 void	pwd(void);
-
 void	echo(t_data *data);
-
 void	env(char **env);
-
 void	unset(char *var, char **envp);
-
-void	handle_commands(t_data *data);
-
 void	cd(char *s, t_data *data);
-
 void	export(t_data *data);
-
 void	ft_exit(t_data *data);
 
-char	*expand_variable(char *input, t_data *data);
-
+// env
 char	*ft_getenv(t_data *data, char *s);
+char	*expand_variable(char *input, t_data *data);
+int		make_env(t_data *data, char **envp);
 
+// signals
+void	setup_signal(void);
+
+// utils
+void	print_welcome(void);
 char	*ft_strncpy(char *destination, const char *source, size_t length);
-
+void	handle_commands(t_data *data);
 void	exec_cmd(char *cmd, char **args, char **envp);
-
 void	handle_unknown_command(char *cmd);
+int		ft_isspace(char c);
+
+// free utils
+void	ft_free(char **cmd);
+void	ft_free_env(t_data *data);
+void	ft_free_tokens(t_token *tokens);
+
+// main functiom
+void	loop(t_data *data);
+
 
 #endif

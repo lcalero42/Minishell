@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/13 18:48:18 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:50:33 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	loop(t_data *data)
 		data->tokens = tokenize(line, data);
 		if (!handle_exit(line))
 			break ;
-		while (data->tokens)
-		{
-			printf("value : %s\n", data->tokens->value);
-			printf("type : %d\n", data->tokens->type);
-			data->tokens = data->tokens->next;
-		}
-		// handle_commands(data);
+		// while (data->tokens)
+		// {
+		// 	printf("value : %s\n", data->tokens->value);
+		// 	printf("type : %d\n", data->tokens->type);
+		// 	data->tokens = data->tokens->next;
+		// }
+		handle_commands(data);
 		if (*line)
 			add_history(line);
 		free(line);
