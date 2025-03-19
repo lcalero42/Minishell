@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/18 17:45:26 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:12:01 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exec_cmd(t_data *data)
 	pid_t	pid;
 	int		status;
 	char	**exec_args;
-	
+
 	pid = fork();
 	executable = NULL;
 	status = 0;
@@ -44,35 +44,35 @@ void	exec_cmd(t_data *data)
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-    	data->exit_status = WEXITSTATUS(status);
+		data->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-   		data->exit_status = 128 + WTERMSIG(status);
+		data->exit_status = 128 + WTERMSIG(status);
 	ft_free(exec_args);
-	 return ;
 }
 
 static char	**join_cmd_args(t_data *data)
 {
-	char **exec_args;
-	
+	char	**exec_args;
+	int		i;
+
 	exec_args = malloc(sizeof(char *) * (count_args(data->commands->args) + 2));
 	if (!exec_args)
 		return (NULL);
-    exec_args[0] = ft_strdup(data->commands->command);
-    int i = 0;
-    while (data->commands->args[i])
-    {
-        exec_args[i + 1] = ft_strdup(data->commands->args[i]);
-        i++;
-    }
-    exec_args[i + 1] = NULL;
+	exec_args[0] = ft_strdup(data->commands->command);
+	i = 0;
+	while (data->commands->args[i])
+	{
+		exec_args[i + 1] = ft_strdup(data->commands->args[i]);
+		i++;
+	}
+	exec_args[i + 1] = NULL;
 	return (exec_args);
 }
 
 static int	count_args(char **args)
 {
 	int	i;
-	
+
 	i = 0;
 	while (args[i])
 		i++;

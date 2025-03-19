@@ -3,15 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/18 18:35:51 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
+/*   Updated: 2025/03/19 17:14:55 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #include "minishell.h"
 
