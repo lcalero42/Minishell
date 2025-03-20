@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 14:30:54 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:15:27 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ char		*expand_variable(char *input, t_data *data);
 char		*ft_getenv(t_data *data, char *s);
 
 // BUILTIN COMMANDS
-void		pwd(void);
+void		pwd(t_data *data);
 void		echo(t_data *data);
 void		env(char **env, t_data *data);
-void		unset(char *var, char **envp);
+void		unset(char *var, char **envp, t_data *data);
 void		cd(char *s, t_data *data);
 void		export(t_data *data);
 void		ft_exit(t_data *data);

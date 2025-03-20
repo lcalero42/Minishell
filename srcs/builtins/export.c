@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 16:26:43 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:14:23 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	export(t_data *data)
 		}
 		i++;
 	}
+	data->exit_status = 0;
 }
 
 static int	check_var_name(char *parameter, char *envp_var)

@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 18:35:12 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:15:39 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 		*is_known = 0;
 	}
 	else if (!ft_strncmp("pwd", command->command, INT_MAX))
-		pwd();
+		pwd(data);
 	else if (!ft_strncmp("cd", command->command, INT_MAX))
 		cd(command->args[0], data);
 	else if (!ft_strncmp("echo", command->command, INT_MAX))
@@ -45,7 +45,7 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 	else if (!ft_strncmp("env", command->command, INT_MAX))
 		env(data->envp, data);
 	else if (!ft_strncmp("unset", command->command, INT_MAX))
-		unset(command->args[0], data->envp);
+		unset(command->args[0], data->envp, data);
 	else if (!ft_strncmp("export", command->command, INT_MAX))
 		export(data);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
