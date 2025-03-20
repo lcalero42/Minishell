@@ -1,15 +1,45 @@
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -Iinc -I.
 LDFLAGS = -lreadline -lncurses
 
-SRCS = srcs/main.c libft/ft_putstr_fd.c srcs/exec/shell_launching.c \
-                libft/ft_strlen.c libft/ft_strncmp.c srcs/env/handle_signals.c \
-                srcs/builtins/pwd.c srcs/exec/handle_commands.c srcs/parsing/parsing.c \
-                libft/ft_split.c libft/ft_bzero.c libft/ft_putchar_fd.c \
-                srcs/exec/loop_logic.c srcs/env/handle_env_variables.c \
-                libft/ft_strlcpy.c libft/ft_strdup.c srcs/builtins/cd.c \
-                srcs/builtins/echo.c srcs/builtins/unset.c srcs/builtins/env.c
+SRCS = srcs/main.c \
+	   libft/ft_putstr_fd.c \
+       libft/ft_strlen.c \
+	   libft/ft_strncmp.c \
+       libft/ft_split.c \
+	   libft/ft_bzero.c \
+	   libft/ft_putchar_fd.c \
+       libft/ft_strlcpy.c \
+	   libft/ft_strdup.c \
+	   libft/ft_strjoin.c \
+	   libft/ft_isdigit.c \
+	   libft/ft_atoi.c \
+	   libft/ft_itoa.c \
+	   srcs/parsing/ft_strncpy.c \
+	   srcs/parsing/add_token.c \
+	   srcs/parsing/ft_isspace.c \
+	   srcs/parsing/tokenize.c \
+	   srcs/parsing/extract_quoted_string.c \
+	   srcs/parsing/extract_word.c \
+	   srcs/parsing/ft_free.c \
+	   srcs/parsing/cmd_utils.c \
+	   srcs/parsing/parse_commands.c \
+	   srcs/parsing/free_redirections.c \
+	   srcs/builtins/cd.c \
+       srcs/builtins/echo.c \
+	   srcs/builtins/unset.c \
+	   srcs/builtins/env.c \
+       srcs/builtins/pwd.c \
+	   srcs/builtins/export.c \
+	   srcs/builtins/exit.c \
+	   srcs/env/handle_signals.c \
+	   srcs/env/handle_env_variables.c \
+	   srcs/exec/shell_launching.c \
+	   srcs/exec/handle_commands.c \
+       srcs/exec/loop_logic.c \
+	   srcs/exec_executable/find_executable.c
+
 HEADERS = inc/minishell.h
 
 OBJS_DIR = objects/

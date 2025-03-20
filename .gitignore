@@ -51,6 +51,13 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+#debug
+readline.supp
+
+#debug
+debug_func.c
+readline.supp
+
 #objects
 objects
 
@@ -59,3 +66,6 @@ minishell
 
 #vscode config
 .vscode
+
+#test exec
+push_swap

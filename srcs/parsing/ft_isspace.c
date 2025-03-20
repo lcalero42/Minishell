@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 13:53:32 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 15:13:40 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/10 18:19:47 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/03/12 15:11:52 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(t_data *data)
+int	ft_isspace(char c)
 {
-	char	cwd[1024];
-
-	getcwd(cwd, sizeof(cwd));
-	ft_putstr_fd(cwd, 1);
-	ft_putchar_fd('\n', 1);
-	data->exit_status = 0;
+	if ((c >= 7 && c <= 13) || c == ' ')
+		return (1);
+	return (0);
 }

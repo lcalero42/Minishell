@@ -5,43 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 13:55:25 by lcalero          ###   ########.fr       */
+/*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
+/*   Updated: 2025/03/19 17:14:55 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 static int	handle_exit(char *line);
 
 void	loop(t_data *data)
 {
-	char	*line;
+	char		*line;
+	t_command	*first_cmd;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
-		pars_input(data, line);
+		data->tokens = tokenize(line, data);
+		data->commands = parse_commands(data->tokens);
+		first_cmd = data->commands;
 		if (!handle_exit(line))
+		{
+			ft_putstr_fd("exit\n", 1);
 			break ;
+		}
 		handle_commands(data);
 		if (*line)
 			add_history(line);
 		free(line);
-		ft_free(data->cmd);
+		free_commands(first_cmd);
+		free_tokens(data->tokens);
 	}
+	free_commands(first_cmd);
+	free_tokens(data->tokens);
 	free(line);
 	ft_free_env(data);
-	if (line)
-		ft_free(data->cmd);
 	rl_clear_history();
 }
 
 static int	handle_exit(char *line)
 {
 	if (!line)
-		return (0);
-	if (!ft_strncmp("exit", line, 4))
 		return (0);
 	return (1);
 }

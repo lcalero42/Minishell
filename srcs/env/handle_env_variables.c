@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env_variables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:57:52 by lcalero           #+#    #+#             */
-/*   Updated: 2025/02/21 13:55:17 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/18 19:22:48 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 int	make_env(t_data *data, char **envp)
 {
 	int	i;
-	
+
 	i = 0;
 	while (envp[i])
 		i++;
 	i = 0;
-	while(envp[i])
+	while (envp[i])
 	{
 		data->envp[i] = ft_strdup(envp[i]);
 		if (!data->envp[i])
@@ -34,7 +34,7 @@ int	make_env(t_data *data, char **envp)
 	return (1);
 }
 
-char *ft_getenv(t_data *data, char *s)
+char	*ft_getenv(t_data *data, char *s)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ char	*expand_variable(char *input, t_data *data)
 void	ft_free_env(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (data->envp[i])
 	{

@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   extract_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 13:52:43 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 16:09:03 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/10 18:09:33 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/03/12 15:11:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(char **env, t_data *data)
+char	*extract_word(char *str)
 {
-	int	i;
+	int		i;
+	int		size;
+	char	*rslt;
 
 	i = 0;
-	while (env[i])
+	size = 0;
+	while (!ft_isspace(str[size]) && str[size])
+		size++;
+	rslt = malloc(sizeof(char) * (size + 1));
+	if (!rslt)
+		return (NULL);
+	while (!ft_isspace(str[i]) && str[i])
 	{
-		ft_putstr_fd(env[i], 1);
-		ft_putchar_fd('\n', 1);
+		rslt[i] = str[i];
 		i++;
 	}
-	data->exit_status = 0;
+	rslt[i] = '\0';
+	return (rslt);
 }
