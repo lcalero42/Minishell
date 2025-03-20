@@ -38,7 +38,8 @@ SRCS = srcs/main.c \
 	   srcs/exec/shell_launching.c \
 	   srcs/exec/handle_commands.c \
        srcs/exec/loop_logic.c \
-	   srcs/exec_executable/find_executable.c
+	   srcs/exec_executable/find_executable.c \
+	   srcs/redirections/apply_redirections.c
 
 HEADERS = inc/minishell.h
 

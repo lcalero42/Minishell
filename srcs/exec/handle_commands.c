@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 15:15:39 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:48:24 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	handle_commands(t_data *data)
 
 static void	find_command(t_command *command, t_data *data, int *is_known)
 {
+	apply_redirections(command);
 	if (!command->command && command->redirections)
 	{
 		data->commands = data->commands->next;
@@ -57,6 +58,7 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 		*is_known = 0;
 		handle_unknown_command(command->command, data);
 	}
+	reset_fds(command);
 	lst_update_command(data, *is_known);
 }
 
