@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 16:35:32 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/20 17:58:38 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	export(t_command *command, t_data *data)
 	int		j;
 	int		count;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	count = 0;
 	while (command->args[count])
 		count++;
 	while (j < count)
 	{
-		if (!data->envp[i])
+		if (!data->envp[i] || check_var_name(command->args[j], data->envp[i]))
 		{
 			data->envp[i] = ft_strdup(command->args[j]);
 			j++;
@@ -78,7 +78,7 @@ static char	**init_copy(t_data *data, int count)
 {
 	int		i;
 	char	**sorted_envp;
-	
+
 	i = 0;
 	sorted_envp = malloc(sizeof(char *) * (count + 1));
 	if (!sorted_envp)
@@ -97,8 +97,7 @@ static int	check_var_name(char *parameter, char *envp_var)
 	char	**param;
 
 	param = ft_split(parameter, '=');
-	if (!ft_strncmp(param[0], envp_var, ft_strlen(param[0]))
-		&& envp_var[ft_strlen(param[0])] == '=')
+	if (!ft_strncmp(param[0], envp_var, INT_MAX))
 	{
 		ft_free(param);
 		return (1);
