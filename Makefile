@@ -16,6 +16,7 @@ SRCS = srcs/main.c \
 	   libft/ft_isdigit.c \
 	   libft/ft_atoi.c \
 	   libft/ft_itoa.c \
+	   libft/ft_strchr.c \
 	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/ft_isspace.c \

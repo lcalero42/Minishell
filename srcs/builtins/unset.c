@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:53:44 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:56 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:17:37 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	unset(char *var, char **envp)
 	int	i;
 	int	j;
 
+	if (!var)
+		return ;
 	i = 0;
 	j = 0;
 	while (envp[i])

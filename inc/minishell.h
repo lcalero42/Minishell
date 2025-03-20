@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 14:34:23 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:18:59 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void		free_commands(t_command *cmd_list);
 void		free_redirections(t_redirection *redir);
 void		ft_free(char **cmd);
 void		ft_free_env(t_data *data);
+void		free_all(char *line, t_data *data, t_command *first_cmd);
 
 // ENVIRONMENT FUNCTIONS
 int			make_env(t_data *data, char **envp);
@@ -107,12 +108,12 @@ char		*ft_getenv(t_data *data, char *s);
 
 // BUILTIN COMMANDS
 void		pwd(void);
-void		echo(t_data *data);
+void		echo(t_command *command, t_data *data);
 void		env(char **env, t_data *data);
 void		unset(char *var, char **envp);
 void		cd(char *s, t_data *data);
-void		export(t_data *data);
-void		ft_exit(t_data *data);
+void		export(t_command *command, t_data *data);
+void		ft_exit(t_command *command, t_data *data);
 
 // EXECUTION FUNCTIONS
 void		loop(t_data *data);
