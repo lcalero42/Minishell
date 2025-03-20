@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/19 17:14:55 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/20 14:02:23 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ static int	handle_exit(char *line);
 void	loop(t_data *data)
 {
 	char		*line;
-	t_command	*first_cmd;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
 		data->tokens = tokenize(line, data);
 		data->commands = parse_commands(data->tokens);
-		first_cmd = data->commands;
 		if (!handle_exit(line))
 		{
 			ft_putstr_fd("exit\n", 1);
@@ -33,13 +31,9 @@ void	loop(t_data *data)
 		handle_commands(data);
 		if (*line)
 			add_history(line);
-		free(line);
-		free_commands(first_cmd);
-		free_tokens(data->tokens);
+		free_all(line, data, data->commands);
 	}
-	free_commands(first_cmd);
-	free_tokens(data->tokens);
-	free(line);
+	free_all(line, data, data->commands);
 	ft_free_env(data);
 	rl_clear_history();
 }
@@ -49,4 +43,14 @@ static int	handle_exit(char *line)
 	if (!line)
 		return (0);
 	return (1);
+}
+
+void	free_all(char *line, t_data *data, t_command *first_cmd)
+{
+	if (line)
+		free(line);
+	if (first_cmd)
+		free_commands(first_cmd);
+	if (data->tokens)
+		free_tokens(data->tokens);
 }

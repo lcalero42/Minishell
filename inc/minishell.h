@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 12:42:41 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/20 13:20:42 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void		free_commands(t_command *cmd_list);
 
 void		free_redirections(t_redirection *redir);
 
+void		free_all(char *line, t_data *data, t_command *first_cmd);
+
 void		loop(t_data *data);
 
 int			make_env(t_data *data, char **envp);
@@ -115,7 +117,7 @@ void		setup_signal(void);
 
 void		pwd(void);
 
-void		echo(t_data *data);
+void		echo(t_command *command, t_data *data);
 
 void		env(char **env, t_data *data);
 
@@ -125,9 +127,9 @@ void		handle_commands(t_data *data);
 
 void		cd(char *s, t_data *data);
 
-void		export(t_data *data);
+void		export(t_command *command, t_data *data);
 
-void		ft_exit(t_data *data);
+void		ft_exit(t_command *command, t_data *data);
 
 char		*expand_variable(char *input, t_data *data);
 

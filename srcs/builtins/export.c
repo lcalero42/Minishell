@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/14 16:26:43 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/20 13:20:18 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	check_var_name(char *parameter, char *envp_var);
 
-void	export(t_data *data)
+void	export(t_command *command, t_data *data)
 {
 	int		i;
 	int		j;
@@ -23,19 +23,19 @@ void	export(t_data *data)
 	i = 1;
 	j = 0;
 	count = 0;
-	while (data->commands->args[count])
+	while (command->args[count])
 		count++;
 	while (j < count)
 	{
 		if (!data->envp[i])
 		{
-			data->envp[i] = ft_strdup(data->commands->args[j]);
+			data->envp[i] = ft_strdup(command->args[j]);
 			j++;
 		}
-		else if (check_var_name(data->commands->args[j], data->envp[i]))
+		else if (check_var_name(command->args[j], data->envp[i]))
 		{
 			free(data->envp[i]);
-			data->envp[i] = ft_strdup(data->commands->args[j]);
+			data->envp[i] = ft_strdup(command->args[j]);
 			j++;
 		}
 		i++;
