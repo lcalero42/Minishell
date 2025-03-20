@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 17:13:32 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:42:41 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ typedef struct s_command
 {
 	char				*command;
 	char				**args;
-	char				*infile;
-	char				*outfile;
 	int					append;
 	t_redirection		*redirections;
 	struct s_command	*next;
