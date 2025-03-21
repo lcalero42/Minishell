@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 17:58:38 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/21 14:37:00 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,8 @@ void	export(t_command *command, t_data *data)
 	{
 		if (!data->envp[i] || check_var_name(command->args[j], data->envp[i]))
 		{
-			data->envp[i] = ft_strdup(command->args[j]);
-			j++;
-		}
-		else if (check_var_name(command->args[j], data->envp[i]))
-		{
-			free(data->envp[i]);
+			if (data->envp[i])
+				free(data->envp[i]);
 			data->envp[i] = ft_strdup(command->args[j]);
 			j++;
 		}
@@ -70,7 +66,7 @@ static void	print_ascii_order(t_data *data)
 	}
 	i = -1;
 	while (++i < count)
-		printf("declare -x %s\n", sorted_envp[i]);
+		printf("declare -x \"%s\"\n", sorted_envp[i]);
 	ft_free(sorted_envp);
 }
 
@@ -97,7 +93,7 @@ static int	check_var_name(char *parameter, char *envp_var)
 	char	**param;
 
 	param = ft_split(parameter, '=');
-	if (!ft_strncmp(param[0], envp_var, INT_MAX))
+	if (!ft_strncmp(param[0], envp_var, ft_strlen(param[0])))
 	{
 		ft_free(param);
 		return (1);
