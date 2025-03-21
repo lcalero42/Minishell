@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 16:55:12 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:24:02 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void		handle_commands(t_data *data);
 void		exec_cmd(t_data *data);
 void		handle_unknown_command(char *cmd, t_data *data);
 int			apply_redirections(t_command *cmd);
+int			handle_heredoc(char *delimiter);
 void 		reset_fds(t_command *cmd);
 
 // UTILITY FUNCTIONS

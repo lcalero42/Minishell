@@ -16,6 +16,9 @@ SRCS = srcs/main.c \
 	   libft/ft_isdigit.c \
 	   libft/ft_atoi.c \
 	   libft/ft_itoa.c \
+	   libft/get_next_line.c \
+	   libft/ft_memcpy.c \
+	   libft/ft_strchr.c \
 	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/ft_isspace.c \
@@ -39,7 +42,8 @@ SRCS = srcs/main.c \
 	   srcs/exec/handle_commands.c \
        srcs/exec/loop_logic.c \
 	   srcs/exec_executable/find_executable.c \
-	   srcs/redirections/apply_redirections.c
+	   srcs/redirections/apply_redirections.c \
+	   srcs/redirections/handle_heredoc.c
 
 HEADERS = inc/minishell.h
 

@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/20 17:48:54 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:46:49 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ int	apply_redirections(t_command *cmd)
 			}
 			dup2(fd, STDOUT_FILENO);
 		}
-		// else if (redir->type == REDIR_HEREDOC)
-		// {
-		// 	fd = handle_heredoc(redir->file);
-		// 	if (fd == -1)
-		// 		return (0);
-		// 	dup2(fd, STDIN_FILENO);
-		// 	close(fd);
-		// }
+		else if (redir->type == REDIR_HEREDOC)
+		{
+			fd = handle_heredoc(redir->file);
+			if (fd == -1)
+				return (0);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
 		redir = redir->next;
 	}
 	return (1);
