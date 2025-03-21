@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 15:18:59 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/21 17:04:18 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void		ft_exit(t_command *command, t_data *data);
 // EXECUTION FUNCTIONS
 void		loop(t_data *data);
 void		handle_commands(t_data *data);
-void		exec_cmd(t_data *data);
+void		exec_cmd(t_command *command, t_data *data);
 void		handle_unknown_command(char *cmd, t_data *data);
 
 // UTILITY FUNCTIONS
