@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_redirections.c                                :+:      :+:    :+:   */
+/*   safe_close.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 16:19:35 by luis              #+#    #+#             */
-/*   Updated: 2025/03/24 19:26:32 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/24 16:52:31 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/03/24 16:53:44 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_redirections(t_redirection *redir)
+void	safe_close(int *fd)
 {
-	t_redirection	*tmp;
-	t_redirection	*next;
-
-	tmp = redir;
-	while (tmp)
+	if (*fd != -1)
 	{
-		next = tmp->next;
-		if (tmp->file)
-			free(tmp->file);
-		free(tmp);
-		tmp = next;
+		if (close(*fd) == -1)
+			perror("close failed");
+		*fd = -1;	
 	}
-	redir = NULL;
 }

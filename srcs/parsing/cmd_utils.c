@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:41 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 12:43:02 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/24 19:24:01 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ void	add_redirection(t_command *cmd, char *file, t_redir_type type)
 		return ;
 	last = NULL;
 	new_redir->file = ft_strdup(file);
+	if (!new_redir->file)
+    {
+        free(new_redir);
+        return;
+    }
 	new_redir->type = type;
 	new_redir->next = NULL;
 	if (!cmd->redirections)

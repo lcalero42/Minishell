@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:58:06 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/24 18:57:44 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ void	handle_commands(t_data *data)
 
 static void	find_command(t_command *command, t_data *data, int *is_known)
 {
-	apply_redirections(command);
+	if (!apply_redirections(command))
+    {
+        perror("Failed to apply redirections");
+        *is_known = 0;
+        return ;
+    }
 	if (!command->command && command->redirections)
 	{
 		data->commands = data->commands->next;
