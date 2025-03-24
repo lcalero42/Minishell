@@ -16,6 +16,7 @@ SRCS = srcs/main.c \
 	   libft/ft_isdigit.c \
 	   libft/ft_atoi.c \
 	   libft/ft_itoa.c \
+	   libft/ft_strchr.c \
 	   libft/get_next_line.c \
 	   libft/ft_memcpy.c \
 	   libft/ft_strchr.c \

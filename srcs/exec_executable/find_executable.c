@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/19 17:12:01 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/21 17:09:09 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,52 @@
 
 static char	**join_cmd_args(t_data *data);
 static int	count_args(char **args);
+static void	child_process(t_data *data, char *executable, char **exec_args);
+static void	set_exit_status(t_data *data, int status);
 
-void	exec_cmd(t_data *data)
+void	exec_cmd(t_command *command, t_data *data)
 {
 	char	*executable;
 	pid_t	pid;
 	int		status;
 	char	**exec_args;
 
-	pid = fork();
 	executable = NULL;
 	status = 0;
-	if (data->commands->command[0] == '/' || data->commands->command[0] == '.')
-		executable = data->commands->command;
+	if ((command->command[0] == '/' || command->command[0] == '.'))
+		executable = command->command;
+	if (access(command->command, F_OK))
+		return ;
 	exec_args = join_cmd_args(data);
+	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
 		data->exit_status = 1;
+		ft_free(exec_args);
 		return ;
 	}
-	else if (pid == 0)
-	{
-		if (executable)
-			execve(executable, exec_args, data->envp);
-		handle_unknown_command(data->commands->command, data);
-		exit(127);
-	}
+	if (pid == 0)
+		child_process(data, executable, exec_args);
 	waitpid(pid, &status, 0);
+	set_exit_status(data, status);
+	ft_free(exec_args);
+}
+
+static void	child_process(t_data *data, char *executable, char **exec_args)
+{
+	if (executable)
+		execve(executable, exec_args, data->envp);
+	handle_unknown_command(data->commands->command, data);
+	exit(127);
+}
+
+static void	set_exit_status(t_data *data, int status)
+{
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		data->exit_status = 128 + WTERMSIG(status);
-	ft_free(exec_args);
 }
 
 static char	**join_cmd_args(t_data *data)

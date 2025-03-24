@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 16:48:24 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:53:41 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	find_command(t_command *command, t_data *data, int *is_known);
-static void	lst_update_command(t_data *data, int is_known);
+//static void	lst_update_command(t_data *data, int is_known);
 
 void	handle_commands(t_data *data)
 {
@@ -38,21 +38,21 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 		*is_known = 0;
 	}
 	else if (!ft_strncmp("pwd", command->command, INT_MAX))
-		pwd(data);
+		pwd();
 	else if (!ft_strncmp("cd", command->command, INT_MAX))
 		cd(command->args[0], data);
 	else if (!ft_strncmp("echo", command->command, INT_MAX))
-		echo(data);
+		echo(command, data);
 	else if (!ft_strncmp("env", command->command, INT_MAX))
 		env(data->envp, data);
 	else if (!ft_strncmp("unset", command->command, INT_MAX))
 		unset(command->args[0], data->envp, data);
 	else if (!ft_strncmp("export", command->command, INT_MAX))
-		export(data);
+		export(command, data);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
-		ft_exit(data);
+		ft_exit(command, data);
 	else if (command->command[0] == '/' || command->command[0] == '.')
-		exec_cmd(data);
+		exec_cmd(command, data);
 	else
 	{
 		*is_known = 0;
@@ -68,11 +68,10 @@ void	handle_unknown_command(char *cmd, t_data *data)
 	ft_putstr_fd(": command not found", 2);
 	ft_putchar_fd('\n', 2);
 	data->exit_status = 127;
-	return ;
 }
 
-static void	lst_update_command(t_data *data, int is_known)
-{
-	if (is_known)
-		data->commands = data->commands->next;
-}
+// static void	lst_update_command(t_data *data, int is_known)
+// {
+// 	if (is_known)
+// 		data->commands = data->commands->next;
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:19:38 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:49:22 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ typedef struct s_command
 {
 	char				*command;
 	char				**args;
-	char				*infile;
-	char				*outfile;
 	int					append;
 	int					saved_stdin;
 	int					saved_stdout;
@@ -103,6 +101,7 @@ void		free_commands(t_command *cmd_list);
 void		free_redirections(t_redirection *redir);
 void		ft_free(char **cmd);
 void		ft_free_env(t_data *data);
+void		free_all(char *line, t_data *data, t_command *first_cmd);
 
 // ENVIRONMENT FUNCTIONS
 int			make_env(t_data *data, char **envp);
@@ -110,18 +109,18 @@ char		*expand_variable(char *input, t_data *data);
 char		*ft_getenv(t_data *data, char *s);
 
 // BUILTIN COMMANDS
-void		pwd(t_data *data);
-void		echo(t_data *data);
+void		pwd(void);
+void		echo(t_command *command, t_data *data);
 void		env(char **env, t_data *data);
 void		unset(char *var, char **envp, t_data *data);
 void		cd(char *s, t_data *data);
-void		export(t_data *data);
-void		ft_exit(t_data *data);
+void		export(t_command *command, t_data *data);
+void		ft_exit(t_command *command, t_data *data);
 
 // EXECUTION FUNCTIONS
 void		loop(t_data *data);
 void		handle_commands(t_data *data);
-void		exec_cmd(t_data *data);
+void		exec_cmd(t_command *command, t_data *data);
 void		handle_unknown_command(char *cmd, t_data *data);
 int			apply_redirections(t_command *cmd);
 int			apply_heredoc(char *delimiter);

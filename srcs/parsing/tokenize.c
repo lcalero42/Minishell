@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:15:06 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/18 20:03:41 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:30:52 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,8 @@ static void	handle_words(t_token **tokens, t_data *data, char *input, int *i)
 			add_word(word, i, ENV_VAR, tokens);
 			return ;
 		}
-		if (!ft_getenv(data, word))
-		{
-			*i += ft_strlen(word);
-			free(word);
-			return ;
-		}
-		add_token(tokens, ft_getenv(data, word), ENV_VAR);
+		if (ft_getenv(data, word))
+			add_token(tokens, ft_getenv(data, word), ENV_VAR);
 		*i += ft_strlen(word);
 		free(word);
 	}
