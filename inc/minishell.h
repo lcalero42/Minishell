@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:57:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:25 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 # include <limits.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 // DEFINES
 # define MAX_ARGS 64
