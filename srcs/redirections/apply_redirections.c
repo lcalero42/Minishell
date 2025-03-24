@@ -6,76 +6,90 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/24 13:48:25 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:33:33 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 
+static int	handle_input_output(int fd, t_redirection *redir);
+static int	handle_heredoc(int fd, t_redirection *redir);
+static int	handle_append_out(int fd, t_redirection *redir);
+
 int	apply_redirections(t_command *cmd)
 {
 	t_redirection	*redir;
 	int				fd;
 
+	fd = 0;
 	cmd->saved_stdin = dup(STDIN_FILENO);
 	cmd->saved_stdout = dup(STDOUT_FILENO);
 	redir = cmd->redirections;
 	while (redir)
 	{
 		if (redir->type == REDIR_INPUT)
-		{
-			fd = open(redir->file, O_RDONLY);
-			if (fd == -1)
-			{
-				perror(redir->file);
-				return (0);
-			}
-			dup2(fd, STDIN_FILENO);
-		}
+			handle_input_output(fd, redir);
 		else if (redir->type == REDIR_OUTPUT)
-		{
-			fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd == -1)
-			{
-				perror(redir->file);
-				return (0);
-			}
-			dup2(fd, STDOUT_FILENO);
-		}
+			handle_input_output(fd, redir);
 		else if (redir->type == REDIR_APPEND_OUT)
-		{
-			fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (fd == -1)
-			{
-				perror(redir->file);
-				return (0);
-			}
-			dup2(fd, STDOUT_FILENO);
-		}
+			handle_append_out(fd, redir);
 		else if (redir->type == REDIR_HEREDOC)
-		{
-			fd = handle_heredoc(redir->file);
-			if (fd == -1)
-				return (0);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
+			handle_heredoc(fd, redir);
 		redir = redir->next;
 	}
 	return (1);
 }
 
-void	reset_fds(t_command *cmd)
+static int	handle_input_output(int fd, t_redirection *redir)
 {
-	if (cmd->saved_stdin != -1)
+	if (redir->type == REDIR_INPUT)
 	{
-		dup2(cmd->saved_stdin, STDIN_FILENO);
-		close(cmd->saved_stdin);
+		fd = open(redir->file, O_RDONLY);
+		if (fd == -1)
+		{
+			perror(redir->file);
+			return (0);
+		}
+		dup2(fd, STDIN_FILENO);
 	}
-	if (cmd->saved_stdout != -1)
+	else if (redir->type == REDIR_OUTPUT)
 	{
-		dup2(cmd->saved_stdout, STDOUT_FILENO);
-		close(cmd->saved_stdout);
+		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd == -1)
+		{
+			perror(redir->file);
+			return (0);
+		}
+		dup2(fd, STDOUT_FILENO);
 	}
+	return (0);
+}
+
+static int	handle_heredoc(int fd, t_redirection *redir)
+{
+	if (redir->type == REDIR_HEREDOC)
+	{
+		fd = apply_heredoc(redir->file);
+		if (fd == -1)
+			return (0);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+	return (0);
+}
+
+static int	handle_append_out(int fd, t_redirection *redir)
+{
+	if (redir->type == REDIR_APPEND_OUT)
+	{
+		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd == -1)
+		{
+			perror(redir->file);
+			return (0);
+		}
+		dup2(fd, STDOUT_FILENO);
+	}
+	return (0);
 }

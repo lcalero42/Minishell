@@ -43,7 +43,8 @@ SRCS = srcs/main.c \
        srcs/exec/loop_logic.c \
 	   srcs/exec_executable/find_executable.c \
 	   srcs/redirections/apply_redirections.c \
-	   srcs/redirections/handle_heredoc.c
+	   srcs/redirections/apply_heredoc.c \
+	   srcs/redirections/reset_fds.c
 
 HEADERS = inc/minishell.h
 
