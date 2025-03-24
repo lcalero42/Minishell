@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:49:22 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:57:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char		*expand_variable(char *input, t_data *data);
 char		*ft_getenv(t_data *data, char *s);
 
 // BUILTIN COMMANDS
-void		pwd(void);
+void		pwd(t_data *data);
 void		echo(t_command *command, t_data *data);
 void		env(char **env, t_data *data);
 void		unset(char *var, char **envp, t_data *data);

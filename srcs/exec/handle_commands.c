@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:53:41 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:58:06 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 		*is_known = 0;
 	}
 	else if (!ft_strncmp("pwd", command->command, INT_MAX))
-		pwd();
+		pwd(data);
 	else if (!ft_strncmp("cd", command->command, INT_MAX))
 		cd(command->args[0], data);
 	else if (!ft_strncmp("echo", command->command, INT_MAX))
@@ -59,7 +59,6 @@ static void	find_command(t_command *command, t_data *data, int *is_known)
 		handle_unknown_command(command->command, data);
 	}
 	reset_fds(command);
-	lst_update_command(data, *is_known);
 }
 
 void	handle_unknown_command(char *cmd, t_data *data)
@@ -69,9 +68,3 @@ void	handle_unknown_command(char *cmd, t_data *data)
 	ft_putchar_fd('\n', 2);
 	data->exit_status = 127;
 }
-
-// static void	lst_update_command(t_data *data, int is_known)
-// {
-// 	if (is_known)
-// 		data->commands = data->commands->next;
-// }
