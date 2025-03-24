@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:58:06 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/24 16:49:02 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@ void	handle_commands(t_data *data)
 static void	find_command(t_command *command, t_data *data, int *is_known)
 {
 	apply_redirections(command);
-	if (!command->command && command->redirections)
-	{
-		data->commands = data->commands->next;
-		*is_known = 0;
-	}
-	else if (!ft_strncmp("pwd", command->command, INT_MAX))
+	if (!ft_strncmp("pwd", command->command, INT_MAX))
 		pwd(data);
 	else if (!ft_strncmp("cd", command->command, INT_MAX))
 		cd(command->args[0], data);
