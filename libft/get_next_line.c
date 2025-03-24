@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:32:34 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/21 15:26:16 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:51:25 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,3 @@ static void	ft_update(char	*buf)
 		buf[j++] = buf[i++];
 	buf[j] = '\0';
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/18 17:58:55 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/24 13:50:58 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_command	*parse_commands(t_token *token_list)
 	t_command		*cmd_list;
 	t_command		*current_cmd;
 	t_token			*token;
+	t_command		*new_cmd;
 
 	cmd_list = NULL;
 	current_cmd = NULL;
@@ -40,7 +41,7 @@ t_command	*parse_commands(t_token *token_list)
 		{
 			if (!current_cmd)
 			{
-				t_command *new_cmd = init_command();
+				new_cmd = init_command();
 				if (!cmd_list)
 					cmd_list = new_cmd;
 				else

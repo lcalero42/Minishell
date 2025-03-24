@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:47:08 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/21 15:24:41 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:48:53 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	handle_heredoc(char *delimiter)
 {
-	int 	pipe_fd[2];
+	int		pipe_fd[2];
 	char	*line;
-	int	len;
-	
+	int		len;
+
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
@@ -28,14 +28,14 @@ int	handle_heredoc(char *delimiter)
 		ft_putstr_fd("> ", STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			break;
+			break ;
 		len = ft_strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
 			line[len - 1] = '\0';
 		if (ft_strncmp(line, delimiter, INT_MAX) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		ft_putstr_fd(line, pipe_fd[1]);
 		ft_putstr_fd("\n", pipe_fd[1]);
