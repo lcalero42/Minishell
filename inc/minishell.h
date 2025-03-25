@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 17:41:49 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:23:58 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,7 @@ int			check_pipe(t_data *data);
 void		print_welcome(void);
 void		setup_signal(void);
 char		*ft_strncpy(char *destination, const char *source, size_t length);
+char		**join_cmd_args(t_command *command);
+int			count_args(char **args);
 
 #endif
