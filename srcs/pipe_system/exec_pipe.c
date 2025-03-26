@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/25 16:46:52 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/26 16:15:44 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec(t_data *data)
 			if (pipe(fd) == -1)
 			{
 				perror("pipe");
-				return;
+				return ;
 			}
 		}
 		pid = fork();
@@ -86,7 +86,7 @@ void	exec(t_data *data)
 		}
 		cmd = cmd->next;
 	}
-	while (wait(&status) > 0);
+	wait_processes(data, &status);
 }
 
 static void	exec_programm(t_command *command, t_data *data)
@@ -101,26 +101,15 @@ static void	exec_programm(t_command *command, t_data *data)
 	if ((command->command[0] == '/' || command->command[0] == '.'))
 		executable = command->command;
 	if (access(command->command, F_OK))
-		return ;
+		exit(127);
 	exec_args = join_cmd_args(command);
 	if (executable)
 		execve(executable, exec_args, data->envp);
 	handle_unknown_command(data->commands->command, data);
 	ft_free(exec_args);
+	free_all(NULL, data, data->commands);
+	ft_free_env(data);
 	exit(127);
-}
-
-int	check_pipe(t_data *data)
-{
-	t_token *token = data->tokens;
-
-	while (token)
-	{
-		if (token->type == PIPE)
-			return (1);
-		token = token->next;
-	}
-	return (0);
 }
 
 static void	find_cmd(t_command *command, t_data *data)

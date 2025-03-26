@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/25 16:23:58 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/26 16:08:40 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <limits.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
 
 // DEFINES
 # define MAX_ARGS 64
@@ -127,6 +128,9 @@ void		handle_unknown_command(char *cmd, t_data *data);
 int			apply_redirections(t_command *cmd);
 int			apply_heredoc(char *delimiter);
 void		reset_fds(t_command *cmd);
+
+// PIPE FUNCTIONS
+void		wait_processes(t_data *data, int *status);
 void		exec(t_data *data);
 int			check_pipe(t_data *data);
 
