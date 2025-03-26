@@ -46,7 +46,8 @@ SRCS = srcs/main.c \
 	   srcs/redirections/apply_heredoc.c \
 	   srcs/redirections/reset_fds.c \
 	   srcs/pipe_system/exec_pipe.c \
-	   srcs/pipe_system/pipe_system_utils.c
+	   srcs/pipe_system/pipe_system_utils.c \
+	   srcs/pipe_system/check_pipe.c
 
 HEADERS = inc/minishell.h
 

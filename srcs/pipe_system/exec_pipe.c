@@ -6,17 +6,13 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/26 16:15:44 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:02:03 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	find_cmd(t_command *command, t_data *data);
-static void	exec_programm(t_command *command, t_data *data);
-static int	is_builtin(t_command *command);
-
-void	exec(t_data *data)
+void	exec_pipe(t_data *data)
 {
 	t_command	*cmd;
 	int			fd[2];
@@ -28,75 +24,25 @@ void	exec(t_data *data)
 	fd_in = STDIN_FILENO;
 	while (cmd)
 	{
-		fd[0] = -1;
-		fd[1] = -1;
-		if (cmd->next)
-		{
-			if (pipe(fd) == -1)
-			{
-				perror("pipe");
-				return ;
-			}
-		}
-		pid = fork();
+		pid = create_pipe_and_fork(fd, cmd);
 		if (pid == 0)
-		{
-			if (fd_in != STDIN_FILENO)
-			{
-				if (dup2(fd_in, STDIN_FILENO) == -1)
-				{
-					perror("dup2 input");
-					exit(1);
-				}
-				close(fd_in);
-			}
-			if (cmd->next)
-			{
-				if (dup2(fd[1], STDOUT_FILENO) == -1)
-				{
-					perror("dup2 output");
-					exit(1);
-				}
-			}
-			if (cmd->next)
-			{
-				close(fd[0]);
-				close(fd[1]);
-			}
-			apply_redirections(cmd);
-			if (is_builtin(cmd))
-				find_cmd(cmd, data);
-			else
-				exec_programm(cmd, data);
-			free_all(NULL, data, data->commands);
-			ft_free_env(data);
-			exit(0);
-		}
+			execute_child_process(cmd, data, fd_in, fd);
 		else if (pid < 0)
 		{
 			perror("fork");
-			return;
+			return ;
 		}
-		if (fd_in != STDIN_FILENO)
-			close(fd_in);
-		if (cmd->next)
-		{
-			close(fd[1]);
-			fd_in = fd[0];
-		}
+		fd_in = manage_parent_fd(fd_in, fd, cmd);
 		cmd = cmd->next;
 	}
 	wait_processes(data, &status);
 }
 
-static void	exec_programm(t_command *command, t_data *data)
+void	exec_programm(t_command *command, t_data *data)
 {
 	char	*executable;
 	char	**exec_args;
 
-	
-	printf("Executing extenal command: %s (PID: %d, PPID: %d)\n",
-			command->command, getpid(), getppid());
 	executable = NULL;
 	if ((command->command[0] == '/' || command->command[0] == '.'))
 		executable = command->command;
@@ -105,14 +51,14 @@ static void	exec_programm(t_command *command, t_data *data)
 	exec_args = join_cmd_args(command);
 	if (executable)
 		execve(executable, exec_args, data->envp);
-	handle_unknown_command(data->commands->command, data);
+	handle_unknown_command(command->command, data);
 	ft_free(exec_args);
 	free_all(NULL, data, data->commands);
 	ft_free_env(data);
 	exit(127);
 }
 
-static void	find_cmd(t_command *command, t_data *data)
+void	find_cmd(t_command *command, t_data *data)
 {
 	if (!ft_strncmp("pwd", command->command, INT_MAX))
 		pwd(data);
@@ -129,10 +75,10 @@ static void	find_cmd(t_command *command, t_data *data)
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(command, data);
 	else
-		exit(1);
+		exit(127);
 }
 
-static int	is_builtin(t_command *command)
+int	is_builtin(t_command *command)
 {
 	if (!ft_strncmp("pwd", command->command, INT_MAX))
 		return (1);

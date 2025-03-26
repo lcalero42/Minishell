@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/26 16:08:40 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:04:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,16 @@ void		reset_fds(t_command *cmd);
 
 // PIPE FUNCTIONS
 void		wait_processes(t_data *data, int *status);
-void		exec(t_data *data);
+void		exec_pipe(t_data *data);
 int			check_pipe(t_data *data);
+void		setup_fds(t_command *cmd, int fd_in, int *fd);
+void		execute_child_process(t_command *cmd, t_data *data,
+				int fd_in, int *fd);
+int			manage_parent_fd(int fd_in, int *fd, t_command *cmd);
+pid_t		create_pipe_and_fork(int *fd, t_command *cmd);
+void		exec_programm(t_command *command, t_data *data);
+void		find_cmd(t_command *command, t_data *data);
+int			is_builtin(t_command *command);
 
 // UTILITY FUNCTIONS
 void		print_welcome(void);
