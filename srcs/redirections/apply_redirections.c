@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/24 14:33:33 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:27:18 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	handle_input_output(int fd, t_redirection *redir)
 			return (0);
 		}
 		dup2(fd, STDIN_FILENO);
+		close(fd);
 	}
 	else if (redir->type == REDIR_OUTPUT)
 	{
@@ -62,6 +63,7 @@ static int	handle_input_output(int fd, t_redirection *redir)
 			return (0);
 		}
 		dup2(fd, STDOUT_FILENO);
+		close(fd);
 	}
 	return (0);
 }
@@ -90,6 +92,7 @@ static int	handle_append_out(int fd, t_redirection *redir)
 			return (0);
 		}
 		dup2(fd, STDOUT_FILENO);
+		close(fd);
 	}
 	return (0);
 }

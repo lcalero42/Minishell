@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:57:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/26 17:04:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 # include <limits.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <errno.h>
 
 // DEFINES
 # define MAX_ARGS 64
@@ -126,9 +129,24 @@ int			apply_redirections(t_command *cmd);
 int			apply_heredoc(char *delimiter);
 void		reset_fds(t_command *cmd);
 
+// PIPE FUNCTIONS
+void		wait_processes(t_data *data, int *status);
+void		exec_pipe(t_data *data);
+int			check_pipe(t_data *data);
+void		setup_fds(t_command *cmd, int fd_in, int *fd);
+void		execute_child_process(t_command *cmd, t_data *data,
+				int fd_in, int *fd);
+int			manage_parent_fd(int fd_in, int *fd, t_command *cmd);
+pid_t		create_pipe_and_fork(int *fd, t_command *cmd);
+void		exec_programm(t_command *command, t_data *data);
+void		find_cmd(t_command *command, t_data *data);
+int			is_builtin(t_command *command);
+
 // UTILITY FUNCTIONS
 void		print_welcome(void);
 void		setup_signal(void);
 char		*ft_strncpy(char *destination, const char *source, size_t length);
+char		**join_cmd_args(t_command *command);
+int			count_args(char **args);
 
 #endif
