@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   safe_close.c                                       :+:      :+:    :+:   */
+/*   check_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 16:52:31 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/24 16:53:44 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/26 16:58:56 by lcalero           #+#    #+#             */
+/*   Updated: 2025/03/26 17:01:13 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	safe_close(int *fd)
+int	check_pipe(t_data *data)
 {
-	if (*fd != -1)
+	t_token	*token;
+
+	token = data->tokens;
+	while (token)
 	{
-		if (close(*fd) == -1)
-			perror("close failed");
-		*fd = -1;	
+		if (token->type == PIPE)
+			return (1);
+		token = token->next;
 	}
+	return (0);
 }

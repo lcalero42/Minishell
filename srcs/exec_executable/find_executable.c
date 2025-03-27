@@ -6,15 +6,13 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/21 17:09:09 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:20:20 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/wait.h>
 
-static char	**join_cmd_args(t_data *data);
-static int	count_args(char **args);
 static void	child_process(t_data *data, char *executable, char **exec_args);
 static void	set_exit_status(t_data *data, int status);
 
@@ -31,7 +29,7 @@ void	exec_cmd(t_command *command, t_data *data)
 		executable = command->command;
 	if (access(command->command, F_OK))
 		return ;
-	exec_args = join_cmd_args(data);
+	exec_args = join_cmd_args(command);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -63,26 +61,26 @@ static void	set_exit_status(t_data *data, int status)
 		data->exit_status = 128 + WTERMSIG(status);
 }
 
-static char	**join_cmd_args(t_data *data)
+char	**join_cmd_args(t_command *command)
 {
 	char	**exec_args;
 	int		i;
 
-	exec_args = malloc(sizeof(char *) * (count_args(data->commands->args) + 2));
+	exec_args = malloc(sizeof(char *) * (count_args(command->args) + 2));
 	if (!exec_args)
 		return (NULL);
-	exec_args[0] = ft_strdup(data->commands->command);
+	exec_args[0] = ft_strdup(command->command);
 	i = 0;
-	while (data->commands->args[i])
+	while (command->args[i])
 	{
-		exec_args[i + 1] = ft_strdup(data->commands->args[i]);
+		exec_args[i + 1] = ft_strdup(command->args[i]);
 		i++;
 	}
 	exec_args[i + 1] = NULL;
 	return (exec_args);
 }
 
-static int	count_args(char **args)
+int	count_args(char **args)
 {
 	int	i;
 

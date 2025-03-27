@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/21 16:57:56 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/26 16:48:07 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	loop(t_data *data)
 			ft_putstr_fd("exit\n", 1);
 			break ;
 		}
-		handle_commands(data);
+		if (!check_pipe(data))
+			handle_commands(data);
+		else
+			exec_pipe(data);
 		if (*line)
 			add_history(line);
 		free_all(line, data, data->commands);
