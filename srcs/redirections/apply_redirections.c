@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/25 14:27:18 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:17:28 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	handle_input_output(int fd, t_redirection *redir);
 static int	handle_heredoc(int fd, t_redirection *redir);
 static int	handle_append_out(int fd, t_redirection *redir);
 
+// fixing
 int	apply_redirections(t_command *cmd)
 {
 	t_redirection	*redir;
