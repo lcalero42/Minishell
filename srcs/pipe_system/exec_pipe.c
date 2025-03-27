@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/26 17:02:03 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:40:33 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,20 @@
 
 void	exec_pipe(t_data *data)
 {
-	t_command	*cmd;
-	int			fd[2];
-	pid_t		pid;
-	int			fd_in;
-	int			status;
+	int		num_commands;
 
-	cmd = data->commands;
-	fd_in = STDIN_FILENO;
-	while (cmd)
+	num_commands = lst_cmd_len(data->commands);
+	if (num_commands == 0)
+		return ;
+	data->pids = ft_calloc(num_commands, sizeof(pid_t));
+	if (!data->pids)
 	{
-		pid = create_pipe_and_fork(fd, cmd);
-		if (pid == 0)
-			execute_child_process(cmd, data, fd_in, fd);
-		else if (pid < 0)
-		{
-			perror("fork");
-			return ;
-		}
-		fd_in = manage_parent_fd(fd_in, fd, cmd);
-		cmd = cmd->next;
+		perror("calloc");
+		return ;
 	}
-	wait_processes(data, &status);
+	if (fork_commands(data, data->pids, num_commands))
+		wait_processes(data, data->pids, num_commands);
+	free(data->pids);
 }
 
 void	exec_programm(t_command *command, t_data *data)

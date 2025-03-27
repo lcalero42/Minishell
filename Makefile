@@ -19,6 +19,7 @@ SRCS = srcs/main.c \
 	   libft/get_next_line.c \
 	   libft/ft_memcpy.c \
 	   libft/ft_strchr.c \
+	   libft/ft_calloc.c \
 	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/ft_isspace.c \
@@ -29,6 +30,7 @@ SRCS = srcs/main.c \
 	   srcs/parsing/cmd_utils.c \
 	   srcs/parsing/parse_commands.c \
 	   srcs/parsing/free_redirections.c \
+	   srcs/parsing/lst_utils.c \
 	   srcs/builtins/cd.c \
        srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
@@ -47,7 +49,8 @@ SRCS = srcs/main.c \
 	   srcs/redirections/reset_fds.c \
 	   srcs/pipe_system/exec_pipe.c \
 	   srcs/pipe_system/pipe_system_utils.c \
-	   srcs/pipe_system/check_pipe.c
+	   srcs/pipe_system/check_pipe.c \
+	   srcs/pipe_system/pipe_exec_utils.c
 
 HEADERS = inc/minishell.h
 
