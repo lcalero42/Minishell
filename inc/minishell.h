@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/27 14:30:29 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:04:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void		free_redirections(t_redirection *redir);
 void		ft_free(char **cmd);
 void		ft_free_env(t_data *data);
 void		free_all(char *line, t_data *data, t_command *first_cmd);
-void		safe_close(int *fd);
 
 // ENVIRONMENT FUNCTIONS
 int			make_env(t_data *data, char **envp);

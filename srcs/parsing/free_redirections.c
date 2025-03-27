@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:19:35 by luis              #+#    #+#             */
-/*   Updated: 2025/03/24 19:26:32 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:32:31 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	free_redirections(t_redirection *redir)
 		free(tmp);
 		tmp = next;
 	}
-	redir = NULL;
 }

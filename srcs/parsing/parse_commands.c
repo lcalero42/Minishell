@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 19:14:45 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:56:20 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_command	*parse_commands(t_token *token_list)
 			add_argument(current_cmd, token->value);
 		else if (should_handle_redirection(token, current_cmd))
 		{
-			handle_redirections(token, &cmd_list, &current_cmd);;
+			handle_redirections(token, &cmd_list, &current_cmd);
 			token = token->next;
 		}
 		token = token->next;
@@ -53,12 +53,9 @@ static void	handle_redirections(t_token *token, t_command **cmd_list,
 	t_redir_type	type;
 	t_command		*new_cmd;
 
-	new_cmd = NULL;
 	if (!(*current_cmd))
 	{
 		new_cmd = init_command();
-		if (!new_cmd)
-            return ;
 		if (!(*cmd_list))
 			*cmd_list = new_cmd;
 		else
