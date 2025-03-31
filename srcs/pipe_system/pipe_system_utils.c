@@ -6,11 +6,13 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:55:19 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/27 17:33:40 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/31 17:02:53 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	setup_fds(t_command *cmd, int fd_in, int *fd);
 
 void	wait_processes(t_data *data, pid_t *pids, int num_commands)
 {
@@ -29,27 +31,6 @@ void	wait_processes(t_data *data, pid_t *pids, int num_commands)
 				data->exit_status = 128 + WTERMSIG(child_status);
 		}
 		i++;
-	}
-}
-
-void	setup_fds(t_command *cmd, int fd_in, int *fd)
-{
-	if (fd_in != STDIN_FILENO)
-	{
-		if (dup2(fd_in, STDIN_FILENO) == -1)
-		{
-			perror("dup2 input");
-			exit(1);
-		}
-		close(fd_in);
-	}
-	if (cmd->next)
-	{
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-		{
-			perror("dup2 output");
-			exit(1);
-		}
 	}
 }
 
@@ -105,4 +86,25 @@ pid_t	create_pipe_and_fork(int *fd, t_command *cmd)
 	}
 	pid = fork();
 	return (pid);
+}
+
+static void	setup_fds(t_command *cmd, int fd_in, int *fd)
+{
+	if (fd_in != STDIN_FILENO)
+	{
+		if (dup2(fd_in, STDIN_FILENO) == -1)
+		{
+			perror("dup2 input");
+			exit(1);
+		}
+		close(fd_in);
+	}
+	if (cmd->next)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2 output");
+			exit(1);
+		}
+	}
 }
