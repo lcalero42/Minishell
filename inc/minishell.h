@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/31 17:03:07 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/31 17:05:24 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void		exec_programm(t_command *command, t_data *data);
 void		find_cmd(t_command *command, t_data *data);
 int			is_builtin(t_command *command);
 int			fork_commands(t_data *data, pid_t *pids, int num_commands);
-pid_t		create_child_process(t_command *cmd, t_data *data, 
+pid_t		create_child_process(t_command *cmd, t_data *data,
 				int fd_in, int *fd);
 
 // UTILITY FUNCTIONS
