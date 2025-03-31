@@ -6,21 +6,29 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:55:19 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/26 17:00:50 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/27 17:33:40 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_processes(t_data *data, int *status)
+void	wait_processes(t_data *data, pid_t *pids, int num_commands)
 {
-	*status = 0;
-	while (waitpid(-1, status, 0) > 0)
+	int	i;
+	int	child_status;
+
+	i = 0;
+	while (i < num_commands)
 	{
-		if (WIFEXITED(*status))
-			data->exit_status = WEXITSTATUS(*status);
-		else if (WIFSIGNALED(*status))
-			data->exit_status = 128 + WTERMSIG(*status);
+		waitpid(pids[i], &child_status, 0);
+		if (i == num_commands - 1)
+		{
+			if (WIFEXITED(child_status))
+				data->exit_status = WEXITSTATUS(child_status);
+			else if (WIFSIGNALED(child_status))
+				data->exit_status = 128 + WTERMSIG(child_status);
+		}
+		i++;
 	}
 }
 
@@ -56,7 +64,12 @@ void	execute_child_process(t_command *cmd, t_data *data,
 	}
 	apply_redirections(cmd);
 	if (is_builtin(cmd))
+	{
 		find_cmd(cmd, data);
+		free_all(NULL, data, data->commands);
+		ft_free_env(data);
+		exit(data->exit_status);
+	}
 	else
 		exec_programm(cmd, data);
 	free_all(NULL, data, data->commands);

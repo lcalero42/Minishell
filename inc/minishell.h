@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/26 17:04:47 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:38:54 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_data
 	t_token		*tokens;
 	t_command	*commands;
 	int			exit_status;
+	pid_t		*pids;
 }	t_data;
 
 // TOKENIZER FUNCTION
@@ -130,7 +131,7 @@ int			apply_heredoc(char *delimiter);
 void		reset_fds(t_command *cmd);
 
 // PIPE FUNCTIONS
-void		wait_processes(t_data *data, int *status);
+void		wait_processes(t_data *data, pid_t *pids, int num_commands);
 void		exec_pipe(t_data *data);
 int			check_pipe(t_data *data);
 void		setup_fds(t_command *cmd, int fd_in, int *fd);
@@ -141,6 +142,9 @@ pid_t		create_pipe_and_fork(int *fd, t_command *cmd);
 void		exec_programm(t_command *command, t_data *data);
 void		find_cmd(t_command *command, t_data *data);
 int			is_builtin(t_command *command);
+int			fork_commands(t_data *data, pid_t *pids, int num_commands);
+pid_t		create_child_process(t_command *cmd, t_data *data, 
+				int fd_in, int *fd);
 
 // UTILITY FUNCTIONS
 void		print_welcome(void);
@@ -148,5 +152,6 @@ void		setup_signal(void);
 char		*ft_strncpy(char *destination, const char *source, size_t length);
 char		**join_cmd_args(t_command *command);
 int			count_args(char **args);
+int			lst_cmd_len(t_command *cmd);
 
 #endif
