@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/27 16:38:54 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/02 13:35:21 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_data
 
 // TOKENIZER FUNCTION
 t_token		*tokenize(char *input, t_data *data);
-char		*extract_quoted_string(char *str);
+char		*extract_quoted_string(char *str, t_data *data);
 char		*extract_word(char *str);
 void		add_token(t_token **tokens, char *value, t_token_type type);
 int			ft_isspace(char c);
