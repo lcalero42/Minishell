@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/25 14:27:18 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/02 17:01:36 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	apply_redirections(t_command *cmd)
 	t_redirection	*redir;
 	int				fd;
 
-	fd = 0;
+	fd = -1;
 	cmd->saved_stdin = dup(STDIN_FILENO);
 	cmd->saved_stdout = dup(STDOUT_FILENO);
 	redir = cmd->redirections;
@@ -36,6 +36,8 @@ int	apply_redirections(t_command *cmd)
 			handle_append_out(fd, redir);
 		else if (redir->type == REDIR_HEREDOC)
 			handle_heredoc(fd, redir);
+		if (fd > 2)
+			close(fd);
 		redir = redir->next;
 	}
 	return (1);
@@ -49,7 +51,7 @@ static int	handle_input_output(int fd, t_redirection *redir)
 		if (fd == -1)
 		{
 			perror(redir->file);
-			return (0);
+			return (-1);
 		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
@@ -60,12 +62,12 @@ static int	handle_input_output(int fd, t_redirection *redir)
 		if (fd == -1)
 		{
 			perror(redir->file);
-			return (0);
+			return (-1);
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
-	return (0);
+	return (fd);
 }
 
 static int	handle_heredoc(int fd, t_redirection *redir)
@@ -74,11 +76,11 @@ static int	handle_heredoc(int fd, t_redirection *redir)
 	{
 		fd = apply_heredoc(redir->file);
 		if (fd == -1)
-			return (0);
+			return (-1);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
-	return (0);
+	return (fd);
 }
 
 static int	handle_append_out(int fd, t_redirection *redir)
@@ -89,10 +91,10 @@ static int	handle_append_out(int fd, t_redirection *redir)
 		if (fd == -1)
 		{
 			perror(redir->file);
-			return (0);
+			return (-1);
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
-	return (0);
+	return (fd);
 }
