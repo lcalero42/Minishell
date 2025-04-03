@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/02 13:35:21 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:29:08 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_command	*init_command(void);
 void		add_command(t_command **cmd_list, t_command *new_cmd);
 void		add_argument(t_command *cmd, char *arg);
 void		add_redirection(t_command *cmd, char *file, t_redir_type type);
+char		*extract_quote_no_expand(char *str);
 
 // MEMORY MANAGEMENT
 void		free_tokens(t_token *tokens);
@@ -143,7 +144,7 @@ void		exec_programm(t_command *command, t_data *data);
 void		find_cmd(t_command *command, t_data *data);
 int			is_builtin(t_command *command);
 int			fork_commands(t_data *data, pid_t *pids, int num_commands);
-pid_t		create_child_process(t_command *cmd, t_data *data, 
+pid_t		create_child_process(t_command *cmd, t_data *data,
 				int fd_in, int *fd);
 
 // UTILITY FUNCTIONS

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:15:06 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/02 17:55:38 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/03 15:25:42 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,12 @@ static void	handle_words(t_token **tokens, t_data *data, char *input, int *i)
 		free(word);
 	}
 	else if (input[*i] == '\'' || input[*i] == '"')
+	{
+		word = extract_quote_no_expand(input + *i);
 		add_word(extract_quoted_string(input + *i, data), i, QUOTE, tokens);
+		*i += ft_strlen(word) + 1;
+		free(word);
+	}
 	else if (!ft_isspace(input[*i]))
 		add_word(extract_word(input + *i), i, WORD, tokens);
 }
@@ -96,8 +101,6 @@ static void	add_word(char *input, int *i, t_token_type type, t_token **tokens)
 	add_token(tokens, word, type);
 	if (type == WORD)
 		*i += ft_strlen(word) - 1;
-	else if (type == QUOTE)
-		*i += ft_strlen(word) + 1;
 	else if (type == ENV_VAR)
 		*i += ft_strlen(word) - 1;
 	free(word);

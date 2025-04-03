@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:30:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/02 17:30:53 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:29:26 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	handle_env_var(char **rslt, char *str, int *i, t_data *data);
 static char	*extract_word_quoted(char *str);
 
-char *extract_quoted_string(char *str, t_data *data)
+char	*extract_quoted_string(char *str, t_data *data)
 {
 	char	*rslt;
 	int		i;
@@ -47,14 +47,56 @@ char *extract_quoted_string(char *str, t_data *data)
 	return (rslt);
 }
 
-static void handle_env_var(char **rslt, char *str, int *i, t_data *data)
+char	*extract_quote_no_expand(char *str)
 {
-	char 	*var_name;
-	char 	*env_var;
-	char 	*tmp;
-	int 	var_name_len;
-	
+	char	*rslt;
+	int		i;
+	int		size;
+	char	quote;
+
+	if (!str || (str[0] != '\'' && str[0] != '"'))
+		return (NULL);
+	quote = str[0];
+	size = 1;
+	while (str[size] && str[size] != quote)
+		size++;
+	if (str[size] != quote)
+		return (NULL);
+	rslt = malloc((size) * sizeof(char));
+	if (!rslt)
+		return (NULL);
+	i = 0;
+	while (i < size - 1)
+	{
+		rslt[i] = str[i + 1];
+		i++;
+	}
+	rslt[i] = '\0';
+	return (rslt);
+}
+
+static void	handle_env_var(char **rslt, char *str, int *i, t_data *data)
+{
+	char	*var_name;
+	char	*env_var;
+	char	*tmp;
+
 	(*i)++;
+	if (!str[*i] || str[*i] == '"' || str[*i] == '\'')
+	{
+		tmp = ft_strjoin(*rslt, "$");
+		free(*rslt);
+		*rslt = tmp;
+		return ;
+	}
+	if (str[*i] == '?')
+	{
+		tmp = ft_strjoin(*rslt, "0");
+		free(*rslt);
+		*rslt = tmp;
+		(*i)++;
+		return ;
+	}
 	var_name = extract_word_quoted(str + *i);
 	if (!var_name || var_name[0] == '\0')
 	{
@@ -64,32 +106,34 @@ static void handle_env_var(char **rslt, char *str, int *i, t_data *data)
 	env_var = ft_getenv(data, var_name);
 	if (!env_var)
 		env_var = ft_strdup("");
-	var_name_len = ft_strlen(var_name);
+	else
+		env_var = ft_strdup(env_var);
 	tmp = ft_strjoin(*rslt, env_var);
 	free(*rslt);
 	*rslt = tmp;
+	*i += ft_strlen(var_name);
 	free(var_name);
-	*i += var_name_len;
+	free(env_var);
 }
 
 static char	*extract_word_quoted(char *str)
 {
 	int		i;
-	int		size;
+	int		j;
 	char	*rslt;
 
 	i = 0;
-	size = 0;
-	while (!ft_isspace(str[size]) && str[size])
-		size++;
-	rslt = malloc(sizeof(char) * (size + 1));
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+		i++;
+	rslt = malloc(sizeof(char) * (i + 1));
 	if (!rslt)
 		return (NULL);
-	while (!ft_isspace(str[i]) && str[i] && str[i] != '"')
+	j = 0;
+	while (j < i)
 	{
-		rslt[i] = str[i];
-		i++;
+		rslt[j] = str[j];
+		j++;
 	}
-	rslt[i] = '\0';
+	rslt[j] = '\0';
 	return (rslt);
 }

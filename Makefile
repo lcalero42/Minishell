@@ -20,6 +20,7 @@ SRCS = srcs/main.c \
 	   libft/ft_memcpy.c \
 	   libft/ft_strchr.c \
 	   libft/ft_calloc.c \
+	   libft/ft_isalnum.c \
 	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/ft_isspace.c \
