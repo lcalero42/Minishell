@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:30:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/03 16:29:26 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:27:33 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static void	handle_env_var(char **rslt, char *str, int *i, t_data *data)
 	char	*var_name;
 	char	*env_var;
 	char	*tmp;
+	char	*exit_status;
 
 	(*i)++;
 	if (!str[*i] || str[*i] == '"' || str[*i] == '\'')
@@ -91,8 +92,10 @@ static void	handle_env_var(char **rslt, char *str, int *i, t_data *data)
 	}
 	if (str[*i] == '?')
 	{
-		tmp = ft_strjoin(*rslt, "0");
+		exit_status = ft_itoa(data->exit_status);
+		tmp = ft_strjoin(*rslt, exit_status);
 		free(*rslt);
+		free(exit_status);
 		*rslt = tmp;
 		(*i)++;
 		return ;
