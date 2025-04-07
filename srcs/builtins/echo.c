@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:54:00 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 13:15:16 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/07 16:13:38 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ static void	write_output(t_command *command, t_data *data, int i)
 	char	*to_free;
 
 	to_free = NULL;
-	if (command->args[i][1] == '?')
+	if (!ft_strlen(command->args[i]))
+	{
+		output = ft_strdup("");
+		to_free = output;
+	}
+	else if (!ft_strncmp(command->args[i], "$?", INT_MAX))
 	{
 		output = ft_itoa(data->exit_status);
 		to_free = output;
