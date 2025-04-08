@@ -32,6 +32,7 @@ SRCS = srcs/main.c \
 	   srcs/parsing/parse_commands.c \
 	   srcs/parsing/free_redirections.c \
 	   srcs/parsing/lst_utils.c \
+	   srcs/parsing/check_parsing_errors.c \
 	   srcs/builtins/cd.c \
        srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/08 14:19:55 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/08 17:25:10 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void		add_command(t_command **cmd_list, t_command *new_cmd);
 void		add_argument(t_command *cmd, char *arg);
 void		add_redirection(t_command *cmd, char *file, t_redir_type type);
 char		*extract_quote_no_expand(char *str);
+int			check_parsing_errors(char *s);
 
 // MEMORY MANAGEMENT
 void		free_tokens(t_token *tokens);
