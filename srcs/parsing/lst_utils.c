@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 13:53:32 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 15:13:40 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/27 16:07:08 by lcalero           #+#    #+#             */
+/*   Updated: 2025/03/27 16:08:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(t_data *data)
+int	lst_cmd_len(t_command *cmd)
 {
-	char	cwd[1024];
+	int	i;
 
-	getcwd(cwd, sizeof(cwd));
-	ft_putstr_fd(cwd, 1);
-	ft_putchar_fd('\n', 1);
-	data->exit_status = 0;
+	i = 0;
+	while (cmd)
+	{
+		i++;
+		cmd = cmd->next;
+	}
+	return (i);
 }

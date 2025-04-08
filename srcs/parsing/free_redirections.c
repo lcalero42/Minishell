@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   free_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 13:53:32 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 15:13:40 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/17 16:19:35 by luis              #+#    #+#             */
+/*   Updated: 2025/03/18 14:32:31 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(t_data *data)
+void	free_redirections(t_redirection *redir)
 {
-	char	cwd[1024];
+	t_redirection	*tmp;
+	t_redirection	*next;
 
-	getcwd(cwd, sizeof(cwd));
-	ft_putstr_fd(cwd, 1);
-	ft_putchar_fd('\n', 1);
-	data->exit_status = 0;
+	tmp = redir;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (tmp->file)
+			free(tmp->file);
+		free(tmp);
+		tmp = next;
+	}
 }

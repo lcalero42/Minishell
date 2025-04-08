@@ -6,43 +6,57 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:22 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:08:04 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	handle_unknown_command(t_data *data);
+static void	find_command(t_command *command, t_data *data);
 
 void	handle_commands(t_data *data)
 {
-	if (!data->cmd[0])
-		return ;
-	else if (!ft_strncmp("pwd", data->cmd[0], INT_MAX))
-		pwd();
-	else if (!ft_strncmp("cd", data->cmd[0], INT_MAX))
-		cd(data->cmd[1], data);
-	else if (!ft_strncmp("echo", data->cmd[0], INT_MAX))
-		echo(data);
-	else if (!ft_strncmp("env", data->cmd[0], INT_MAX))
-		env(data->envp);
-	else if (!ft_strncmp("unset", data->cmd[0], INT_MAX))
-		unset(data->cmd[1], data->envp);
-	else if (!ft_strncmp("export", data->cmd[0], INT_MAX))
-		export(data);
-	else if (!ft_strncmp("exit", data->cmd[0], INT_MAX))
-		ft_exit(data);
-	else if ((data->cmd[0][0] == '/' || data->cmd[0][0] == '.'))
-		exec_cmd(data->cmd[0], data->cmd, data->envp);
-	else
-		handle_unknown_command(data->cmd[0]);
-	return ;
+	t_command	*tmp;
+
+	tmp = data->commands;
+	while (tmp)
+	{
+		find_command(tmp, data);
+		tmp = tmp->next;
+	}
 }
 
-void	handle_unknown_command(char *cmd)
+static void	find_command(t_command *command, t_data *data)
+{
+	apply_redirections(command);
+	if (command->command)
+	{
+		if (!ft_strncmp("pwd", command->command, INT_MAX))
+			pwd(data);
+		else if (!ft_strncmp("cd", command->command, INT_MAX))
+			cd(command->args[0], data);
+		else if (!ft_strncmp("echo", command->command, INT_MAX))
+			echo(command, data);
+		else if (!ft_strncmp("env", command->command, INT_MAX))
+			env(data->envp, data);
+		else if (!ft_strncmp("unset", command->command, INT_MAX))
+			unset(command->args[0], data->envp, data);
+		else if (!ft_strncmp("export", command->command, INT_MAX))
+			export(command, data);
+		else if (!ft_strncmp("exit", command->command, INT_MAX))
+			ft_exit(command, data);
+		else if (command->command[0] == '/' || command->command[0] == '.')
+			exec_cmd(command, data);
+		else
+			handle_unknown_command(command->command, data);
+	}
+	reset_fds(command);
+}
+
+void	handle_unknown_command(char *cmd, t_data *data)
 {
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found", 2);
 	ft_putchar_fd('\n', 2);
-	return ;
+	data->exit_status = 127;
 }

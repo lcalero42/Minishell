@@ -15,14 +15,23 @@ SRCS = srcs/main.c \
 	   libft/ft_strjoin.c \
 	   libft/ft_isdigit.c \
 	   libft/ft_atoi.c \
-	   srcs/parsing/parsing.c \
-	   srcs/parsing/split_tokens.c \
+	   libft/ft_itoa.c \
+	   libft/get_next_line.c \
+	   libft/ft_memcpy.c \
+	   libft/ft_strchr.c \
+	   libft/ft_calloc.c \
+	   libft/ft_isalnum.c \
 	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/ft_isspace.c \
 	   srcs/parsing/tokenize.c \
 	   srcs/parsing/extract_quoted_string.c \
 	   srcs/parsing/extract_word.c \
+	   srcs/parsing/ft_free.c \
+	   srcs/parsing/cmd_utils.c \
+	   srcs/parsing/parse_commands.c \
+	   srcs/parsing/free_redirections.c \
+	   srcs/parsing/lst_utils.c \
 	   srcs/builtins/cd.c \
        srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
@@ -36,6 +45,13 @@ SRCS = srcs/main.c \
 	   srcs/exec/handle_commands.c \
        srcs/exec/loop_logic.c \
 	   srcs/exec_executable/find_executable.c \
+	   srcs/redirections/apply_redirections.c \
+	   srcs/redirections/apply_heredoc.c \
+	   srcs/redirections/reset_fds.c \
+	   srcs/pipe_system/exec_pipe.c \
+	   srcs/pipe_system/pipe_system_utils.c \
+	   srcs/pipe_system/check_pipe.c \
+	   srcs/pipe_system/pipe_exec_utils.c
 
 HEADERS = inc/minishell.h
 

@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*   reset_fds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 12:06:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/14 14:13:39 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/24 14:21:19 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/04/02 17:23:03 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 200809L
 #include "minishell.h"
 
-void	sig_handler(int sig);
-
-void	setup_signal(void)
+void	reset_fds(t_command *cmd)
 {
-	struct sigaction	sa;
-
-	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-	sa.sa_handler = sig_handler;
-	sigaction(SIGINT, &sa, NULL);
-}
-
-void	sig_handler(int sig)
-{
-	if (sig == SIGINT)
+	if (cmd->saved_stdin != -1)
 	{
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		dup2(cmd->saved_stdin, STDIN_FILENO);
+		close(cmd->saved_stdin);
+		cmd->saved_stdin = -1;
+	}
+	if (cmd->saved_stdout != -1)
+	{
+		dup2(cmd->saved_stdout, STDOUT_FILENO);
+		close(cmd->saved_stdout);
+		cmd->saved_stdout = -1;
 	}
 }

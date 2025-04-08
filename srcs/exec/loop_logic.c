@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 14:25:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:26 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
+/*   Updated: 2025/03/26 16:48:07 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,30 @@
 
 static int	handle_exit(char *line);
 
-void	loop(t_data *data, t_token *token)
+void	loop(t_data *data)
 {
-	char	*line;
+	char		*line;
 
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
-		token = tokenize(line, data);
+		data->tokens = tokenize(line, data);
+		data->commands = parse_commands(data->tokens);
 		if (!handle_exit(line))
-			break ;
-		while (token)  // Parcours toute la liste, y compris le dernier élément
 		{
-			printf("value : %s\n", token->value);
-			printf("type : %d\n", token->type);
-			token = token->next;
-		}	
-		// handle_commands(data);
+			ft_putstr_fd("exit\n", 1);
+			break ;
+		}
+		if (!check_pipe(data))
+			handle_commands(data);
+		else
+			exec_pipe(data);
 		if (*line)
 			add_history(line);
-		free(line);
-		ft_free(data->cmd);
+		free_all(line, data, data->commands);
 	}
-	free(line);
+	free_all(line, data, data->commands);
 	ft_free_env(data);
-	if (line)
-		ft_free(data->cmd);
 	rl_clear_history();
 }
 
@@ -48,4 +46,14 @@ static int	handle_exit(char *line)
 	if (!line)
 		return (0);
 	return (1);
+}
+
+void	free_all(char *line, t_data *data, t_command *first_cmd)
+{
+	if (line)
+		free(line);
+	if (first_cmd)
+		free_commands(first_cmd);
+	if (data->tokens)
+		free_tokens(data->tokens);
 }

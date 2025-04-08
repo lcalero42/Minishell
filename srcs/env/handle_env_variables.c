@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env_variables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:57:52 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:40 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:23:44 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*expand_variable(char *input, t_data *data)
 	var_name = NULL;
 	if (input[0] == '$')
 	{
-		var_name = ft_strdup(input + 1);
+		var_name = extract_word(input + 1);
 		output = ft_getenv(data, var_name);
 		if (!output)
 		{

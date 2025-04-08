@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 18:39:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/10 15:17:00 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/12 15:26:56 by ekeisler          #+#    #+#             */
+/*   Updated: 2025/03/12 15:34:16 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	pars_input(t_data *data, char *input)
-{
-	if (!input)
-		return ;
-	data->cmd = split_token(input);
-}
 
 void	ft_free(char **cmd)
 {

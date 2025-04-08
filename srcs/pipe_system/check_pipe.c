@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   check_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 13:53:32 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 15:13:40 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/26 16:58:56 by lcalero           #+#    #+#             */
+/*   Updated: 2025/03/26 17:01:13 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(t_data *data)
+int	check_pipe(t_data *data)
 {
-	char	cwd[1024];
+	t_token	*token;
 
-	getcwd(cwd, sizeof(cwd));
-	ft_putstr_fd(cwd, 1);
-	ft_putchar_fd('\n', 1);
-	data->exit_status = 0;
+	token = data->tokens;
+	while (token)
+	{
+		if (token->type == PIPE)
+			return (1);
+		token = token->next;
+	}
+	return (0);
 }
