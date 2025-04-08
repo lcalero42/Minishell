@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:50:28 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/03 15:14:03 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	export(t_command *command, t_data *data)
 	}
 	if (!count)
 		print_ascii_order(data);
+	data->exit_status = 0;
 }
 
 static void	print_ascii_order(t_data *data)
