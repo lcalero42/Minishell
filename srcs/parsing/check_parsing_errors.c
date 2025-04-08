@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:21:36 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/08 17:28:07 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/08 17:37:22 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	check_parsing_errors(char *s)
 	}
 	return (1);
 }
+
 static int	check_closed_quotes(char *s)
 {
 	int		i;
