@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/08 17:26:35 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:49:58 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ void	loop(t_data *data)
 	while (1)
 	{
 		line = readline("\e[1;32mMinishell> \e[0m");
+		if (line)
+		{
+			if (!check_parsing_errors(line))
+				continue ;
+		}
+		data->tokens = tokenize(line, data);
+		data->commands = parse_commands(data->tokens);
 		if (!handle_exit(line))
 		{
 			ft_putstr_fd("exit\n", 1);
 			break ;
 		}
-		if (!check_parsing_errors(line))
-			continue ;
-		data->tokens = tokenize(line, data);
-		data->commands = parse_commands(data->tokens);
 		if (!check_pipe(data))
 			handle_commands(data);
 		else

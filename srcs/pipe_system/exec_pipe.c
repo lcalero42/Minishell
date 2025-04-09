@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/27 16:40:33 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/09 16:28:09 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ void	find_cmd(t_command *command, t_data *data)
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(command, data);
 	else
+	{
+		reset_fds(command);
 		exit(127);
+	}
+	reset_fds(command);
 }
 
 int	is_builtin(t_command *command)
