@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/09 16:28:09 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/09 16:57:41 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	exec_programm(t_command *command, t_data *data)
 	exec_args = join_cmd_args(command);
 	if (executable)
 		execve(executable, exec_args, data->envp);
+	reset_fds(command);
 	handle_unknown_command(command->command, data);
 	ft_free(exec_args);
 	free_all(NULL, data, data->commands);
@@ -66,9 +67,10 @@ void	find_cmd(t_command *command, t_data *data)
 		export(command, data);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(command, data);
-	else
+	else if (command->command[0] != '/' && command->command[0] != '.')
 	{
 		reset_fds(command);
+		handle_unknown_command(command->command, data);
 		exit(127);
 	}
 	reset_fds(command);
@@ -89,6 +91,8 @@ int	is_builtin(t_command *command)
 	else if (!ft_strncmp("export", command->command, INT_MAX))
 		return (1);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
+		return (1);
+	else if (command->command[0] != '/' && command->command[0] != '.')
 		return (1);
 	return (0);
 }
