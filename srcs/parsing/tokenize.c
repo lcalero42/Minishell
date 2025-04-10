@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:15:06 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/08 17:17:05 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/10 16:30:03 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ static void	handle_words(t_token **tokens, t_data *data, char *input, int *i)
 		if (word[0] == '?')
 		{
 			free(word);
-			word = extract_word(input + *i);
-			add_word(word, i, ENV_VAR, tokens);
+			add_word(extract_word(input + *i), i, ENV_VAR, tokens);
 			return ;
 		}
 		if (ft_getenv(data, word))
