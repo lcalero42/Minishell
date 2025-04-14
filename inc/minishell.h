@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/10 15:41:50 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/14 18:30:43 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 
 // DEFINES
 # define MAX_ARGS 64
+
+// GLOB
+int	g_signal;
 
 // ENUMERATIONS
 typedef enum e_token_type
@@ -155,7 +158,7 @@ pid_t		create_child_process(t_command *cmd, t_data *data,
 
 // UTILITY FUNCTIONS
 void		print_welcome(void);
-void		setup_signal(void);
+void	setup_signal(int is_child, t_data *data);
 char		*ft_strncpy(char *destination, const char *source, size_t length);
 char		**join_cmd_args(t_command *command);
 int			count_args(char **args);

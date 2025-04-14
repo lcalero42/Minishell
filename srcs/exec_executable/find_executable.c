@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/25 16:20:20 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/14 18:31:19 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	exec_cmd(t_command *command, t_data *data)
 
 static void	child_process(t_data *data, char *executable, char **exec_args)
 {
+	setup_signal(1, data);
 	if (executable)
 		execve(executable, exec_args, data->envp);
 	handle_unknown_command(data->commands->command, data);
@@ -55,10 +56,17 @@ static void	child_process(t_data *data, char *executable, char **exec_args)
 
 static void	set_exit_status(t_data *data, int status)
 {
+	int	signal;
+	
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		data->exit_status = 128 + WTERMSIG(status);
+	{
+		signal = WTERMSIG(status);
+		data->exit_status = 128 + signal;
+		if (signal == SIGQUIT)
+			ft_putstr_fd("Quit (core dumped)\n", 1);
+	}
 }
 
 char	**join_cmd_args(t_command *command)
