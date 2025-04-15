@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:54:00 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/07 16:13:38 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/15 17:40:03 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	write_output(t_command *command, t_data *data, int i)
 		output = ft_itoa(data->exit_status);
 		to_free = output;
 	}
-	else if (command->args[i][0] == '$')
+	else if (command->args[i][0] == '$' && ft_strlen(command->args[i]) > 1)
 		output = expand_variable(command->args[i] + 1, data);
 	else
 		output = command->args[i];
