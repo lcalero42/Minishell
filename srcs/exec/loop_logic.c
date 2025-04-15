@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/10 16:26:02 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/15 19:01:39 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ void	loop(t_data *data)
 			continue ;
 		if (process_result == -1)
 			break ;
+		if (g_signals == SIGINT)
+			data->exit_status = 130;
 		execute_commands(data);
 		if (*line)
 			add_history(line);
 		free_all(line, data, data->commands);
+		g_signals = 0;
 	}
 	free_all(line, data, data->commands);
 	ft_free_env(data);
