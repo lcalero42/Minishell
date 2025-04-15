@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 17:30:29 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/15 17:44:11 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/15 18:11:04 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	handle_env_var(char **rslt, char *str, int *i, t_data *data)
 	char	*tmp;
 
 	(*i)++;
-	if (!str[*i] || str[*i] == '"' || str[*i] == '\'' || 
-		!(ft_isalnum(str[*i]) || str[*i] == '_' || str[*i] == '?'))
+	if (!str[*i] || str[*i] == '"' || str[*i] == '\''
+		|| !(ft_isalnum(str[*i]) || str[*i] == '_' || str[*i] == '?'))
 	{
 		tmp = ft_strjoin(*rslt, "$");
 		free(*rslt);
