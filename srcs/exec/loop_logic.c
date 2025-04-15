@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/10 16:26:02 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:43:51 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,22 @@ void	loop(t_data *data)
 		if (!line)
 			break ;
 		if (process_result == 0)
+		{
+			free_all(line, data, data->commands);
 			continue ;
+		}
 		if (process_result == -1)
+		{
+			free_all(line, data, data->commands);
 			break ;
+		}
 		execute_commands(data);
 		if (*line)
 			add_history(line);
 		free_all(line, data, data->commands);
+		line = NULL;
+        data->commands = NULL;
+        data->tokens = NULL;
 	}
 	free_all(line, data, data->commands);
 	ft_free_env(data);
@@ -43,8 +52,6 @@ void	loop(t_data *data)
 
 static int	process_input(char *line, t_data *data)
 {
-	data->tokens = tokenize(line, data);
-	data->commands = parse_commands(data->tokens);
 	if (!handle_exit(line))
 	{
 		ft_putstr_fd("exit\n", 1);
@@ -52,6 +59,8 @@ static int	process_input(char *line, t_data *data)
 	}
 	if (!check_parsing_errors(line))
 		return (0);
+	data->tokens = tokenize(line, data);
+	data->commands = parse_commands(data->tokens);
 	return (1);
 }
 
