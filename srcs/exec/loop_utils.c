@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:02:42 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 15:11:57 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 15:36:11 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,16 @@ void	update_exit_status(t_data *data)
 		data->exit_status = 130;
 	else if (g_signals == SIGQUIT)
 		data->exit_status = 131;
+	g_signals = 0;
 }
 
 void	execute_and_update(t_data *data)
 {
 	if (g_signals == SIGINT)
+	{
 		data->exit_status = 130;
+		g_signals = 0;
+	}
 	setup_signal(2);
 	execute_commands(data);
 	update_exit_status(data);
@@ -53,5 +57,7 @@ void	cleanup_iteration(char *line, t_data *data)
 	if (*line)
 		add_history(line);
 	free_all(line, data, data->commands);
-	g_signals = 0;
+	line = NULL;
+	data->commands = NULL;
+	data->tokens = NULL;
 }

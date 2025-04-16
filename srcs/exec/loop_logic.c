@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 15:18:46 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 15:24:45 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,15 @@ void	execute_commands(t_data *data)
 
 static int	process_input(char *line, t_data *data)
 {
-	data->tokens = tokenize(line, data);
-	data->commands = parse_commands(data->tokens);
-	if (!handle_exit(line))
+	if (!line)
 	{
 		ft_putstr_fd("exit\n", 1);
 		return (-1);
 	}
 	if (!check_parsing_errors(line))
 		return (0);
-	return (1);
-}
-
-static int	handle_exit(char *line)
-{
-	if (!line)
-		return (0);
+	data->tokens = tokenize(line, data);
+	data->commands = parse_commands(data->tokens);
 	return (1);
 }
 
