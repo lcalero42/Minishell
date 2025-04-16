@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:38:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 16:48:53 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 17:07:14 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*get_prompt_line(t_data *data)
 	
 	emoji = exit_code_emoji(data);
 	res = ft_strjoin(emoji, " \e[1;32mMinishell> \e[0m");
+	if (!res)
+		return (NULL);
 	return (res);
 }
 
