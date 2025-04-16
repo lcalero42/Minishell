@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/15 19:02:50 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:34:22 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ static void	child_process(t_data *data, char *executable, char **exec_args)
 {
 	setup_signal(1);
 	if (executable)
-	{
 		execve(executable, exec_args, data->envp);
-	}
 	handle_unknown_command(data->commands->command, data);
 	exit(127);
 }

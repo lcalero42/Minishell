@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/15 19:01:29 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:16:25 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ pid_t		create_child_process(t_command *cmd, t_data *data,
 
 // UTILITY FUNCTIONS
 void		print_welcome(void);
-void		setup_signal(int in_child);
+void		setup_signal(int context);
 char		*ft_strncpy(char *destination, const char *source, size_t length);
 char		**join_cmd_args(t_command *command);
 int			count_args(char **args);

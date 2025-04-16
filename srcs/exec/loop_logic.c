@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/15 19:01:39 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:51:34 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	loop(t_data *data)
 
 	while (1)
 	{
+		if (g_signals != SIGINT)
+			setup_signal(0);
+		else
+			g_signals = 0;
 		line = readline("\e[1;32mMinishell> \e[0m");
 		process_result = process_input(line, data);
 		if (!line)
@@ -33,7 +37,12 @@ void	loop(t_data *data)
 			break ;
 		if (g_signals == SIGINT)
 			data->exit_status = 130;
+		setup_signal(2);
 		execute_commands(data);
+		if (g_signals == SIGINT)
+			data->exit_status = 130;
+		else if (g_signals == SIGQUIT)
+			data->exit_status = 131;
 		if (*line)
 			add_history(line);
 		free_all(line, data, data->commands);

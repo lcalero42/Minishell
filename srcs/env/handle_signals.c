@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:06:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/15 19:03:41 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:56:16 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,49 @@
 
 int	g_signals;
 
-static void	sig_affect(int sig);
+static void	sig_handler(int sig)
+{
+	g_signals = sig;
+	if (sig == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
 
-void	setup_signal(int in_child)
+static void	sig_handler_cmd(int sig)
+{
+	g_signals = sig;
+	if (sig == SIGINT)
+		write(STDOUT_FILENO, "\n", 1);
+	else if (sig == SIGQUIT)
+		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+}
+
+void	setup_signal(int context)
 {
 	struct sigaction	sa;
 
 	memset(&sa, 0, sizeof(sa));
-	if (in_child == 0)
+	if (context == 0)
 	{
-		sa.sa_handler = sig_affect;
+		sa.sa_handler = sig_handler;
 		sigaction(SIGINT, &sa, NULL);
 		sa.sa_handler = SIG_IGN;
 		sigaction(SIGQUIT, &sa, NULL);
 	}
-	else
+	else if (context == 1)
 	{
-		sa.sa_handler = SIG_DFL;
-		sigaction(SIGQUIT, &sa, NULL);
+		sa.sa_handler = sig_handler_cmd;
 		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
 	}
-}
-
-static void	sig_affect(int sig)
-{
-	g_signals = sig;
-	if (g_signals == SIGINT)
+	else if (context == 2)
 	{
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		sa.sa_handler = sig_handler_cmd;
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
 	}
 }
