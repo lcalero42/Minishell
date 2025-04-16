@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/25 16:20:20 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 14:34:22 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	exec_cmd(t_command *command, t_data *data)
 
 static void	child_process(t_data *data, char *executable, char **exec_args)
 {
+	setup_signal(1);
 	if (executable)
 		execve(executable, exec_args, data->envp);
 	handle_unknown_command(data->commands->command, data);
@@ -58,7 +59,15 @@ static void	set_exit_status(t_data *data, int status)
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		data->exit_status = 128 + WTERMSIG(status);
+	{
+		g_signals = WTERMSIG(status);
+		data->exit_status = 128 + g_signals;
+		if (g_signals == SIGQUIT)
+			ft_putstr_fd("Quit (core dumped)\n", 1);
+		if (g_signals == SIGINT)
+			data->exit_status = 130;
+	}
+	setup_signal(0);
 }
 
 char	**join_cmd_args(t_command *command)

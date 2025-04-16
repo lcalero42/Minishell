@@ -6,75 +6,65 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/15 17:01:12 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 15:18:46 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	process_input(char *line, t_data *data);
-static void	execute_commands(t_data *data);
-static void	exec_reset_cmd(t_data *data, char *line);
 
 void	loop(t_data *data)
 {
 	char	*line;
 	int		process_result;
+	int		result;
 
 	while (1)
 	{
+		handle_signals_before_input();
 		line = readline("\e[1;32mMinishell> \e[0m");
 		process_result = process_input(line, data);
-		if (!line)
+		result = handle_command_result(line, process_result);
+		if (result == 1)
 			break ;
-		if (process_result == 0)
-		{
-			free_all(line, data, data->commands);
+		if (result == 2)
 			continue ;
-		}
-		if (process_result == -1)
-		{
-			free_all(line, data, data->commands);
-			break ;
-		}
-		exec_reset_cmd(data, line);
+		execute_and_update(data);
+		cleanup_iteration(line, data);
 	}
 	free_all(line, data, data->commands);
 	ft_free_env(data);
 	rl_clear_history();
 }
 
-static void	exec_reset_cmd(t_data *data, char *line)
+void	execute_commands(t_data *data)
 {
-	execute_commands(data);
-	if (*line)
-		add_history(line);
-	free_all(line, data, data->commands);
-	line = NULL;
-	data->commands = NULL;
-	data->tokens = NULL;
+	if (!check_pipe(data))
+		handle_commands(data);
+	else
+		exec_pipe(data);
 }
 
 static int	process_input(char *line, t_data *data)
 {
-	if (!line)
+	data->tokens = tokenize(line, data);
+	data->commands = parse_commands(data->tokens);
+	if (!handle_exit(line))
 	{
 		ft_putstr_fd("exit\n", 1);
 		return (-1);
 	}
 	if (!check_parsing_errors(line))
 		return (0);
-	data->tokens = tokenize(line, data);
-	data->commands = parse_commands(data->tokens);
 	return (1);
 }
 
-static void	execute_commands(t_data *data)
+static int	handle_exit(char *line)
 {
-	if (!check_pipe(data))
-		handle_commands(data);
-	else
-		exec_pipe(data);
+	if (!line)
+		return (0);
+	return (1);
 }
 
 void	free_all(char *line, t_data *data, t_command *first_cmd)
