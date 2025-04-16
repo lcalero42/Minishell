@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 15:24:45 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 16:58:02 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ void	loop(t_data *data)
 	char	*line;
 	int		process_result;
 	int		result;
+	char	*prompt;
 
 	while (1)
 	{
 		handle_signals_before_input();
-		line = readline("\e[1;32mMinishell> \e[0m");
+		prompt = get_prompt_line(data);
+		line = readline(prompt);
+		free(prompt);
 		process_result = process_input(line, data);
 		result = handle_command_result(line, process_result);
 		if (result == 1)
@@ -34,6 +37,7 @@ void	loop(t_data *data)
 		cleanup_iteration(line, data);
 	}
 	free_all(line, data, data->commands);
+	free(prompt);
 	ft_free_env(data);
 	rl_clear_history();
 }

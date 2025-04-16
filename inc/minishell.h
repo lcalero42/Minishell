@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 15:09:17 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 16:58:18 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,6 @@ int			handle_command_result(char *line, int process_result);
 void		update_exit_status(t_data *data);
 void		execute_and_update(t_data *data);
 void		cleanup_iteration(char *line, t_data *data);
+char		*get_prompt_line(t_data *data);
 
 #endif
