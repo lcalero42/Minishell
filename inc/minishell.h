@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 14:16:25 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 15:09:17 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void		handle_unknown_command(char *cmd, t_data *data);
 int			apply_redirections(t_command *cmd);
 int			apply_heredoc(char *delimiter);
 void		reset_fds(t_command *cmd);
+void		execute_commands(t_data *data);
 
 // PIPE FUNCTIONS
 void		wait_processes(t_data *data, pid_t *pids, int num_commands);
@@ -163,5 +164,10 @@ char		*ft_strncpy(char *destination, const char *source, size_t length);
 char		**join_cmd_args(t_command *command);
 int			count_args(char **args);
 int			lst_cmd_len(t_command *cmd);
+void		handle_signals_before_input(void);
+int			handle_command_result(char *line, int process_result);
+void		update_exit_status(t_data *data);
+void		execute_and_update(t_data *data);
+void		cleanup_iteration(char *line, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 14:51:34 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/16 15:11:43 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,37 @@
 
 static int	handle_exit(char *line);
 static int	process_input(char *line, t_data *data);
-static void	execute_commands(t_data *data);
 
 void	loop(t_data *data)
 {
 	char	*line;
 	int		process_result;
+	int		result;
 
 	while (1)
 	{
-		if (g_signals != SIGINT)
-			setup_signal(0);
-		else
-			g_signals = 0;
+		handle_signals_before_input();
 		line = readline("\e[1;32mMinishell> \e[0m");
 		process_result = process_input(line, data);
-		if (!line)
+		result = handle_command_result(line, process_result);
+		if (result == 1)
 			break ;
-		if (process_result == 0)
+		if (result == 2)
 			continue ;
-		if (process_result == -1)
-			break ;
-		if (g_signals == SIGINT)
-			data->exit_status = 130;
-		setup_signal(2);
-		execute_commands(data);
-		if (g_signals == SIGINT)
-			data->exit_status = 130;
-		else if (g_signals == SIGQUIT)
-			data->exit_status = 131;
-		if (*line)
-			add_history(line);
-		free_all(line, data, data->commands);
-		g_signals = 0;
+		execute_and_update(data);
+		cleanup_iteration(line, data);
 	}
 	free_all(line, data, data->commands);
 	ft_free_env(data);
 	rl_clear_history();
+}
+
+void	execute_commands(t_data *data)
+{
+	if (!check_pipe(data))
+		handle_commands(data);
+	else
+		exec_pipe(data);
 }
 
 static int	process_input(char *line, t_data *data)
@@ -65,14 +59,6 @@ static int	process_input(char *line, t_data *data)
 	if (!check_parsing_errors(line))
 		return (0);
 	return (1);
-}
-
-static void	execute_commands(t_data *data)
-{
-	if (!check_pipe(data))
-		handle_commands(data);
-	else
-		exec_pipe(data);
 }
 
 static int	handle_exit(char *line)
