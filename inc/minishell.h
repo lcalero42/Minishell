@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 16:58:18 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/17 15:38:24 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int			apply_redirections(t_command *cmd);
 int			apply_heredoc(char *delimiter);
 void		reset_fds(t_command *cmd);
 void		execute_commands(t_data *data);
+int			check_access(char *cmd, t_data *data);
 
 // PIPE FUNCTIONS
 void		wait_processes(t_data *data, pid_t *pids, int num_commands);
