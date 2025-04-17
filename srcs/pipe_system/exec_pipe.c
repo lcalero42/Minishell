@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 17:29:32 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/17 18:34:58 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	exec_programm(t_command *command, t_data *data)
 	if (access(command->command, F_OK))
 	{
 		reset_fds(command);
+		reset_all_heredocs(data->commands);
 		free_all(NULL, data, data->commands);
 		ft_free_env(data);
 		exit(127);
@@ -49,6 +50,7 @@ void	exec_programm(t_command *command, t_data *data)
 	if (executable)
 		execve(executable, exec_args, data->envp);
 	reset_fds(command);
+	reset_all_heredocs(data->commands);
 	handle_unknown_command(command->command, data);
 	ft_free(exec_args);
 	free_all(NULL, data, data->commands);
@@ -75,12 +77,14 @@ void	find_cmd(t_command *command, t_data *data)
 	else if (command->command[0] != '/' && command->command[0] != '.')
 	{
 		reset_fds(command);
+		reset_all_heredocs(data->commands);
 		handle_unknown_command(command->command, data);
 		free_all(NULL, data, data->commands);
 		ft_free_env(data);
 		exit(127);
 	}
 	reset_fds(command);
+	reset_all_heredocs(data->commands);
 }
 
 int	is_builtin(t_command *command)

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:39:31 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/27 17:33:54 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/17 18:42:37 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	fork_commands(t_data *data, pid_t *pids, int num_commands)
 
 	cmd = data->commands;
 	fd_in = STDIN_FILENO;
+	process_all_heredocs(cmd);
 	i = 0;
 	while (cmd && i < num_commands)
 	{

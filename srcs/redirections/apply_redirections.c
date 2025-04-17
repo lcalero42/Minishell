@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/02 17:01:36 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:01:15 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,13 @@ static int	handle_input_output(int fd, t_redirection *redir)
 	return (fd);
 }
 
-static int	handle_heredoc(int fd, t_redirection *redir)
+static int handle_heredoc(int fd, t_redirection *redir)
 {
-	if (redir->type == REDIR_HEREDOC)
+	if (redir->heredoc_fd >= 0)
 	{
-		fd = apply_heredoc(redir->file);
-		if (fd == -1)
-			return (-1);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
+		dup2(redir->heredoc_fd, STDIN_FILENO);
+		fd = redir->heredoc_fd;
+		close(redir->heredoc_fd);
 	}
 	return (fd);
 }

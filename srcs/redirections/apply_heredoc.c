@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:47:08 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/26 12:24:47 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/17 17:27:56 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,43 @@ int	apply_heredoc(char *delimiter)
 	read_heredoc(line, len, pipe_fd, delimiter);
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
+}
+
+void process_all_heredocs(t_command *cmd_list)
+{
+	t_command *current = cmd_list;
+	
+	while (current)
+	{
+		t_redirection *redir = current->redirections;
+		while (redir)
+		{
+			if (redir->type == REDIR_HEREDOC)
+				redir->heredoc_fd = apply_heredoc(redir->file);
+			redir = redir->next;
+		}
+		current = current->next;
+	}
+}
+
+void reset_all_heredocs(t_command *cmd_list)
+{
+	t_command *current = cmd_list;
+	
+	while (current)
+	{
+		t_redirection *redir = current->redirections;
+		while (redir)
+		{
+			if (redir->type == REDIR_HEREDOC)
+			{
+				close(redir->heredoc_fd);
+				redir->heredoc_fd = -1;
+			}
+			redir = redir->next;
+		}
+		current = current->next;
+	}
 }
 
 static void	read_heredoc(char *line, int len, int pipe_fd[2], char *delimiter)

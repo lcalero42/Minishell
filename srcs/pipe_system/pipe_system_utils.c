@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:55:19 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/09 16:39:06 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/17 17:32:04 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ void	execute_child_process(t_command *cmd, t_data *data,
 	if (is_builtin(cmd))
 	{
 		find_cmd(cmd, data);
+		reset_all_heredocs(data->commands);
 		free_all(NULL, data, data->commands);
 		ft_free_env(data);
 		exit(data->exit_status);
 	}
 	else
 		exec_programm(cmd, data);
+	reset_all_heredocs(data->commands);
 	free_all(NULL, data, data->commands);
 	ft_free_env(data);
 	exit(0);

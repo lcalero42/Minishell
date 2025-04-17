@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/17 15:38:24 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/17 17:28:00 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_redirection
 	char					*file;
 	t_redir_type			type;
 	struct s_redirection	*next;
+	int						heredoc_fd;
 }	t_redirection;
 
 typedef struct s_command
@@ -157,6 +158,8 @@ int			is_builtin(t_command *command);
 int			fork_commands(t_data *data, pid_t *pids, int num_commands);
 pid_t		create_child_process(t_command *cmd, t_data *data,
 				int fd_in, int *fd);
+void		process_all_heredocs(t_command *cmd_list);
+void		reset_all_heredocs(t_command *cmd_list);
 
 // UTILITY FUNCTIONS
 void		print_welcome(void);
