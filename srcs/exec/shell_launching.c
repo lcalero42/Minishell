@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_launching.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:38:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 17:07:14 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/18 16:15:48 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_prompt_line(t_data *data)
 {
 	char	*res;
 	char	*emoji;
-	
+
 	emoji = exit_code_emoji(data);
 	res = ft_strjoin(emoji, " \e[1;32mMinishell> \e[0m");
 	if (!res)

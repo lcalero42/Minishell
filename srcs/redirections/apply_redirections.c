@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/17 18:01:15 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/18 16:15:35 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 
 static int	handle_input_output(int fd, t_redirection *redir);
-static int	handle_heredoc(int fd, t_redirection *redir);
+static int	handle_heredoc(t_redirection *redir);
 static int	handle_append_out(int fd, t_redirection *redir);
 
 int	apply_redirections(t_command *cmd)
@@ -28,14 +28,12 @@ int	apply_redirections(t_command *cmd)
 	redir = cmd->redirections;
 	while (redir)
 	{
-		if (redir->type == REDIR_INPUT)
-			handle_input_output(fd, redir);
-		else if (redir->type == REDIR_OUTPUT)
-			handle_input_output(fd, redir);
+		if (redir->type == REDIR_INPUT || redir->type == REDIR_OUTPUT)
+			fd = handle_input_output(fd, redir);
 		else if (redir->type == REDIR_APPEND_OUT)
-			handle_append_out(fd, redir);
+			fd = handle_append_out(fd, redir);
 		else if (redir->type == REDIR_HEREDOC)
-			handle_heredoc(fd, redir);
+			fd = handle_heredoc(redir);
 		if (fd > 2)
 			close(fd);
 		redir = redir->next;
@@ -70,15 +68,16 @@ static int	handle_input_output(int fd, t_redirection *redir)
 	return (fd);
 }
 
-static int handle_heredoc(int fd, t_redirection *redir)
+static int	handle_heredoc(t_redirection *redir)
 {
 	if (redir->heredoc_fd >= 0)
 	{
 		dup2(redir->heredoc_fd, STDIN_FILENO);
-		fd = redir->heredoc_fd;
 		close(redir->heredoc_fd);
+		redir->heredoc_fd = -1;
+		return (0);
 	}
-	return (fd);
+	return (-1);
 }
 
 static int	handle_append_out(int fd, t_redirection *redir)

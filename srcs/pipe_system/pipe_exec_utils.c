@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:39:31 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/17 18:42:37 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/18 16:16:28 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	close_heredocs_for_command(t_command *cmd);
 
 int	fork_commands(t_data *data, pid_t *pids, int num_commands)
 {
@@ -33,6 +35,7 @@ int	fork_commands(t_data *data, pid_t *pids, int num_commands)
 			return (0);
 		}
 		pids[i++] = pid;
+		close_heredocs_for_command(cmd);
 		fd_in = manage_parent_fd(fd_in, fd, cmd);
 		cmd = cmd->next;
 	}
@@ -51,4 +54,20 @@ pid_t	create_child_process(t_command *cmd, t_data *data,
 		execute_child_process(cmd, data, fd_in, fd);
 	}
 	return (pid);
+}
+
+static void	close_heredocs_for_command(t_command *cmd)
+{
+	t_redirection	*redir;
+
+	redir = cmd->redirections;
+	while (redir)
+	{
+		if (redir->type == REDIR_HEREDOC && redir->heredoc_fd >= 0)
+		{
+			close(redir->heredoc_fd);
+			redir->heredoc_fd = -1;
+		}
+		redir = redir->next;
+	}
 }

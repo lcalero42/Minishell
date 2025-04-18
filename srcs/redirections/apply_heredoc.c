@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:47:08 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/17 17:27:56 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/04/18 16:14:47 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ int	apply_heredoc(char *delimiter)
 	return (pipe_fd[0]);
 }
 
-void process_all_heredocs(t_command *cmd_list)
+void	process_all_heredocs(t_command *cmd_list)
 {
-	t_command *current = cmd_list;
-	
+	t_command		*current;
+	t_redirection	*redir;
+
+	current = cmd_list;
 	while (current)
 	{
-		t_redirection *redir = current->redirections;
+		redir = current->redirections;
 		while (redir)
 		{
 			if (redir->type == REDIR_HEREDOC)
@@ -49,16 +51,18 @@ void process_all_heredocs(t_command *cmd_list)
 	}
 }
 
-void reset_all_heredocs(t_command *cmd_list)
+void	reset_all_heredocs(t_command *cmd_list)
 {
-	t_command *current = cmd_list;
-	
+	t_command		*current;
+	t_redirection	*redir;
+
+	current = cmd_list;
 	while (current)
 	{
-		t_redirection *redir = current->redirections;
+		redir = current->redirections;
 		while (redir)
 		{
-			if (redir->type == REDIR_HEREDOC)
+			if (redir->type == REDIR_HEREDOC && redir->heredoc_fd >= 0)
 			{
 				close(redir->heredoc_fd);
 				redir->heredoc_fd = -1;
