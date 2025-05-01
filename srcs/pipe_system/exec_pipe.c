@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/17 18:34:58 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/01 18:07:34 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	exec_programm(t_command *command, t_data *data)
 	char	*executable;
 	char	**exec_args;
 
+	if (!command->command)
+		return ;
 	executable = NULL;
 	if ((command->command[0] == '/' || command->command[0] == '.'))
 		executable = command->command;
@@ -60,6 +62,12 @@ void	exec_programm(t_command *command, t_data *data)
 
 void	find_cmd(t_command *command, t_data *data)
 {
+	if (!command->command)
+	{
+		reset_fds(command);
+		reset_all_heredocs(data->commands);
+		return ;
+	}
 	if (!ft_strncmp("pwd", command->command, INT_MAX))
 		pwd(data);
 	else if (!ft_strncmp("cd", command->command, INT_MAX))
@@ -89,6 +97,8 @@ void	find_cmd(t_command *command, t_data *data)
 
 int	is_builtin(t_command *command)
 {
+	if (!command->command)
+		return (1);
 	if (!ft_strncmp("pwd", command->command, INT_MAX))
 		return (1);
 	else if (!ft_strncmp("cd", command->command, INT_MAX))
