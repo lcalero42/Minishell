@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/06 17:48:25 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:49:08 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_cmd(t_command *command, t_data *data)
 	status = 0;
 	if ((command->command[0] == '/' || command->command[0] == '.'))
 		executable = command->command;
-	if (!check_access(command->command, data) || !command->command[2])
+	if (!check_access(command->command, data))
 		return ;
 	exec_args = join_cmd_args(command);
 	pid = fork();
