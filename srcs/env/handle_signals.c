@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:06:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/16 16:37:33 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/06 14:46:05 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define _POSIX_C_SOURCE 200809L
 #include "minishell.h"
-
-int	g_signals;
 
 static void	sig_handler(int sig)
 {
