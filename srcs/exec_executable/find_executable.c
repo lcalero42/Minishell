@@ -6,12 +6,11 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/06 17:06:37 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:48:25 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/wait.h>
 
 static void	child_process(t_data *data, char *executable, char **exec_args);
 static void	set_exit_status(t_data *data, int status);
