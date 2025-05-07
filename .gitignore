@@ -53,6 +53,7 @@ dkms.conf
 
 #debug
 readline.supp
+Muffinette
 
 #debug
 debug_func.c
