@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 18:27:11 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:28:56 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MAX_ARGS 64
 
 // GLOBAL VAR
-static int	g_signals;
+extern volatile sig_atomic_t	g_signals;
 
 // ENUMERATIONS
 typedef enum e_token_type

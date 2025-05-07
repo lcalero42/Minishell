@@ -6,12 +6,14 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:06:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/07 16:48:40 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:28:53 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define _POSIX_C_SOURCE 200809L
 #include "minishell.h"
+
+volatile sig_atomic_t	g_signals = 0;
 
 static void	sig_handler(int sig)
 {
