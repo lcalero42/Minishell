@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/06 14:41:41 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:44:52 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,9 @@ void		update_exit_status(t_data *data);
 void		execute_and_update(t_data *data);
 void		cleanup_iteration(char *line, t_data *data);
 char		*get_prompt_line(t_data *data);
+int			is_valid_identifier(char *identifier);
+void		handle_valid_arg(char *arg, t_data *data);
+int			process_export_arg(char *arg, t_data *data);
+int			check_var_name(char *parameter, char *envp_var);
 
 #endif
