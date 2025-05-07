@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/06 14:41:41 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:55:45 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		add_command(t_command **cmd_list, t_command *new_cmd);
 void		add_argument(t_command *cmd, char *arg);
 void		add_redirection(t_command *cmd, char *file, t_redir_type type);
 char		*extract_quote_no_expand(char *str);
-int			check_parsing_errors(char *s);
+int			check_parsing_errors(char *s, t_data *data);
 void		process_quoted_content(char **rslt, char *str, int *i,
 				t_data *data);
 void		handle_env_var(char **rslt, char *str, int *i, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/06 14:31:15 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:18:52 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ int	main(int ac, char **av, char **envp)
 	ft_bzero(&data, sizeof(data));
 	make_env(&data, envp);
 	loop(&data);
-	return (0);
+	return (data.exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:21:31 by luis              #+#    #+#             */
-/*   Updated: 2025/04/03 17:54:06 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:06:16 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_exit(t_command *cmd, t_data *data)
 		else
 			exit_code = converted % 256;
 	}
+	printf("exit code : %d\n", exit_code);
 	reset_fds(cmd);
 	free_all(NULL, data, data->commands);
 	ft_free_env(data);

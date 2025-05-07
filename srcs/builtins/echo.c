@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:54:00 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/15 17:40:03 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:02:27 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	echo(t_command *command, t_data *data)
 	}
 	if (put_endl)
 		ft_putchar_fd('\n', 1);
-	data->exit_status = 0;
+	if (check_parsing_errors(*command->args, data))
+		data->exit_status = 0;
 }
 
 static void	write_output(t_command *command, t_data *data, int i)
