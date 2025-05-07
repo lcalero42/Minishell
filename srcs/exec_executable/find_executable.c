@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/17 15:39:32 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/07 18:28:09 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/wait.h>
 
 static void	child_process(t_data *data, char *executable, char **exec_args);
 static void	set_exit_status(t_data *data, int status);
@@ -64,9 +63,11 @@ static void	set_exit_status(t_data *data, int status)
 		data->exit_status = 128 + g_signals;
 		if (g_signals == SIGQUIT)
 			ft_putstr_fd("Quit (core dumped)\n", 1);
-		if (g_signals == SIGINT)
+		else if (g_signals == SIGINT)
 			data->exit_status = 130;
 	}
+	else
+		data->exit_status = 0;
 	setup_signal(0);
 }
 

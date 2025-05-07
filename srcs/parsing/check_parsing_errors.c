@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_parsing_errors.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:21:36 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/08 17:37:22 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:01:39 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 static int	check_closed_quotes(char *s);
 
-int	check_parsing_errors(char *s)
+int	check_parsing_errors(char *s, t_data *data)
 {
 	if (!check_closed_quotes(s))
 	{
 		ft_putstr_fd("Error : quotes not closed\n", 2);
+		data->exit_status = 2;
 		return (0);
 	}
 	return (1);

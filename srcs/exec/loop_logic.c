@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/16 17:08:50 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:20:43 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	process_input(char *line, t_data *data)
 		ft_putstr_fd("exit\n", 1);
 		return (-1);
 	}
-	if (!check_parsing_errors(line))
+	if (!check_parsing_errors(line, data))
 		return (0);
 	data->tokens = tokenize(line, data);
 	data->commands = parse_commands(data->tokens);
