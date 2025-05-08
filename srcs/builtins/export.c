@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 16:45:08 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/08 18:39:36 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	export(t_command *command, t_data *data)
 		process_export_arg(command->args[j], data);
 		j++;
 	}
-	data->exit_status = 0;
 }
 
 static void	print_ascii_order(t_data *data)

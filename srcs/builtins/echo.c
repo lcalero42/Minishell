@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:54:00 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 16:02:27 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:56:37 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	echo(t_command *command, t_data *data)
 	}
 	if (put_endl)
 		ft_putchar_fd('\n', 1);
-	if (check_parsing_errors(*command->args, data))
-		data->exit_status = 0;
+	data->exit_status = 0;
 }
 
 static void	write_output(t_command *command, t_data *data, int i)
@@ -50,8 +49,6 @@ static void	write_output(t_command *command, t_data *data, int i)
 		output = ft_itoa(data->exit_status);
 		to_free = output;
 	}
-	else if (command->args[i][0] == '$' && ft_strlen(command->args[i]) > 1)
-		output = expand_variable(command->args[i] + 1, data);
 	else
 		output = command->args[i];
 	if (output)
