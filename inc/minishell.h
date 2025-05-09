@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 18:28:56 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:21:35 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // INCLUDES                                    
-# include "../libft/libft.h"
+# include "../libft/include/libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
