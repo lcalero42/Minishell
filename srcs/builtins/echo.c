@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:54:00 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/08 18:56:37 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/09 13:12:56 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	write_output(t_command *command, t_data *data, int i)
 static void	skip_parameters(t_command *command, int *i, int *put_endl)
 {
 	while (command->args[*i] && command->args[*i][0] == '-'
-		&& command->args[*i][1] == 'n')
+		&& command->args[*i][1] == 'n' && ft_strlen(command->args[*i]) == 2)
 	{
 		*put_endl = 0;
 		*i += 1;

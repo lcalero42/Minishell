@@ -22,6 +22,7 @@ SRCS = srcs/main.c \
 	   libft/ft_calloc.c \
 	   libft/ft_isalnum.c \
 	   libft/ft_isalpha.c \
+	   libft/ft_substr.c \
 	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/ft_isspace.c \
@@ -36,6 +37,7 @@ SRCS = srcs/main.c \
 	   srcs/parsing/check_parsing_errors.c \
 	   srcs/parsing/extract_quoted_utils.c \
 	   srcs/parsing/export_utils.c \
+	   srcs/parsing/interpreter_word.c \
 	   srcs/builtins/cd.c \
        srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/08 18:20:48 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/09 16:13:58 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void		handle_env_var(char **rslt, char *str, int *i, t_data *data);
 void		handle_exit_status(char **rslt, int *i, t_data *data);
 void		handle_var_expansion(char **rslt, char *var_name, int *i,
 				t_data *data);
+char		*interpreter_word(int *i, char *word, t_data *data);
+void		add_char_to_result(char **rslt, char c);
 
 // MEMORY MANAGEMENT
 void		free_tokens(t_token *tokens);
