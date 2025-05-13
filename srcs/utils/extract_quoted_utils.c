@@ -6,13 +6,11 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:28:23 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/15 17:34:26 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/09 14:30:12 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	add_char_to_result(char **rslt, char c);
 
 void	process_quoted_content(char **rslt, char *str, int *i, t_data *data)
 {
@@ -62,7 +60,7 @@ void	handle_var_expansion(char **rslt, char *var_name, int *i, t_data *data)
 	free(env_var);
 }
 
-static void	add_char_to_result(char **rslt, char c)
+void	add_char_to_result(char **rslt, char c)
 {
 	char	temp[2];
 	char	*tmp;

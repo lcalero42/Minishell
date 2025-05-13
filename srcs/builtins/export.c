@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 16:45:08 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/13 08:50:30 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	print_ascii_order(t_data *data)
 	}
 	i = -1;
 	while (++i < count)
-		printf("declare -x \"%s\"\n", sorted_envp[i]);
+		print_export_var(sorted_envp[i]);
 	ft_free(sorted_envp);
 }
 

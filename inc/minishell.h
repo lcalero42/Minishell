@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 19:21:35 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/13 08:51:01 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,7 @@ int			is_valid_identifier(char *identifier);
 void		handle_valid_arg(char *arg, t_data *data);
 int			process_export_arg(char *arg, t_data *data);
 int			check_var_name(char *parameter, char *envp_var);
+void		add_char_to_result(char **rslt, char c);
+void		print_export_var(char *env_var);
 
 #endif

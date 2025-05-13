@@ -5,20 +5,13 @@ LDFLAGS = -lreadline -lncurses
 include libft.mk
 
 SRCS = srcs/main.c \
-	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
-	   srcs/parsing/ft_isspace.c \
 	   srcs/parsing/tokenize.c \
 	   srcs/parsing/extract_quoted_string.c \
 	   srcs/parsing/extract_word.c \
-	   srcs/parsing/ft_free.c \
-	   srcs/parsing/cmd_utils.c \
 	   srcs/parsing/parse_commands.c \
 	   srcs/parsing/free_redirections.c \
-	   srcs/parsing/lst_utils.c \
 	   srcs/parsing/check_parsing_errors.c \
-	   srcs/parsing/extract_quoted_utils.c \
-	   srcs/parsing/export_utils.c \
 	   srcs/builtins/cd.c \
 	   srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
@@ -31,16 +24,23 @@ SRCS = srcs/main.c \
 	   srcs/exec/shell_launching.c \
 	   srcs/exec/handle_commands.c \
 	   srcs/exec/loop_logic.c \
-	   srcs/exec/loop_utils.c \
 	   srcs/exec_executable/find_executable.c \
 	   srcs/exec_executable/check_accesses.c \
 	   srcs/redirections/apply_redirections.c \
 	   srcs/redirections/apply_heredoc.c \
 	   srcs/redirections/reset_fds.c \
 	   srcs/pipe_system/exec_pipe.c \
-	   srcs/pipe_system/pipe_system_utils.c \
 	   srcs/pipe_system/check_pipe.c \
-	   srcs/pipe_system/pipe_exec_utils.c
+	   srcs/utils/cmd_utils.c \
+	   srcs/utils/ft_strncpy.c \
+	   srcs/utils/ft_isspace.c \
+	   srcs/utils/ft_free.c \
+	   srcs/utils/lst_utils.c \
+	   srcs/utils/loop_utils.c \
+	   srcs/utils/extract_quoted_utils.c \
+	   srcs/utils/pipe_system_utils.c \
+	   srcs/utils/pipe_exec_utils.c \
+	   srcs/utils/export_utils.c
 
 HEADER = inc/minishell.h
 
