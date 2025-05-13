@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:20:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/09 16:22:40 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/13 09:53:13 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*interpreter_word(int *i, char *word, t_data *data)
 		}
 	}
 	*i += ft_strlen(word) - 1;
-	printf("RESULT : %s", rslt);
 	return (rslt);
 }
 

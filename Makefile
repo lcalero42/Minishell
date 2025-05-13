@@ -38,6 +38,7 @@ SRCS = srcs/main.c \
 	   srcs/parsing/extract_quoted_utils.c \
 	   srcs/parsing/export_utils.c \
 	   srcs/parsing/interpreter_word.c \
+	   srcs/parsing/check_syntax_errors.c \
 	   srcs/builtins/cd.c \
        srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
