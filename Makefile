@@ -48,7 +48,8 @@ SRCS = srcs/main.c \
        srcs/exec/loop_logic.c \
 	   srcs/exec/loop_utils.c \
 	   srcs/exec_executable/find_executable.c \
-	   srcs/exec_executable/check_accesses.c \
+	   srcs/exec_executable/check_access.c \
+	   srcs/exec_executable/find_exec_path.c \
 	   srcs/redirections/apply_redirections.c \
 	   srcs/redirections/apply_heredoc.c \
 	   srcs/redirections/reset_fds.c \

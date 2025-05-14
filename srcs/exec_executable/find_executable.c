@@ -6,13 +6,14 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/07 18:30:20 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:23:15 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	child_process(t_data *data, char *executable, char **exec_args);
+static void	child_process(t_data *data, char *executable,
+				char **exec_args, char *path);
 static void	set_exit_status(t_data *data, int status);
 
 void	exec_cmd(t_command *command, t_data *data)
@@ -21,13 +22,17 @@ void	exec_cmd(t_command *command, t_data *data)
 	pid_t	pid;
 	int		status;
 	char	**exec_args;
+	char	*path;
 
-	executable = NULL;
-	status = 0;
-	if ((command->command[0] == '/' || command->command[0] == '.'))
-		executable = command->command;
-	if (!check_access(command->command, data))
-		return ;
+	executable = command->command;
+	path = NULL;
+	if (executable[0] == '/' || executable[0] == '.')
+	{
+		if (!check_access(executable, data))
+			return ;
+	}
+	else
+		path = data_get_paths(data->envp, executable);
 	exec_args = join_cmd_args(command);
 	pid = fork();
 	if (pid < 0)
@@ -38,18 +43,22 @@ void	exec_cmd(t_command *command, t_data *data)
 		return ;
 	}
 	if (pid == 0)
-		child_process(data, executable, exec_args);
+		child_process(data, executable, exec_args, path);
 	waitpid(pid, &status, 0);
 	set_exit_status(data, status);
 	ft_free(exec_args);
 }
 
-static void	child_process(t_data *data, char *executable, char **exec_args)
+static void	child_process(t_data *data, char *executable,
+		char **exec_args, char *path)
 {
 	setup_signal(1);
-	if (executable)
+	if (path)
+		execve(path, exec_args, data->envp);
+	else if (executable)
 		execve(executable, exec_args, data->envp);
 	handle_unknown_command(data->commands->command, data);
+	free(path);
 	exit(127);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 15:55:45 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:01:44 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int			apply_heredoc(char *delimiter);
 void		reset_fds(t_command *cmd);
 void		execute_commands(t_data *data);
 int			check_access(char *cmd, t_data *data);
+char		*data_get_paths(char **envp, char *command);
 
 // PIPE FUNCTIONS
 void		wait_processes(t_data *data, pid_t *pids, int num_commands);

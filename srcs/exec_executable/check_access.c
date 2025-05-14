@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_accesses.c                                   :+:      :+:    :+:   */
+/*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:34:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/06 17:40:55 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:45:13 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static int	check_dir(char *cmd, t_data *data)
 
 static int	check_exec(char *cmd, t_data *data)
 {
-	if (access(cmd, F_OK))
+	if (!access(cmd, F_OK))
 	{
 		data->exit_status = 127;
 		perror(cmd);
 		return (0);
 	}
-	if (access(cmd, X_OK))
+	if (!access(cmd, X_OK))
 	{
 		data->exit_status = 126;
 		perror(cmd);
