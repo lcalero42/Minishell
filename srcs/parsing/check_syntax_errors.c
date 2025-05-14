@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:14:54 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 17:53:23 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 18:29:31 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static int	check_adjacent_tokens(t_token *token)
 	t_token_type	next_type;
 
 	current_type = token->type;
-	if (token->next && (current_type == PIPE || current_type == REDIR_APPEND || 
-			current_type == REDIR_IN || current_type == HEREDOC ||
-			current_type == REDIR_OUT))
+	if (token->next && (current_type == PIPE || current_type == REDIR_APPEND
+			|| current_type == REDIR_IN || current_type == HEREDOC
+			|| current_type == REDIR_OUT))
 	{
 		next_type = token->next->type;
 		if (next_type == PIPE && current_type == PIPE)
@@ -83,7 +83,8 @@ int	check_syntax(t_data *data)
 	while (token)
 	{
 		if (!check_pipe_syntax(token))
-			ft_putstr_fd("Minishell: syntax error near unexpected token '|'\n", 2);
+			ft_putstr_fd("Minishell: syntax error near unexpected token '|'\n",
+				2);
 		else if (!check_redir_syntax(token))
 			ft_putstr_fd("Minishell: syntax error near unexpected token\n", 2);
 		else if (!check_adjacent_tokens(token))
