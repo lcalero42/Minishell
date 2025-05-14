@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:56:20 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 17:52:12 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ static int	should_handle_redirection(t_token *token, t_command *cmd)
 	(void)cmd;
 	return ((token->type == REDIR_IN || token->type == REDIR_OUT
 			|| token->type == REDIR_APPEND || token->type == HEREDOC)
-		&& token->next && token->next->type == WORD);
+		&& token->next && (token->next->type == WORD
+			|| token->next->type == QUOTE || token->next->type == ENV_VAR));
 }
 
 static int	is_text_token(t_token_type type)

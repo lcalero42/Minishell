@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 16:39:31 by lcalero           #+#    #+#             */
-/*   Updated: 2025/04/18 16:16:28 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:46:53 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	fork_commands(t_data *data, pid_t *pids, int num_commands)
 
 	cmd = data->commands;
 	fd_in = STDIN_FILENO;
-	process_all_heredocs(cmd);
+	process_all_heredocs(cmd, data);
 	i = 0;
 	while (cmd && i < num_commands)
 	{

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:15:06 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/13 13:58:32 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:56:43 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,21 @@ static void	handle_words(t_token **tokens, t_data *data, char *input, int *i)
 	if (input[*i] == '$')
 	{
 		tmp_word = extract_word(input + *i);
-		word = interpreter_word(i, tmp_word, data);
+		word = interpreter_word(i, tmp_word, data, 1);
 		add_token(tokens, word, ENV_VAR);
 		free(word);
 		free(tmp_word);
 	}
 	else if (input[*i] == '\'' || input[*i] == '"')
 	{
-		word = extract_quote_no_expand(input + *i);
-		add_word(extract_quoted_string(input + *i, data), QUOTE, tokens);
-		*i += ft_strlen(word) + 1;
+		word = extract_word(input + *i);
+		add_word(interpreter_word(i, word, data, 1), QUOTE, tokens);
 		free(word);
 	}
 	else if (!ft_isspace(input[*i]))
 	{
 		word = extract_word(input + *i);
-		add_word(interpreter_word(i, word, data), WORD, tokens);
+		add_word(interpreter_word(i, word, data, 1), WORD, tokens);
 		free(word);
 	}
 }

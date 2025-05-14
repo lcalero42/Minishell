@@ -3,36 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   apply_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:47:08 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/18 16:14:47 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:55:50 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	read_heredoc(char *line, int len, int pipe_fd[2], char *delimiter);
+static void	read_heredoc(int pipe_fd[2], char *delimiter, t_data *data);
+static int	is_quoted(t_data *data);
 
-int	apply_heredoc(char *delimiter)
+int	apply_heredoc(char *delimiter, t_data *data)
 {
 	int		pipe_fd[2];
-	char	*line;
-	int		len;
 
-	len = 0;
-	line = NULL;
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
 		return (-1);
 	}
-	read_heredoc(line, len, pipe_fd, delimiter);
+	read_heredoc(pipe_fd, delimiter, data);
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
 }
 
-void	process_all_heredocs(t_command *cmd_list)
+void	process_all_heredocs(t_command *cmd_list, t_data *data)
 {
 	t_command		*current;
 	t_redirection	*redir;
@@ -44,7 +41,7 @@ void	process_all_heredocs(t_command *cmd_list)
 		while (redir)
 		{
 			if (redir->type == REDIR_HEREDOC)
-				redir->heredoc_fd = apply_heredoc(redir->file);
+				redir->heredoc_fd = apply_heredoc(redir->file, data);
 			redir = redir->next;
 		}
 		current = current->next;
@@ -73,24 +70,55 @@ void	reset_all_heredocs(t_command *cmd_list)
 	}
 }
 
-static void	read_heredoc(char *line, int len, int pipe_fd[2], char *delimiter)
+static void	read_heredoc(int pipe_fd[2], char *delimiter, t_data *data)
 {
+	char	*tmp;
+	char	*res;
+	int		i;
+	char	*line;
+
 	while (1)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			break ;
-		len = ft_strlen(line);
-		if (len > 0 && line[len - 1] == '\n')
-			line[len - 1] = '\0';
-		if (ft_strncmp(line, delimiter, INT_MAX) == 0)
+		tmp = ft_strtrim(line, "\n");
+		res = interpreter_word(&i, tmp, data, 0);
+		if (!ft_strncmp(tmp, delimiter, INT_MAX))
 		{
 			free(line);
+			free(tmp);
+			free(res);
 			break ;
 		}
-		ft_putstr_fd(line, pipe_fd[1]);
+		if (!is_quoted(data))
+			ft_putstr_fd(res, pipe_fd[1]);
+		else
+			ft_putstr_fd(tmp, pipe_fd[1]);
 		ft_putstr_fd("\n", pipe_fd[1]);
 		free(line);
+		free(tmp);
+		free(res);
 	}
+}
+
+static int	is_quoted(t_data *data)
+{
+	char	*start;
+	char	*word;
+	int		i;
+
+	i = 2;
+	start = ft_strnstr(data->raw_line, "<<", INT_MAX);
+	while (start[i] && ft_isspace(start[i]))
+		i++;
+	word = extract_word(start + i);
+	if (ft_strchr(word, '"') || ft_strchr(word, '\''))
+	{
+		free(word);
+		return (1);
+	}
+	free(word);
+	return (0);
 }

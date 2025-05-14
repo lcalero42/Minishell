@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:14:54 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/13 16:54:22 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 17:53:23 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static int	check_redir_syntax(t_token *token)
 		if (!token->next)
 			return (0);
 		next = token->next;
-		if (next->type == PIPE || next->type == REDIR_APPEND ||
-			next->type == REDIR_IN || next->type == HEREDOC ||
-			next->type == REDIR_OUT)
+		if (next->type == PIPE || next->type == REDIR_APPEND
+			|| next->type == REDIR_IN || next->type == HEREDOC
+			|| next->type == REDIR_OUT)
 			return (0);
 	}
 	return (1);
@@ -84,9 +84,9 @@ int	check_syntax(t_data *data)
 	{
 		if (!check_pipe_syntax(token))
 			ft_putstr_fd("Minishell: syntax error near unexpected token '|'\n", 2);
-		if (!check_redir_syntax(token))
+		else if (!check_redir_syntax(token))
 			ft_putstr_fd("Minishell: syntax error near unexpected token\n", 2);
-		if (!check_adjacent_tokens(token))
+		else if (!check_adjacent_tokens(token))
 			ft_putstr_fd("Minishell: syntax error near unexpected token\n", 2);
 		if (!check_pipe_syntax(token) || !check_redir_syntax(token)
 			|| !check_adjacent_tokens(token))

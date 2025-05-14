@@ -23,6 +23,8 @@ SRCS = srcs/main.c \
 	   libft/ft_isalnum.c \
 	   libft/ft_isalpha.c \
 	   libft/ft_substr.c \
+	   libft/ft_strtrim.c \
+	   libft/ft_strnstr.c \
 	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/ft_isspace.c \
