@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:20:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 17:47:17 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 22:58:13 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,14 @@ char	*interpreter_word(int *i, char *word, t_data *data, int read_quotes)
 static int	check_wrong_expand(char *word, char *rslt)
 {
 	int		i;
-	int		has_quotes;
-	int		has_char;
 	int		has_expands;
 
 	i = 0;
-	has_char = 0;
 	has_expands = 0;
-	has_quotes = 0;
 	while (word[i])
 	{
-		if ((word[i] == '"' || word[i] == '\''))
-			has_quotes = 1;
-		else if (word[i] == '$')
+		if (word[i] == '$')
 			has_expands = 1;
-		else
-			has_char = 1;
 		i++;
 	}
 	if (!rslt[0] && has_expands)
