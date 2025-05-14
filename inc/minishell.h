@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 17:01:44 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:44:25 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // INCLUDES                                    
-# include "../libft/libft.h"
+# include "../libft/include/libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -29,7 +29,7 @@
 # define MAX_ARGS 64
 
 // GLOBAL VAR
-static int	g_signals;
+extern volatile sig_atomic_t	g_signals;
 
 // ENUMERATIONS
 typedef enum e_token_type
@@ -175,5 +175,11 @@ void		update_exit_status(t_data *data);
 void		execute_and_update(t_data *data);
 void		cleanup_iteration(char *line, t_data *data);
 char		*get_prompt_line(t_data *data);
+int			is_valid_identifier(char *identifier);
+void		handle_valid_arg(char *arg, t_data *data);
+int			process_export_arg(char *arg, t_data *data);
+int			check_var_name(char *parameter, char *envp_var);
+void		add_char_to_result(char **rslt, char c);
+void		print_export_var(char *env_var);
 
 #endif
