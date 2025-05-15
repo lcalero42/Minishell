@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:54:00 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/09 13:12:56 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 18:29:46 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,11 @@ static void	write_output(t_command *command, t_data *data, int i)
 	char	*output;
 	char	*to_free;
 
+	(void)data;
 	to_free = NULL;
 	if (!ft_strlen(command->args[i]))
 	{
 		output = ft_strdup("");
-		to_free = output;
-	}
-	else if (!ft_strncmp(command->args[i], "$?", INT_MAX))
-	{
-		output = ft_itoa(data->exit_status);
 		to_free = output;
 	}
 	else
@@ -61,10 +57,24 @@ static void	write_output(t_command *command, t_data *data, int i)
 
 static void	skip_parameters(t_command *command, int *i, int *put_endl)
 {
-	while (command->args[*i] && command->args[*i][0] == '-'
-		&& command->args[*i][1] == 'n' && ft_strlen(command->args[*i]) == 2)
+	int	j;
+
+	while (command->args[*i])
 	{
-		*put_endl = 0;
-		*i += 1;
+		if (command->args[*i][0] == '-')
+		{
+			j = 1;
+			while (command->args[*i][j] == 'n')
+				j++;
+			if (j > 1 && command->args[*i][j] == '\0')
+			{
+				*put_endl = 0;
+				*i += 1;
+			}
+			else
+				break ;
+		}
+		else
+			break ;
 	}
 }

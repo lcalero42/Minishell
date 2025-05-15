@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/13 16:43:36 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:06:01 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_commands(t_data *data)
 	t_command	*tmp;
 
 	tmp = data->commands;
-	process_all_heredocs(tmp);
+	process_all_heredocs(tmp, data);
 	while (tmp)
 	{
 		find_command(tmp, data);

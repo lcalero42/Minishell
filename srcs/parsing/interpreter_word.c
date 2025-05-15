@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:20:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/09 16:22:40 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 22:58:13 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ static char		*extract_env_var(char *str, t_data *data);
 static size_t	handle_quotes(char *word, size_t j, char **rslt, t_data *data);
 static size_t	handle_env_vars(char *word, size_t j, char **rslt,
 					t_data *data);
+static int		check_wrong_expand(char *word, char *rslt);
 
 /**
  * Main interpreter function for processing words
+ * @return : result of interpretation of the prompt (expands, quotes ...)
  */
-char	*interpreter_word(int *i, char *word, t_data *data)
+char	*interpreter_word(int *i, char *word, t_data *data, int read_quotes)
 {
 	char	*rslt;
 	size_t	j;
@@ -32,7 +34,7 @@ char	*interpreter_word(int *i, char *word, t_data *data)
 	j = 0;
 	while (word[j])
 	{
-		if (word[j] == '"' || word[j] == '\'')
+		if ((word[j] == '"' || word[j] == '\'') && read_quotes)
 		{
 			new_j = handle_quotes(word, j, &rslt, data);
 			if (new_j == 0)
@@ -51,8 +53,30 @@ char	*interpreter_word(int *i, char *word, t_data *data)
 		}
 	}
 	*i += ft_strlen(word) - 1;
-	printf("RESULT : %s", rslt);
+	if (!check_wrong_expand(word, rslt))
+	{
+		free(rslt);
+		return (NULL);
+	}
 	return (rslt);
+}
+
+static int	check_wrong_expand(char *word, char *rslt)
+{
+	int		i;
+	int		has_expands;
+
+	i = 0;
+	has_expands = 0;
+	while (word[i])
+	{
+		if (word[i] == '$')
+			has_expands = 1;
+		i++;
+	}
+	if (!rslt[0] && has_expands)
+		return (0);
+	return (1);
 }
 
 /**
@@ -94,14 +118,14 @@ static size_t	handle_env_vars(char *word, size_t j, char **rslt, t_data *data)
 		free(rslt_temp);
 		free(env_var);
 		j++;
-		while (word[j] && (ft_isalnum(word[j]) || word[j] == '_'))
+		if (word[j] == '?')
 			j++;
+		else
+			while (word[j] && (ft_isalnum(word[j]) || word[j] == '_'))
+				j++;
 	}
 	else
-	{
-		add_char_to_result(rslt, word[j]);
 		j++;
-	}
 	return (j);
 }
 
@@ -114,6 +138,8 @@ static char	*extract_env_var(char *str, t_data *data)
 
 	i = 1;
 	start = i;
+	if (!str[i])
+		return (ft_strdup("$"));
 	if (str[i] == '?')
 		return (ft_itoa(data->exit_status));
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
@@ -122,7 +148,7 @@ static char	*extract_env_var(char *str, t_data *data)
 		return (NULL);
 	var_name = ft_substr(str, start, i - start);
 	if (!var_name)
-		return (NULL);
+		return (ft_strdup("$"));
 	var_value = ft_getenv(data, var_name);
 	free(var_name);
 	if (var_value)

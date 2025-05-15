@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:41 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/20 12:43:02 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 17:37:08 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	add_argument(t_command *cmd, char *arg)
 {
 	int	i;
 
-	if (!cmd && !arg)
+	if (!cmd || !arg)
 		return ;
 	i = 0;
 	while (cmd->args[i] && i < MAX_ARGS - 1)

@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 17:07:26 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:13:13 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ typedef struct s_command
 
 typedef struct s_data
 {
-	char		*envp[100];
-	t_token		*tokens;
-	t_command	*commands;
-	int			exit_status;
-	pid_t		*pids;
+	char				*raw_line;
+	char				*envp[100];
+	t_token				*tokens;
+	t_command			*commands;
+	int					exit_status;
+	pid_t				*pids;
 }	t_data;
 
 // TOKENIZER FUNCTION
@@ -110,8 +111,9 @@ void		handle_env_var(char **rslt, char *str, int *i, t_data *data);
 void		handle_exit_status(char **rslt, int *i, t_data *data);
 void		handle_var_expansion(char **rslt, char *var_name, int *i,
 				t_data *data);
-char		*interpreter_word(int *i, char *word, t_data *data);
+char		*interpreter_word(int *i, char *word, t_data *data, int read_quotes);
 void		add_char_to_result(char **rslt, char c);
+int			check_syntax(t_data *data);
 
 // MEMORY MANAGEMENT
 void		free_tokens(t_token *tokens);
@@ -141,7 +143,7 @@ void		handle_commands(t_data *data);
 void		exec_cmd(t_command *command, t_data *data);
 void		handle_unknown_command(char *cmd, t_data *data);
 int			apply_redirections(t_command *cmd);
-int			apply_heredoc(char *delimiter);
+int			apply_heredoc(char *delimiter, t_data *data);
 void		reset_fds(t_command *cmd);
 void		execute_commands(t_data *data);
 int			check_access(char *cmd, t_data *data);
@@ -161,7 +163,7 @@ int			is_builtin(t_command *command);
 int			fork_commands(t_data *data, pid_t *pids, int num_commands);
 pid_t		create_child_process(t_command *cmd, t_data *data,
 				int fd_in, int *fd);
-void		process_all_heredocs(t_command *cmd_list);
+void		process_all_heredocs(t_command *cmd_list, t_data *data);
 void		reset_all_heredocs(t_command *cmd_list);
 
 // UTILITY FUNCTIONS

@@ -13,6 +13,7 @@ SRCS = srcs/main.c \
 	   srcs/parsing/free_redirections.c \
 	   srcs/parsing/check_parsing_errors.c \
 	   srcs/parsing/interpreter_word.c \
+	   srcs/parsing/check_syntax_errors.c \
 	   srcs/builtins/cd.c \
 	   srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
