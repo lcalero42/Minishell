@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/01 18:07:34 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:29:43 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,39 @@ void	exec_pipe(t_data *data)
 void	exec_programm(t_command *command, t_data *data)
 {
 	char	*executable;
+	char	*path;
 	char	**exec_args;
 
 	if (!command->command)
 		return ;
-	executable = NULL;
-	if ((command->command[0] == '/' || command->command[0] == '.'))
-		executable = command->command;
-	if (access(command->command, F_OK))
+	executable = command->command;
+	path = NULL;
+	if (executable[0] == '/' || executable[0] == '.')
 	{
-		reset_fds(command);
-		reset_all_heredocs(data->commands);
-		free_all(NULL, data, data->commands);
-		ft_free_env(data);
-		exit(127);
+		if (access(executable, F_OK) != 0)
+		{
+			perror(executable);
+			exit(127);
+		}
+	}
+	else
+	{
+		path = data_get_paths(data->envp, executable);
+		if (!path)
+		{
+			handle_unknown_command(command->command, data);
+			exit(127);
+		}
 	}
 	exec_args = join_cmd_args(command);
-	if (executable)
+	setup_signal(1);
+	if (path)
+		execve(path, exec_args, data->envp);
+	else
 		execve(executable, exec_args, data->envp);
-	reset_fds(command);
-	reset_all_heredocs(data->commands);
-	handle_unknown_command(command->command, data);
+	perror("execve");
 	ft_free(exec_args);
-	free_all(NULL, data, data->commands);
-	ft_free_env(data);
+	free(path);
 	exit(127);
 }
 
@@ -82,14 +91,11 @@ void	find_cmd(t_command *command, t_data *data)
 		export(command, data);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(command, data);
-	else if (command->command[0] != '/' && command->command[0] != '.')
+	else
 	{
 		reset_fds(command);
 		reset_all_heredocs(data->commands);
-		handle_unknown_command(command->command, data);
-		free_all(NULL, data, data->commands);
-		ft_free_env(data);
-		exit(127);
+		exec_programm(command, data);
 	}
 	reset_fds(command);
 	reset_all_heredocs(data->commands);

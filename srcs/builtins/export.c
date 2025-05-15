@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/08 18:39:36 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:06:22 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	print_ascii_order(t_data *data)
 	}
 	i = -1;
 	while (++i < count)
-		printf("declare -x \"%s\"\n", sorted_envp[i]);
+		print_export_var(sorted_envp[i]);
 	ft_free(sorted_envp);
 }
 

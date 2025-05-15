@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 10:46:45 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:06:01 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	find_command(t_command *command, t_data *data)
 			export(command, data);
 		else if (!ft_strncmp("exit", command->command, INT_MAX))
 			ft_exit(command, data);
-		else if (command->command[0] == '/' || command->command[0] == '.')
+		else if (command)
 			exec_cmd(command, data);
 		else
 			handle_unknown_command(command->command, data);

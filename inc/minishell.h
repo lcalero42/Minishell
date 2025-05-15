@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 14:58:12 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:06:34 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // INCLUDES                                    
-# include "../libft/libft.h"
+# include "../libft/include/libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -147,6 +147,7 @@ int			apply_heredoc(char *delimiter, t_data *data);
 void		reset_fds(t_command *cmd);
 void		execute_commands(t_data *data);
 int			check_access(char *cmd, t_data *data);
+char		*data_get_paths(char **envp, char *command);
 
 // PIPE FUNCTIONS
 void		wait_processes(t_data *data, pid_t *pids, int num_commands);
@@ -182,5 +183,7 @@ int			is_valid_identifier(char *identifier);
 void		handle_valid_arg(char *arg, t_data *data);
 int			process_export_arg(char *arg, t_data *data);
 int			check_var_name(char *parameter, char *envp_var);
+void		add_char_to_result(char **rslt, char c);
+void		print_export_var(char *env_var);
 
 #endif

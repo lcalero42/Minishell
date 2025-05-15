@@ -71,6 +71,7 @@ minishell
 #test exec
 push_swap
 tests.sh
+test.txt
 
 #test folder
 Muffinette
