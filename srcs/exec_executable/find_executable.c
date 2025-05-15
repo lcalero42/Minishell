@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/15 16:02:07 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:50:47 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,24 @@ void	exec_cmd(t_command *command, t_data *data)
 	char	**exec_args;
 	char	*path;
 
+	status = -1;
 	executable = command->command;
 	path = data_get_paths(data->envp, executable);
 	if (executable[0] == '/' || executable[0] == '.')
 	{
 		if (!check_access(executable, data))
+		{
+			free(path);
 			return ;
+		}
 	}
 	else
 	{
 		if (!check_access(path, data))
+		{
+			free(path);
 			return ;
+		}
 	}
 	exec_args = join_cmd_args(command);
 	pid = fork();
@@ -76,6 +83,8 @@ static void	child_process(t_data *data, char *executable,
 
 static void	set_exit_status(t_data *data, int status)
 {
+	if (status < 0)
+		return ;
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 17:52:12 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/15 19:46:08 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ t_command	*parse_commands(t_token *token_list)
 	{
 		if (token->type == PIPE)
 			current_cmd = NULL;
-		else if (token->type == WORD && (!current_cmd || !current_cmd->command))
+		else if ((token->type == QUOTE || token->type == ENV_VAR
+				|| token->type == WORD)
+			&& (!current_cmd || !current_cmd->command))
 			handle_word_token(token, &cmd_list, &current_cmd);
 		else if (is_text_token(token->type) && current_cmd
 			&& current_cmd->command)

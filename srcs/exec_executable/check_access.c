@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:34:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 15:49:52 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 20:26:49 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/stat.h>
 
 static int	check_dir(char *cmd, t_data *data);
 static int	check_char_count(char *cmd, t_data *data);
@@ -18,21 +19,23 @@ static int	check_exec(char *cmd, t_data *data);
 
 int	check_access(char *cmd, t_data *data)
 {
+	struct stat	file_stat;
+
 	if (cmd == NULL || cmd[0] == '\0')
 	{
 		data->exit_status = 127;
-		ft_putstr_fd("Command not found\n", 2);
+		ft_putstr_fd("minishell: command not found\n", 2);
 		return (0);
 	}
-	if ((ft_strncmp(cmd, "./", 2) == 0 && strlen(cmd) == 2)
-		|| (ft_strncmp(cmd, ".", 1) == 0 && strlen(cmd) == 1)
-		|| (ft_strncmp(cmd, "../", 3) == 0 && strlen(cmd) == 3)
-		|| (ft_strncmp(cmd, "..", 2) == 0 && strlen(cmd) == 2))
+	if (stat(cmd, &file_stat) == 0)
 	{
-		data->exit_status = 126;
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": is a directory\n", 2);
-		return (0);
+		if (S_ISDIR(file_stat.st_mode))
+		{
+			data->exit_status = 126;
+			ft_putstr_fd(cmd, 2);
+			ft_putstr_fd(": is a directory\n", 2);
+			return (0);
+		}
 	}
 	if (!check_dir(cmd, data))
 		return (0);
