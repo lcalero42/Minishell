@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/14 17:44:11 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:02:07 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,24 @@ void	exec_cmd(t_command *command, t_data *data)
 	char	*path;
 
 	executable = command->command;
-	path = NULL;
+	path = data_get_paths(data->envp, executable);
 	if (executable[0] == '/' || executable[0] == '.')
 	{
 		if (!check_access(executable, data))
 			return ;
 	}
 	else
-		path = data_get_paths(data->envp, executable);
+	{
+		if (!check_access(path, data))
+			return ;
+	}
 	exec_args = join_cmd_args(command);
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
 		data->exit_status = 1;
+		free(path);
 		ft_free(exec_args);
 		return ;
 	}
@@ -46,19 +50,27 @@ void	exec_cmd(t_command *command, t_data *data)
 		child_process(data, executable, exec_args, path);
 	waitpid(pid, &status, 0);
 	set_exit_status(data, status);
+	free(path);
 	ft_free(exec_args);
 }
 
 static void	child_process(t_data *data, char *executable,
-		char **exec_args, char *path)
+	char **exec_args, char *path)
 {
 	setup_signal(1);
 	if (path)
-		execve(path, exec_args, data->envp);
+	{
+		if (execve(path, exec_args, data->envp) == -1)
+			perror("execve with path");
+	}
 	else if (executable)
-		execve(executable, exec_args, data->envp);
+	{
+		if (execve(executable, exec_args, data->envp) == -1)
+			perror("execve with executable");
+	}
 	handle_unknown_command(data->commands->command, data);
 	free(path);
+	ft_free(exec_args);
 	exit(127);
 }
 

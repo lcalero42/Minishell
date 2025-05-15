@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 17:42:23 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:29:43 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	exec_programm(t_command *command, t_data *data)
 		}
 	}
 	exec_args = join_cmd_args(command);
+	setup_signal(1);
 	if (path)
 		execve(path, exec_args, data->envp);
 	else

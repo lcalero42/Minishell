@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:40:21 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/14 17:21:46 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:57:14 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*data_get_paths(char **envp, char *command)
 	char	*res;
 
 	i = 0;
+	env_path = NULL;
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "PATH=", 5))
@@ -31,7 +32,11 @@ char	*data_get_paths(char **envp, char *command)
 		}
 		i++;
 	}
+	if (!env_path)
+		return (NULL);
 	paths = ft_split(env_path, ':');
+	if (!paths)
+		return (NULL);
 	res = data_find_path(paths, command);
 	ft_free(paths);
 	return (res);
@@ -44,7 +49,7 @@ static char	*data_find_path(char **paths, char *command)
 	char	*tmp;
 
 	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
@@ -53,10 +58,10 @@ static char	*data_find_path(char **paths, char *command)
 		free(tmp);
 		if (!res)
 			return (NULL);
-		if (!access(res, F_OK))
+		if (!access(res, F_OK | X_OK))
 			return (res);
 		free(res);
 		i++;
 	}
-	return (ft_strdup(res));
+	return (NULL);
 }
