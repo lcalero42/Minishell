@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:35:01 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 16:43:53 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/08 18:40:40 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int	process_export_arg(char *arg, t_data *data)
 	}
 	handle_valid_arg(arg, data);
 	ft_free(param);
+	data->exit_status = 0;
 	return (1);
 }

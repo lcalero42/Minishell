@@ -5,6 +5,26 @@ LDFLAGS = -lreadline -lncurses
 include libft.mk
 
 SRCS = srcs/main.c \
+	   libft/ft_putstr_fd.c \
+       libft/ft_strlen.c \
+	   libft/ft_strncmp.c \
+       libft/ft_split.c \
+	   libft/ft_bzero.c \
+	   libft/ft_putchar_fd.c \
+       libft/ft_strlcpy.c \
+	   libft/ft_strdup.c \
+	   libft/ft_strjoin.c \
+	   libft/ft_isdigit.c \
+	   libft/ft_atoi.c \
+	   libft/ft_itoa.c \
+	   libft/get_next_line.c \
+	   libft/ft_memcpy.c \
+	   libft/ft_strchr.c \
+	   libft/ft_calloc.c \
+	   libft/ft_isalnum.c \
+	   libft/ft_isalpha.c \
+	   libft/ft_substr.c \
+	   srcs/parsing/ft_strncpy.c \
 	   srcs/parsing/add_token.c \
 	   srcs/parsing/tokenize.c \
 	   srcs/parsing/extract_quoted_string.c \
@@ -12,6 +32,9 @@ SRCS = srcs/main.c \
 	   srcs/parsing/parse_commands.c \
 	   srcs/parsing/free_redirections.c \
 	   srcs/parsing/check_parsing_errors.c \
+	   srcs/parsing/extract_quoted_utils.c \
+	   srcs/parsing/export_utils.c \
+	   srcs/parsing/interpreter_word.c \
 	   srcs/builtins/cd.c \
 	   srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
