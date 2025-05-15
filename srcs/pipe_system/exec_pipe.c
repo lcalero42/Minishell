@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 15:29:43 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:02:17 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ void	exec_programm(t_command *command, t_data *data)
 	path = NULL;
 	if (executable[0] == '/' || executable[0] == '.')
 	{
-		if (access(executable, F_OK) != 0)
+		if (!check_access(executable, data))
 		{
-			perror(executable);
-			exit(127);
+			reset_fds(command);
+			reset_all_heredocs(data->commands);
+			free_all(NULL, data, data->commands);
+			ft_free_env(data);
+			exit(data->exit_status);
 		}
 	}
 	else
@@ -54,6 +57,10 @@ void	exec_programm(t_command *command, t_data *data)
 		if (!path)
 		{
 			handle_unknown_command(command->command, data);
+			reset_fds(command);
+			reset_all_heredocs(data->commands);
+			free_all(NULL, data, data->commands);
+			ft_free_env(data);
 			exit(127);
 		}
 	}
@@ -64,7 +71,11 @@ void	exec_programm(t_command *command, t_data *data)
 	else
 		execve(executable, exec_args, data->envp);
 	perror("execve");
+	reset_fds(command);
+	reset_all_heredocs(data->commands);
 	ft_free(exec_args);
+	free_all(NULL, data, data->commands);
+	ft_free_env(data);
 	free(path);
 	exit(127);
 }
@@ -95,7 +106,7 @@ void	find_cmd(t_command *command, t_data *data)
 	{
 		reset_fds(command);
 		reset_all_heredocs(data->commands);
-		exec_programm(command, data);
+		return ;
 	}
 	reset_fds(command);
 	reset_all_heredocs(data->commands);
@@ -118,8 +129,6 @@ int	is_builtin(t_command *command)
 	else if (!ft_strncmp("export", command->command, INT_MAX))
 		return (1);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
-		return (1);
-	else if (command->command[0] != '/' && command->command[0] != '.')
 		return (1);
 	return (0);
 }
