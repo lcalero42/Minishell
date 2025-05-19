@@ -14,6 +14,7 @@ SRCS = srcs/main.c \
 	   srcs/parsing/check_parsing_errors.c \
 	   srcs/parsing/interpreter_word.c \
 	   srcs/parsing/check_syntax_errors.c \
+	   srcs/parsing/interpreter_word_utils.c \
 	   srcs/builtins/cd.c \
 	   srcs/builtins/echo.c \
 	   srcs/builtins/unset.c \
@@ -34,6 +35,7 @@ SRCS = srcs/main.c \
 	   srcs/redirections/reset_fds.c \
 	   srcs/pipe_system/exec_pipe.c \
 	   srcs/pipe_system/check_pipe.c \
+	   srcs/pipe_system/exec_programm.c \
 	   srcs/utils/cmd_utils.c \
 	   srcs/utils/ft_strncpy.c \
 	   srcs/utils/ft_isspace.c \
@@ -43,7 +45,8 @@ SRCS = srcs/main.c \
 	   srcs/utils/extract_quoted_utils.c \
 	   srcs/utils/pipe_system_utils.c \
 	   srcs/utils/pipe_exec_utils.c \
-	   srcs/utils/export_utils.c
+	   srcs/utils/export_utils.c \
+	   srcs/utils/heredoc_utils.c
 
 HEADER = inc/minishell.h
 

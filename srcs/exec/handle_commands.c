@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 16:06:01 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:42:58 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	find_command(t_command *command, t_data *data)
 		else if (!ft_strncmp("env", command->command, INT_MAX))
 			env(data->envp, data);
 		else if (!ft_strncmp("unset", command->command, INT_MAX))
-			unset(command->args[0], data->envp, data);
+			unset(command, data->envp, data);
 		else if (!ft_strncmp("export", command->command, INT_MAX))
 			export(command, data);
 		else if (!ft_strncmp("exit", command->command, INT_MAX))

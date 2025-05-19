@@ -6,17 +6,13 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 13:20:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/14 22:58:13 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:08:24 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*extract_env_var(char *str, t_data *data);
-static size_t	handle_quotes(char *word, size_t j, char **rslt, t_data *data);
-static size_t	handle_env_vars(char *word, size_t j, char **rslt,
-					t_data *data);
-static int		check_wrong_expand(char *word, char *rslt);
+static char	*extract_env_var(char *str, t_data *data);
 
 /**
  * Main interpreter function for processing words
@@ -25,32 +21,14 @@ static int		check_wrong_expand(char *word, char *rslt);
 char	*interpreter_word(int *i, char *word, t_data *data, int read_quotes)
 {
 	char	*rslt;
-	size_t	j;
-	size_t	new_j;
 
 	rslt = ft_strdup("");
 	if (!rslt)
 		return (NULL);
-	j = 0;
-	while (word[j])
+	if (!process_word_chars(word, data, &rslt, read_quotes))
 	{
-		if ((word[j] == '"' || word[j] == '\'') && read_quotes)
-		{
-			new_j = handle_quotes(word, j, &rslt, data);
-			if (new_j == 0)
-			{
-				free(rslt);
-				return (NULL);
-			}
-			j = new_j;
-		}
-		else if (word[j] == '$')
-			j = handle_env_vars(word, j, &rslt, data);
-		else
-		{
-			add_char_to_result(&rslt, word[j]);
-			j++;
-		}
+		free(rslt);
+		return (NULL);
 	}
 	*i += ft_strlen(word) - 1;
 	if (!check_wrong_expand(word, rslt))
@@ -61,7 +39,7 @@ char	*interpreter_word(int *i, char *word, t_data *data, int read_quotes)
 	return (rslt);
 }
 
-static int	check_wrong_expand(char *word, char *rslt)
+int	check_wrong_expand(char *word, char *rslt)
 {
 	int		i;
 	int		has_expands;
@@ -83,7 +61,7 @@ static int	check_wrong_expand(char *word, char *rslt)
  * Handles quoted strings in the interpreter
  * @return: Updated position after processing quotes
  */
-static size_t	handle_quotes(char *word, size_t j, char **rslt, t_data *data)
+size_t	interpreter_quotes(char *word, size_t j, char **rslt, t_data *data)
 {
 	char	*tmp;
 	char	*rslt_temp;
@@ -105,7 +83,7 @@ static size_t	handle_quotes(char *word, size_t j, char **rslt, t_data *data)
 	return (j);
 }
 
-static size_t	handle_env_vars(char *word, size_t j, char **rslt, t_data *data)
+size_t	handle_env_vars(char *word, size_t j, char **rslt, t_data *data)
 {
 	char	*env_var;
 	char	*rslt_temp;

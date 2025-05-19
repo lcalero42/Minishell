@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 16:06:34 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:18:34 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,10 @@ void		handle_var_expansion(char **rslt, char *var_name, int *i,
 char		*interpreter_word(int *i, char *word, t_data *data, int read_quotes);
 void		add_char_to_result(char **rslt, char c);
 int			check_syntax(t_data *data);
+int			check_wrong_expand(char *word, char *rslt);
+size_t		interpreter_quotes(char *word, size_t j, char **rslt, t_data *data);
+size_t		handle_env_vars(char *word, size_t j, char **rslt, t_data *data);
+
 
 // MEMORY MANAGEMENT
 void		free_tokens(t_token *tokens);
@@ -132,7 +136,7 @@ char		*ft_getenv(t_data *data, char *s);
 void		pwd(t_data *data);
 void		echo(t_command *command, t_data *data);
 void		env(char **env, t_data *data);
-void		unset(char *var, char **envp, t_data *data);
+void		unset(t_command *command, char **envp, t_data *data);
 void		cd(char *s, t_data *data);
 void		export(t_command *command, t_data *data);
 void		ft_exit(t_command *command, t_data *data);
@@ -148,6 +152,7 @@ void		reset_fds(t_command *cmd);
 void		execute_commands(t_data *data);
 int			check_access(char *cmd, t_data *data);
 char		*data_get_paths(char **envp, char *command);
+int			check_programm_access(char *executable, char *path, t_data *data);
 
 // PIPE FUNCTIONS
 void		wait_processes(t_data *data, pid_t *pids, int num_commands);
@@ -165,6 +170,7 @@ pid_t		create_child_process(t_command *cmd, t_data *data,
 				int fd_in, int *fd);
 void		process_all_heredocs(t_command *cmd_list, t_data *data);
 void		reset_all_heredocs(t_command *cmd_list);
+void		reset_all_fds(t_command *cmd);
 
 // UTILITY FUNCTIONS
 void		print_welcome(void);
@@ -179,11 +185,17 @@ void		update_exit_status(t_data *data);
 void		execute_and_update(t_data *data);
 void		cleanup_iteration(char *line, t_data *data);
 char		*get_prompt_line(t_data *data);
-int			is_valid_identifier(char *identifier);
+int			is_valid_identifier(char *identifier, int is_unset);
 void		handle_valid_arg(char *arg, t_data *data);
 int			process_export_arg(char *arg, t_data *data);
 int			check_var_name(char *parameter, char *envp_var);
 void		add_char_to_result(char **rslt, char c);
 void		print_export_var(char *env_var);
+int			process_unset_arg(char *arg, t_data *data);
+void		line_cleanup(char *var1, char *var2, char *var3);
+int			process_quotes_and_vars(char *word, size_t *j, 
+				char **rslt, t_data *data);
+int			process_word_chars(char *word, t_data *data, 
+				char **rslt, int read_quotes);
 
 #endif

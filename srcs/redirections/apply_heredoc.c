@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:47:08 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/14 14:55:50 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:31:43 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ static void	read_heredoc(int pipe_fd[2], char *delimiter, t_data *data)
 		res = interpreter_word(&i, tmp, data, 0);
 		if (!ft_strncmp(tmp, delimiter, INT_MAX))
 		{
-			free(line);
-			free(tmp);
-			free(res);
+			line_cleanup(line, tmp, res);
 			break ;
 		}
 		if (!is_quoted(data))
@@ -97,9 +95,7 @@ static void	read_heredoc(int pipe_fd[2], char *delimiter, t_data *data)
 		else
 			ft_putstr_fd(tmp, pipe_fd[1]);
 		ft_putstr_fd("\n", pipe_fd[1]);
-		free(line);
-		free(tmp);
-		free(res);
+		line_cleanup(line, tmp, res);
 	}
 }
 

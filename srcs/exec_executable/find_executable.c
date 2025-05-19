@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/15 19:50:47 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:11:02 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,26 @@ static void	set_exit_status(t_data *data, int status);
 
 void	exec_cmd(t_command *command, t_data *data)
 {
-	char	*executable;
 	pid_t	pid;
 	int		status;
 	char	**exec_args;
 	char	*path;
 
 	status = -1;
-	executable = command->command;
-	path = data_get_paths(data->envp, executable);
-	if (executable[0] == '/' || executable[0] == '.')
-	{
-		if (!check_access(executable, data))
-		{
-			free(path);
-			return ;
-		}
-	}
-	else
-	{
-		if (!check_access(path, data))
-		{
-			free(path);
-			return ;
-		}
-	}
-	exec_args = join_cmd_args(command);
+	path = data_get_paths(data->envp, command->command);
+	if (!check_programm_access(command->command, path, data))
+		return ;
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
 		data->exit_status = 1;
 		free(path);
-		ft_free(exec_args);
 		return ;
 	}
+	exec_args = join_cmd_args(command);
 	if (pid == 0)
-		child_process(data, executable, exec_args, path);
+		child_process(data, command->command, exec_args, path);
 	waitpid(pid, &status, 0);
 	set_exit_status(data, status);
 	free(path);

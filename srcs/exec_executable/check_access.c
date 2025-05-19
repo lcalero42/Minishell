@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:34:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 20:26:49 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:57:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,27 @@ int	check_access(char *cmd, t_data *data)
 		return (0);
 	if (!check_exec(cmd, data))
 		return (0);
+	return (1);
+}
+
+int	check_programm_access(char *executable, char *path, t_data *data)
+{
+	if (executable[0] == '/' || executable[0] == '.')
+	{
+		if (!check_access(executable, data))
+		{
+			free(path);
+			return (0);
+		}
+	}
+	else
+	{
+		if (!check_access(path, data))
+		{
+			free(path);
+			return (0);
+		}
+	}
 	return (1);
 }
 

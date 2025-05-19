@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:26:06 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 19:02:17 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:19:05 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,62 +30,11 @@ void	exec_pipe(t_data *data)
 	free(data->pids);
 }
 
-void	exec_programm(t_command *command, t_data *data)
-{
-	char	*executable;
-	char	*path;
-	char	**exec_args;
-
-	if (!command->command)
-		return ;
-	executable = command->command;
-	path = NULL;
-	if (executable[0] == '/' || executable[0] == '.')
-	{
-		if (!check_access(executable, data))
-		{
-			reset_fds(command);
-			reset_all_heredocs(data->commands);
-			free_all(NULL, data, data->commands);
-			ft_free_env(data);
-			exit(data->exit_status);
-		}
-	}
-	else
-	{
-		path = data_get_paths(data->envp, executable);
-		if (!path)
-		{
-			handle_unknown_command(command->command, data);
-			reset_fds(command);
-			reset_all_heredocs(data->commands);
-			free_all(NULL, data, data->commands);
-			ft_free_env(data);
-			exit(127);
-		}
-	}
-	exec_args = join_cmd_args(command);
-	setup_signal(1);
-	if (path)
-		execve(path, exec_args, data->envp);
-	else
-		execve(executable, exec_args, data->envp);
-	perror("execve");
-	reset_fds(command);
-	reset_all_heredocs(data->commands);
-	ft_free(exec_args);
-	free_all(NULL, data, data->commands);
-	ft_free_env(data);
-	free(path);
-	exit(127);
-}
-
 void	find_cmd(t_command *command, t_data *data)
 {
 	if (!command->command)
 	{
-		reset_fds(command);
-		reset_all_heredocs(data->commands);
+		reset_all_fds(command);
 		return ;
 	}
 	if (!ft_strncmp("pwd", command->command, INT_MAX))
@@ -97,19 +46,17 @@ void	find_cmd(t_command *command, t_data *data)
 	else if (!ft_strncmp("env", command->command, INT_MAX))
 		env(data->envp, data);
 	else if (!ft_strncmp("unset", command->command, INT_MAX))
-		unset(command->args[0], data->envp, data);
+		unset(command, data->envp, data);
 	else if (!ft_strncmp("export", command->command, INT_MAX))
 		export(command, data);
 	else if (!ft_strncmp("exit", command->command, INT_MAX))
 		ft_exit(command, data);
 	else
 	{
-		reset_fds(command);
-		reset_all_heredocs(data->commands);
+		reset_all_fds(command);
 		return ;
 	}
-	reset_fds(command);
-	reset_all_heredocs(data->commands);
+	reset_all_fds(command);
 }
 
 int	is_builtin(t_command *command)
