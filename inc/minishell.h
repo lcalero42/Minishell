@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/19 13:18:34 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 12:26:05 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,13 @@ void		handle_env_var(char **rslt, char *str, int *i, t_data *data);
 void		handle_exit_status(char **rslt, int *i, t_data *data);
 void		handle_var_expansion(char **rslt, char *var_name, int *i,
 				t_data *data);
-char		*interpreter_word(int *i, char *word, t_data *data, int read_quotes);
+char		*interpreter_word(int *i, char *word, t_data *data,
+				int read_quotes);
 void		add_char_to_result(char **rslt, char c);
 int			check_syntax(t_data *data);
 int			check_wrong_expand(char *word, char *rslt);
 size_t		interpreter_quotes(char *word, size_t j, char **rslt, t_data *data);
 size_t		handle_env_vars(char *word, size_t j, char **rslt, t_data *data);
-
 
 // MEMORY MANAGEMENT
 void		free_tokens(t_token *tokens);
@@ -193,9 +193,9 @@ void		add_char_to_result(char **rslt, char c);
 void		print_export_var(char *env_var);
 int			process_unset_arg(char *arg, t_data *data);
 void		line_cleanup(char *var1, char *var2, char *var3);
-int			process_quotes_and_vars(char *word, size_t *j, 
+int			process_quotes_and_vars(char *word, size_t *j,
 				char **rslt, t_data *data);
-int			process_word_chars(char *word, t_data *data, 
+int			process_word_chars(char *word, t_data *data,
 				char **rslt, int read_quotes);
 
 #endif
