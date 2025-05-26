@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   loop_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/26 17:01:03 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:22:04 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	check_sigint(t_data *data);
 static int	process_input(char *line, t_data *data);
 
 void	loop(t_data *data)
@@ -27,6 +28,7 @@ void	loop(t_data *data)
 		prompt = get_prompt_line(data);
 		line = readline(prompt);
 		free(prompt);
+		check_sigint(data);
 		process_result = process_input(line, data);
 		result = handle_command_result(line, process_result);
 		if (result == 1)
@@ -80,4 +82,13 @@ void	free_all(char *line, t_data *data, t_command *first_cmd)
 		free_commands(first_cmd);
 	if (data->tokens)
 		free_tokens(data->tokens);
+}
+
+static void	check_sigint(t_data *data)
+{
+	if (g_signals == SIGINT)
+	{
+		data->exit_status = 130;
+		g_signals = 0;
+	}
 }
