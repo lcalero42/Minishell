@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/26 16:11:41 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 16:26:53 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	apply_redirections(t_command *cmd, t_data *data)
 			fd = handle_heredoc(redir);
 		if (fd > 2)
 			close(fd);
-		else
+		else if (fd == -1)
 		{
 			data->exit_status = 1;
 			return (0);

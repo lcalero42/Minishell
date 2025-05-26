@@ -6,13 +6,14 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/26 16:11:07 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 16:33:40 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	find_command(t_command *command, t_data *data);
+static int	check_reset_redirections(t_command *command, t_data *data);
 
 void	handle_commands(t_data *data)
 {
@@ -29,7 +30,7 @@ void	handle_commands(t_data *data)
 
 static void	find_command(t_command *command, t_data *data)
 {
-	if (!apply_redirections(command, data))
+	if (!check_reset_redirections(command, data))
 		return ;
 	if (command->command)
 	{
@@ -62,4 +63,15 @@ void	handle_unknown_command(char *cmd, t_data *data)
 	ft_putstr_fd(": command not found", 2);
 	ft_putchar_fd('\n', 2);
 	data->exit_status = 127;
+}
+
+static int	check_reset_redirections(t_command *command, t_data *data)
+{
+	if (!apply_redirections(command, data))
+	{
+		reset_fds(command);
+		reset_all_heredocs(data->commands);
+		return (0);
+	}
+	return (1);
 }
