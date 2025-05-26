@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/19 10:42:58 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 16:11:07 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	handle_commands(t_data *data)
 
 static void	find_command(t_command *command, t_data *data)
 {
-	apply_redirections(command);
+	if (!apply_redirections(command, data))
+		return ;
 	if (command->command)
 	{
 		if (!ft_strncmp("pwd", command->command, INT_MAX))

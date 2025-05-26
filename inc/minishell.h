@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/26 12:32:19 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 16:10:53 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void		loop(t_data *data);
 void		handle_commands(t_data *data);
 void		exec_cmd(t_command *command, t_data *data);
 void		handle_unknown_command(char *cmd, t_data *data);
-int			apply_redirections(t_command *cmd);
+int			apply_redirections(t_command *cmd, t_data *data);
 int			apply_heredoc(char *delimiter, t_data *data);
 void		reset_fds(t_command *cmd);
 void		execute_commands(t_data *data);

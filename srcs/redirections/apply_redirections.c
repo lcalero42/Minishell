@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:07:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/04/18 16:15:35 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:11:41 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	handle_input_output(int fd, t_redirection *redir);
 static int	handle_heredoc(t_redirection *redir);
 static int	handle_append_out(int fd, t_redirection *redir);
 
-int	apply_redirections(t_command *cmd)
+int	apply_redirections(t_command *cmd, t_data *data)
 {
 	t_redirection	*redir;
 	int				fd;
@@ -36,6 +36,11 @@ int	apply_redirections(t_command *cmd)
 			fd = handle_heredoc(redir);
 		if (fd > 2)
 			close(fd);
+		else
+		{
+			data->exit_status = 1;
+			return (0);
+		}
 		redir = redir->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:55:19 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/01 18:05:29 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 16:11:00 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execute_child_process(t_command *cmd, t_data *data,
 		close(fd[0]);
 		close(fd[1]);
 	}
-	apply_redirections(cmd);
+	apply_redirections(cmd, data);
 	if (is_builtin(cmd))
 	{
 		find_cmd(cmd, data);
