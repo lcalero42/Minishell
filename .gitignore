@@ -53,6 +53,7 @@ dkms.conf
 
 #debug
 readline.supp
+Muffinette
 
 #debug
 debug_func.c
@@ -69,3 +70,8 @@ minishell
 
 #test exec
 push_swap
+tests.sh
+test.txt
+
+#test folder
+Muffinette

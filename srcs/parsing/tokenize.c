@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:15:06 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/03/21 16:30:52 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/14 14:56:43 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	handle_operators(t_token **tokens, char *input, int *i);
 static void	handle_words(t_token **tokens, t_data *data, char *input, int *i);
-static void	add_word(char *input, int *i, t_token_type type, t_token **tokens);
+static void	add_word(char *input, t_token_type type, t_token **tokens);
 
 t_token	*tokenize(char *input, t_data *data)
 {
@@ -66,41 +66,34 @@ static int	handle_operators(t_token **tokens, char *input, int *i)
 static void	handle_words(t_token **tokens, t_data *data, char *input, int *i)
 {
 	char	*word;
+	char	*tmp_word;
 
 	if (input[*i] == '$')
 	{
-		word = extract_word(input + *i + 1);
-		if (word[0] == '?')
-		{
-			free(word);
-			word = extract_word(input + *i);
-			add_word(word, i, ENV_VAR, tokens);
-			return ;
-		}
-		if (ft_getenv(data, word))
-			add_token(tokens, ft_getenv(data, word), ENV_VAR);
-		*i += ft_strlen(word);
+		tmp_word = extract_word(input + *i);
+		word = interpreter_word(i, tmp_word, data, 1);
+		add_token(tokens, word, ENV_VAR);
 		free(word);
+		free(tmp_word);
 	}
 	else if (input[*i] == '\'' || input[*i] == '"')
-		add_word(extract_quoted_string(input + *i), i, QUOTE, tokens);
+	{
+		word = extract_word(input + *i);
+		add_word(interpreter_word(i, word, data, 1), QUOTE, tokens);
+		free(word);
+	}
 	else if (!ft_isspace(input[*i]))
-		add_word(extract_word(input + *i), i, WORD, tokens);
+	{
+		word = extract_word(input + *i);
+		add_word(interpreter_word(i, word, data, 1), WORD, tokens);
+		free(word);
+	}
 }
 
-static void	add_word(char *input, int *i, t_token_type type, t_token **tokens)
+static void	add_word(char *input, t_token_type type, t_token **tokens)
 {
-	char	*word;
-
-	word = input;
-	add_token(tokens, word, type);
-	if (type == WORD)
-		*i += ft_strlen(word) - 1;
-	else if (type == QUOTE)
-		*i += ft_strlen(word) + 1;
-	else if (type == ENV_VAR)
-		*i += ft_strlen(word) - 1;
-	free(word);
+	add_token(tokens, input, type);
+	free(input);
 }
 
 void	free_tokens(t_token *tokens)

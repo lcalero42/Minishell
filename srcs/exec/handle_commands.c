@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:12:49 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/26 17:03:34 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 10:42:58 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handle_commands(t_data *data)
 	t_command	*tmp;
 
 	tmp = data->commands;
+	process_all_heredocs(tmp, data);
 	while (tmp)
 	{
 		find_command(tmp, data);
@@ -40,17 +41,18 @@ static void	find_command(t_command *command, t_data *data)
 		else if (!ft_strncmp("env", command->command, INT_MAX))
 			env(data->envp, data);
 		else if (!ft_strncmp("unset", command->command, INT_MAX))
-			unset(command->args[0], data->envp, data);
+			unset(command, data->envp, data);
 		else if (!ft_strncmp("export", command->command, INT_MAX))
 			export(command, data);
 		else if (!ft_strncmp("exit", command->command, INT_MAX))
 			ft_exit(command, data);
-		else if (command->command[0] == '/' || command->command[0] == '.')
+		else if (command)
 			exec_cmd(command, data);
 		else
 			handle_unknown_command(command->command, data);
 	}
 	reset_fds(command);
+	reset_all_heredocs(data->commands);
 }
 
 void	handle_unknown_command(char *cmd, t_data *data)

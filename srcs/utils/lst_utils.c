@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 16:18:52 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/03/27 16:07:08 by lcalero           #+#    #+#             */
+/*   Updated: 2025/03/27 16:08:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+int	lst_cmd_len(t_command *cmd)
 {
-	t_data	data;
+	int	i;
 
-	(void)av;
-	(void)ac;
-	print_welcome();
-	ft_bzero(&data, sizeof(data));
-	make_env(&data, envp);
-	loop(&data);
-	return (data.exit_status);
+	i = 0;
+	while (cmd)
+	{
+		i++;
+		cmd = cmd->next;
+	}
+	return (i);
 }

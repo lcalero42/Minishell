@@ -6,41 +6,36 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:50:28 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:06:22 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_var_name(char *parameter, char *envp_var);
 static void	print_ascii_order(t_data *data);
 static char	**init_copy(t_data *data, int count);
 static void	swap_env_vars(char **envp, int j);
 
 void	export(t_command *command, t_data *data)
 {
-	int		i;
-	int		j;
-	int		count;
+	int	j;
+	int	count;
 
-	i = 0;
-	j = 0;
 	count = 0;
 	while (command->args[count])
 		count++;
+	if (!count)
+	{
+		print_ascii_order(data);
+		data->exit_status = 0;
+		return ;
+	}
+	j = 0;
 	while (j < count)
 	{
-		if (!data->envp[i] || check_var_name(command->args[j], data->envp[i]))
-		{
-			if (data->envp[i])
-				free(data->envp[i]);
-			data->envp[i] = ft_strdup(command->args[j]);
-			j++;
-		}
-		i++;
+		process_export_arg(command->args[j], data);
+		j++;
 	}
-	if (!count)
-		print_ascii_order(data);
 }
 
 static void	print_ascii_order(t_data *data)
@@ -66,7 +61,7 @@ static void	print_ascii_order(t_data *data)
 	}
 	i = -1;
 	while (++i < count)
-		printf("declare -x \"%s\"\n", sorted_envp[i]);
+		print_export_var(sorted_envp[i]);
 	ft_free(sorted_envp);
 }
 
@@ -88,7 +83,7 @@ static char	**init_copy(t_data *data, int count)
 	return (sorted_envp);
 }
 
-static int	check_var_name(char *parameter, char *envp_var)
+int	check_var_name(char *parameter, char *envp_var)
 {
 	char	**param;
 

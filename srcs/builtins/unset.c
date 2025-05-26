@@ -6,35 +6,48 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:53:44 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:56:48 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 11:15:38 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset(char *var, char **envp, t_data *data)
+static void	shift_env(char **envp, int i);
+
+void	unset(t_command *command, char **envp, t_data *data)
 {
 	int	i;
 	int	j;
+	int	len;
 
-	if (!var)
-		return ;
 	i = 0;
 	j = 0;
-	while (envp[i])
+	while (command->args[i])
 	{
-		if (!strncmp(envp[i], var, ft_strlen(var)))
+		len = ft_strlen(command->args[i]);
+		while (envp[j])
 		{
-			free(envp[i]);
-			j = i;
-			while (envp[j])
+			if (!ft_strncmp(envp[j], command->args[i], len))
 			{
-				envp[j] = envp[j + 1];
-				j++;
+				free(envp[j]);
+				shift_env(envp, j);
+				break ;
 			}
-			break ;
+			j++;
 		}
 		i++;
 	}
 	data->exit_status = 0;
+}
+
+static void	shift_env(char **envp, int j)
+{
+	int	i;
+
+	i = j;
+	while (envp[i])
+	{
+		envp[i] = envp[i + 1];
+		i++;
+	}
 }

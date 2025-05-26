@@ -6,42 +6,31 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:55:19 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/26 17:00:50 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/01 18:05:29 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_processes(t_data *data, int *status)
-{
-	*status = 0;
-	while (waitpid(-1, status, 0) > 0)
-	{
-		if (WIFEXITED(*status))
-			data->exit_status = WEXITSTATUS(*status);
-		else if (WIFSIGNALED(*status))
-			data->exit_status = 128 + WTERMSIG(*status);
-	}
-}
+static void	setup_fds(t_command *cmd, int fd_in, int *fd);
 
-void	setup_fds(t_command *cmd, int fd_in, int *fd)
+void	wait_processes(t_data *data, pid_t *pids, int num_commands)
 {
-	if (fd_in != STDIN_FILENO)
+	int	i;
+	int	child_status;
+
+	i = 0;
+	while (i < num_commands)
 	{
-		if (dup2(fd_in, STDIN_FILENO) == -1)
+		waitpid(pids[i], &child_status, 0);
+		if (i == num_commands - 1)
 		{
-			perror("dup2 input");
-			exit(1);
+			if (WIFEXITED(child_status))
+				data->exit_status = WEXITSTATUS(child_status);
+			else if (WIFSIGNALED(child_status))
+				data->exit_status = 128 + WTERMSIG(child_status);
 		}
-		close(fd_in);
-	}
-	if (cmd->next)
-	{
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-		{
-			perror("dup2 output");
-			exit(1);
-		}
+		i++;
 	}
 }
 
@@ -56,9 +45,16 @@ void	execute_child_process(t_command *cmd, t_data *data,
 	}
 	apply_redirections(cmd);
 	if (is_builtin(cmd))
+	{
 		find_cmd(cmd, data);
+		reset_all_heredocs(data->commands);
+		free_all(NULL, data, data->commands);
+		ft_free_env(data);
+		exit(data->exit_status);
+	}
 	else
 		exec_programm(cmd, data);
+	reset_all_heredocs(data->commands);
 	free_all(NULL, data, data->commands);
 	ft_free_env(data);
 	exit(0);
@@ -92,4 +88,25 @@ pid_t	create_pipe_and_fork(int *fd, t_command *cmd)
 	}
 	pid = fork();
 	return (pid);
+}
+
+static void	setup_fds(t_command *cmd, int fd_in, int *fd)
+{
+	if (fd_in != STDIN_FILENO)
+	{
+		if (dup2(fd_in, STDIN_FILENO) == -1)
+		{
+			perror("dup2 input");
+			exit(1);
+		}
+		close(fd_in);
+	}
+	if (cmd->next)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2 output");
+			exit(1);
+		}
+	}
 }

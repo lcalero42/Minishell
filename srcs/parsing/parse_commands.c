@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/03/24 14:56:20 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:13:10 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_command	*parse_commands(t_token *token_list)
 	{
 		if (token->type == PIPE)
 			current_cmd = NULL;
-		else if (token->type == WORD && (!current_cmd || !current_cmd->command))
+		else if ((is_text_token(token->type))
+			&& (!current_cmd || !current_cmd->command))
 			handle_word_token(token, &cmd_list, &current_cmd);
 		else if (is_text_token(token->type) && current_cmd
 			&& current_cmd->command)
@@ -104,7 +105,8 @@ static int	should_handle_redirection(t_token *token, t_command *cmd)
 	(void)cmd;
 	return ((token->type == REDIR_IN || token->type == REDIR_OUT
 			|| token->type == REDIR_APPEND || token->type == HEREDOC)
-		&& token->next && token->next->type == WORD);
+		&& token->next && (token->next->type == WORD
+			|| token->next->type == QUOTE || token->next->type == ENV_VAR));
 }
 
 static int	is_text_token(t_token_type type)

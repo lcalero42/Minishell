@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 15:25:58 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 16:18:52 by ekeisler         ###   ########.fr       */
+/*   Created: 2025/05/19 11:29:12 by lcalero           #+#    #+#             */
+/*   Updated: 2025/05/19 11:30:21 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	line_cleanup(char *var1, char *var2, char *var3)
 {
-	t_data	data;
-
-	(void)av;
-	(void)ac;
-	print_welcome();
-	ft_bzero(&data, sizeof(data));
-	make_env(&data, envp);
-	loop(&data);
-	return (data.exit_status);
+	free(var1);
+	free(var2);
+	free(var3);
 }
