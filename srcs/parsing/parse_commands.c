@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/27 18:19:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/27 19:46:11 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,32 +59,35 @@ t_command	*parse_commands(t_token *token_list)
 		}
 		token = token->next;
 	}
-	if (ft_strchr(cmd_list->command, ' '))
+	if (cmd_list->command)
 	{
-		char	**cmd_split = ft_split(cmd_list->command, ' ');
-		int		split_size = count_args(cmd_split);
-		int		existing_args = count_args(current_cmd->args);
-		
-		current_cmd = cmd_list;
-		free(current_cmd->command);
-		current_cmd->command = ft_strdup(cmd_split[0]);
-		char **new_args = malloc((existing_args + split_size - 1 + 1) * sizeof(char*));
-		int i = 0;
-		for (int j = 1; j < split_size; j++)
+		if (ft_strchr(cmd_list->command, ' '))
 		{
-			new_args[i] = ft_strdup(cmd_split[j]);
-			i++;
+			char	**cmd_split = ft_split(cmd_list->command, ' ');
+			int		split_size = count_args(cmd_split);
+			int		existing_args = count_args(current_cmd->args);
+			
+			current_cmd = cmd_list;
+			free(current_cmd->command);
+			current_cmd->command = ft_strdup(cmd_split[0]);
+			char **new_args = malloc((existing_args + split_size - 1 + 1) * sizeof(char*));
+			int i = 0;
+			for (int j = 1; j < split_size; j++)
+			{
+				new_args[i] = ft_strdup(cmd_split[j]);
+				i++;
+			}
+			for (int j = 0; j < existing_args; j++)
+			{
+				new_args[i] = current_cmd->args[j];
+				i++;
+			}
+			new_args[i] = NULL;
+			free(current_cmd->args);
+			current_cmd->args = new_args;
+			
+			ft_free(cmd_split);
 		}
-		for (int j = 0; j < existing_args; j++)
-		{
-			new_args[i] = current_cmd->args[j];
-			i++;
-		}
-		new_args[i] = NULL;
-		free(current_cmd->args);
-		current_cmd->args = new_args;
-		
-		ft_free(cmd_split);
 	}
 	return (cmd_list);
 }
