@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:02:03 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/19 12:13:10 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/27 18:19:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ static void	handle_redirections(t_token *token, t_command **cmd_list,
 				t_command **current_cmd);
 static void	handle_word_token(t_token *token, t_command **cmd_list,
 				t_command **current_cmd);
+
+
+void shift_right_2d_string(char **arr)
+{
+	int size = 0;
+	while (arr[size] != NULL)
+        size++;
+	
+	if (!arr || size <= 1)
+		return ;
+	for (int i = size - 1; i > 0; i--)
+		arr[i] = arr[i - 1];
+	arr[0] = arr[size - 1];
+}
 
 t_command	*parse_commands(t_token *token_list)
 {
@@ -44,6 +58,33 @@ t_command	*parse_commands(t_token *token_list)
 			token = token->next;
 		}
 		token = token->next;
+	}
+	if (ft_strchr(cmd_list->command, ' '))
+	{
+		char	**cmd_split = ft_split(cmd_list->command, ' ');
+		int		split_size = count_args(cmd_split);
+		int		existing_args = count_args(current_cmd->args);
+		
+		current_cmd = cmd_list;
+		free(current_cmd->command);
+		current_cmd->command = ft_strdup(cmd_split[0]);
+		char **new_args = malloc((existing_args + split_size - 1 + 1) * sizeof(char*));
+		int i = 0;
+		for (int j = 1; j < split_size; j++)
+		{
+			new_args[i] = ft_strdup(cmd_split[j]);
+			i++;
+		}
+		for (int j = 0; j < existing_args; j++)
+		{
+			new_args[i] = current_cmd->args[j];
+			i++;
+		}
+		new_args[i] = NULL;
+		free(current_cmd->args);
+		current_cmd->args = new_args;
+		
+		ft_free(cmd_split);
 	}
 	return (cmd_list);
 }

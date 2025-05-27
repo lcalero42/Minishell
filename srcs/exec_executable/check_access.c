@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:34:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/19 12:57:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/27 17:49:27 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	check_access(char *cmd, t_data *data)
 	if (cmd == NULL || cmd[0] == '\0')
 	{
 		data->exit_status = 127;
-		ft_putstr_fd("minishell: command not found\n", 2);
+		ft_putstr_fd("minishell: command not found : ", 2);
+		printf("%s\n", cmd);
 		return (0);
 	}
 	if (stat(cmd, &file_stat) == 0)
