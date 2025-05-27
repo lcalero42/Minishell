@@ -24,6 +24,7 @@ SRCS = srcs/main.c \
 	   srcs/builtins/exit.c \
 	   srcs/env/handle_signals.c \
 	   srcs/env/handle_env_variables.c \
+	   srcs/env/setup_signals.c \
 	   srcs/exec/shell_launching.c \
 	   srcs/exec/handle_commands.c \
 	   srcs/exec/loop_logic.c \
@@ -31,11 +32,13 @@ SRCS = srcs/main.c \
 	   srcs/exec_executable/check_access.c \
 	   srcs/exec_executable/find_exec_path.c \
 	   srcs/redirections/apply_redirections.c \
+	   srcs/redirections/process_heredoc.c \
 	   srcs/redirections/apply_heredoc.c \
 	   srcs/redirections/reset_fds.c \
 	   srcs/pipe_system/exec_pipe.c \
 	   srcs/pipe_system/check_pipe.c \
 	   srcs/pipe_system/exec_programm.c \
+	   srcs/term_settings/term_settings.c \
 	   srcs/utils/cmd_utils.c \
 	   srcs/utils/ft_strncpy.c \
 	   srcs/utils/ft_isspace.c \

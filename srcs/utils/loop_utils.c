@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:02:42 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/26 20:24:21 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:46:53 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ void	update_exit_status(t_data *data)
 
 void	execute_and_update(t_data *data)
 {
-	setup_signal(2);
-	execute_commands(data);
+	if (data->can_exec == 1)
+	{
+		setup_signal(1);
+		execute_commands(data);
+	}
+	data->can_exec = 1;
 	update_exit_status(data);
 }
 

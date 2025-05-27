@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/26 20:23:05 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:47:52 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_data
 {
 	char				*raw_line;
 	char				*envp[100];
+	int					can_exec;
 	t_token				*tokens;
 	t_command			*commands;
 	int					exit_status;
@@ -141,12 +142,26 @@ void		cd(char *s, t_data *data);
 void		export(t_command *command, t_data *data);
 void		ft_exit(t_command *command, t_data *data);
 
+// SIG
+void		setup_interactive_signals(struct sigaction *sa);
+void		setup_command_signals(struct sigaction *sa);
+void		setup_heredoc_signals(struct sigaction *sa);
+void		sig_handler(int sig);
+void		sig_handler_cmd(int sig);
+void		sig_handler_heredoc(int sig);
+
+// TERM SETTINGS
+void		disable_ctrl_char_echo(void);
+void		restore_ctrl_char_echo(void);
+
 // EXECUTION FUNCTIONS
 void		loop(t_data *data);
 void		handle_commands(t_data *data);
 void		exec_cmd(t_command *command, t_data *data);
 void		handle_unknown_command(char *cmd, t_data *data);
 int			apply_redirections(t_command *cmd, t_data *data);
+int			process_heredoc_line(char *line, char *delimiter,
+				t_data *data, int pipe_fd);
 int			apply_heredoc(char *delimiter, t_data *data);
 void		reset_fds(t_command *cmd);
 void		execute_commands(t_data *data);
@@ -164,11 +179,13 @@ int			manage_parent_fd(int fd_in, int *fd, t_command *cmd);
 pid_t		create_pipe_and_fork(int *fd, t_command *cmd);
 void		exec_programm(t_command *command, t_data *data);
 void		find_cmd(t_command *command, t_data *data);
-int			is_builtin(t_command *command);
 int			fork_commands(t_data *data, pid_t *pids, int num_commands);
+int			is_builtin(t_command *command);
+int			is_quoted(t_data *data);
+void		process_all_heredocs(t_command *cmd_list, t_data *data);
 pid_t		create_child_process(t_command *cmd, t_data *data,
 				int fd_in, int *fd);
-void		process_all_heredocs(t_command *cmd_list, t_data *data);
+void		close_heredocs_for_command(t_command *cmd);
 void		reset_all_heredocs(t_command *cmd_list);
 void		reset_all_fds(t_command *cmd);
 

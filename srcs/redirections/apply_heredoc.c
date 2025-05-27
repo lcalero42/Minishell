@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   apply_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:47:08 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/19 11:31:43 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/27 16:35:57 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	read_heredoc(int pipe_fd[2], char *delimiter, t_data *data);
-static int	is_quoted(t_data *data);
 
 int	apply_heredoc(char *delimiter, t_data *data)
 {
 	int		pipe_fd[2];
 
+	if (!data->can_exec)
+		return (-1);
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
 		return (-1);
 	}
+	setup_signal(2);
 	read_heredoc(pipe_fd, delimiter, data);
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
@@ -72,9 +74,6 @@ void	reset_all_heredocs(t_command *cmd_list)
 
 static void	read_heredoc(int pipe_fd[2], char *delimiter, t_data *data)
 {
-	char	*tmp;
-	char	*res;
-	int		i;
 	char	*line;
 
 	while (1)
@@ -82,24 +81,18 @@ static void	read_heredoc(int pipe_fd[2], char *delimiter, t_data *data)
 		ft_putstr_fd("> ", STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			break ;
-		tmp = ft_strtrim(line, "\n");
-		res = interpreter_word(&i, tmp, data, 0);
-		if (!ft_strncmp(tmp, delimiter, INT_MAX))
 		{
-			line_cleanup(line, tmp, res);
+			write(1, "\n", 1);
 			break ;
 		}
-		if (!is_quoted(data))
-			ft_putstr_fd(res, pipe_fd[1]);
-		else
-			ft_putstr_fd(tmp, pipe_fd[1]);
-		ft_putstr_fd("\n", pipe_fd[1]);
-		line_cleanup(line, tmp, res);
+		if (process_heredoc_line(line, delimiter, data, pipe_fd[1]))
+			break ;
 	}
+	if (g_signals == SIGINT)
+		data->can_exec = 0;
 }
 
-static int	is_quoted(t_data *data)
+int	is_quoted(t_data *data)
 {
 	char	*start;
 	char	*word;

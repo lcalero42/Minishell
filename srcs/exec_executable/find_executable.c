@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:17:56 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/19 13:11:02 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/26 20:39:20 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ static void	set_exit_status(t_data *data, int status)
 	{
 		g_signals = WTERMSIG(status);
 		data->exit_status = 128 + g_signals;
-		if (g_signals == SIGQUIT)
-			ft_putstr_fd("Quit (core dumped)\n", 1);
-		else if (g_signals == SIGINT)
+		if (g_signals == SIGINT)
 			data->exit_status = 130;
 	}
 	else

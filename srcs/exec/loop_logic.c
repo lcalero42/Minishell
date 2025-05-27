@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/26 20:22:04 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:15:57 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,13 @@ void	loop(t_data *data)
 
 void	execute_commands(t_data *data)
 {
-	if (!check_pipe(data))
-		handle_commands(data);
-	else
-		exec_pipe(data);
+	if (data->can_exec == 1)
+	{
+		if (!check_pipe(data))
+			handle_commands(data);
+		else
+			exec_pipe(data);
+	}
 }
 
 static int	process_input(char *line, t_data *data)
