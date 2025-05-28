@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:34:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/27 17:49:27 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/28 10:20:48 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int	check_access(char *cmd, t_data *data)
 			return (0);
 		}
 	}
-	if (!check_dir(cmd, data))
-		return (0);
-	if (!check_char_count(cmd, data))
+	if (!check_dir(cmd, data) || !check_char_count(cmd, data))
 		return (0);
 	if (!check_exec(cmd, data))
 		return (0);

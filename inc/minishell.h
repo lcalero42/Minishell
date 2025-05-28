@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:26:07 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/27 16:47:52 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:10:51 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,13 @@ int			check_syntax(t_data *data);
 int			check_wrong_expand(char *word, char *rslt);
 size_t		interpreter_quotes(char *word, size_t j, char **rslt, t_data *data);
 size_t		handle_env_vars(char *word, size_t j, char **rslt, t_data *data);
+void		handle_command_with_spaces(t_command *cmd);
+int			is_text_token(t_token_type type);
+void		handle_redirections(t_token *token, t_command **cmd_list,
+				t_command **current_cmd);
+void		handle_word_token(t_token *token, t_command **cmd_list,
+				t_command **current_cmd);
+int			should_handle_redirection(t_token *token, t_command *cmd);
 
 // MEMORY MANAGEMENT
 void		free_tokens(t_token *tokens);

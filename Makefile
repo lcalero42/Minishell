@@ -10,6 +10,8 @@ SRCS = srcs/main.c \
 	   srcs/parsing/extract_quoted_string.c \
 	   srcs/parsing/extract_word.c \
 	   srcs/parsing/parse_commands.c \
+	   srcs/parsing/parse_commands_utils.c \
+	   srcs/parsing/parse_commands_handlers.c \
 	   srcs/parsing/free_redirections.c \
 	   srcs/parsing/check_parsing_errors.c \
 	   srcs/parsing/interpreter_word.c \
