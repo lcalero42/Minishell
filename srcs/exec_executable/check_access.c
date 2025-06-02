@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:34:25 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/28 10:20:48 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/06/02 11:32:08 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	check_access(char *cmd, t_data *data)
 	if (cmd == NULL || cmd[0] == '\0')
 	{
 		data->exit_status = 127;
-		ft_putstr_fd("minishell: command not found : ", 2);
-		printf("%s\n", cmd);
+		ft_putstr_fd("minishell: command not found\n", 2);
 		return (0);
 	}
 	if (stat(cmd, &file_stat) == 0)
