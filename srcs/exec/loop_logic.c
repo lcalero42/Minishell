@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:14:35 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/27 18:07:33 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/06/02 12:44:25 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ static int	process_input(char *line, t_data *data)
 	}
 	data->raw_line = line;
 	if (!check_parsing_errors(line, data))
+	{
+		add_history(line);
 		return (0);
+	}
 	data->tokens = tokenize(line, data);
 	if (!check_syntax(data))
 	{

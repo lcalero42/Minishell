@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:10:24 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/15 16:06:22 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/05/28 13:53:13 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,18 @@ static char	**init_copy(t_data *data, int count)
 int	check_var_name(char *parameter, char *envp_var)
 {
 	char	**param;
+	char	**envp_var_split;
 
+	envp_var_split = ft_split(envp_var, '=');
 	param = ft_split(parameter, '=');
-	if (!ft_strncmp(param[0], envp_var, ft_strlen(param[0])))
+	if (!ft_strncmp(param[0], envp_var_split[0], INT_MAX))
 	{
 		ft_free(param);
+		ft_free(envp_var_split);
 		return (1);
 	}
 	ft_free(param);
+	ft_free(envp_var_split);
 	return (0);
 }
 

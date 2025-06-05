@@ -6,7 +6,7 @@
 /*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:06:09 by ekeisler          #+#    #+#             */
-/*   Updated: 2025/05/27 16:24:27 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:50:24 by ekeisler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	setup_signal(int context)
 {
 	struct sigaction	sa;
 
-	memset(&sa, 0, sizeof(sa));
+	ft_memset(&sa, 0, sizeof(sa));
 	if (context == 0)
 		setup_interactive_signals(&sa);
 	else if (context == 1)

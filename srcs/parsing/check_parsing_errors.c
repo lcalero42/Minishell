@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_parsing_errors.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekeisler <ekeisler@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:21:36 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/07 16:01:39 by ekeisler         ###   ########.fr       */
+/*   Updated: 2025/06/02 13:02:34 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,21 @@ static int	check_closed_quotes(char *s)
 {
 	int		i;
 	char	quote;
-	int		found_quote;
 
 	i = 0;
-	found_quote = 0;
 	while (s[i])
 	{
-		if ((s[i] == '\'' || s[i] == '"') && !found_quote)
+		if (s[i] == '\'' || s[i] == '"')
 		{
-			quote = s[i];
-			found_quote = 1;
+			quote = s[i++];
+			while (s[i] && s[i] != quote)
+				i++;
+			if (!s[i])
+				return (0);
 			i++;
-			continue ;
 		}
-		if (found_quote && s[i] == quote)
-			return (1);
-		i++;
+		else
+			i++;
 	}
-	if (!found_quote)
-		return (1);
-	return (0);
+	return (1);
 }

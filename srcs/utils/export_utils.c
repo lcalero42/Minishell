@@ -6,7 +6,7 @@
 /*   By: lcalero <lcalero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:35:01 by lcalero           #+#    #+#             */
-/*   Updated: 2025/05/27 17:20:40 by lcalero          ###   ########.fr       */
+/*   Updated: 2025/06/03 14:31:16 by lcalero          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ int	process_export_arg(char *arg, t_data *data)
 	char	*identifier;
 
 	param = ft_split(arg, '=');
+	if (arg[0] == '=')
+	{
+		printf("minishell: export: `%s': not a valid identifier\n", arg);
+		ft_free(param);
+		data->exit_status = 1;
+		return (0);
+	}
 	identifier = param[0];
 	if (!is_valid_identifier(identifier, 0))
 	{
